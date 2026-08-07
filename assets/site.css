@@ -290,6 +290,9 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 }
 .maplink:hover { border-color: var(--color-accent); }
 
+/* 뒤집힌 글자를 **시각적으로만** 되돌린다. DOM 의 문자열은 뒤집힌 채로 남는다. */
+.rev { unicode-bidi: bidi-override; direction: rtl; }
+
 /* ── 좁은 화면 ────────────────────────────────────────────────── */
 @media (max-width: 1080px) {
   .threeup { grid-template-columns: 1fr 1fr; }

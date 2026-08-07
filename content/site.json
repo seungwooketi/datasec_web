@@ -88,10 +88,6 @@
         }
       }
     ],
-    "lead_lede": {
-      "ko": "주관기관으로 이끄는 과제입니다. 이 주제와 맞닿아 있다면 이야기가 빠릅니다.",
-      "en": "Programmes where this center is the lead institute. If your work touches these, the conversation starts faster."
-    },
     "contact_lede": {
       "ko": "공동연구, 기술이전, 국제협력 등 문의사항은 아래의 연락처로 부탁드립니다.",
       "en": "For joint research, technology transfer or international collaboration, please use the address below."

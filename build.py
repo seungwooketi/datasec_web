@@ -380,9 +380,12 @@ def mail(email: str, cls: str = "") -> str:
     ⛔ `mailto:` 나 `user@domain` 문자열을 HTML 에 두면 수집 봇의 정규식에 그대로 걸린다.
     ⚠️ 스크립트가 없으면 `aidsrc [at] keti.re.kr` 로 남는다 — 사람은 읽고 쓸 수 있다.
     """
-    user, _, dom = email.partition("@")
-    return (f'<a class="mail {cls}" data-m="{e(email[::-1])}" href="#" rel="nofollow">'
-            f'{e(user)}<span class="at"> [at] </span>{e(dom)}</a>')
+    # ⭐ **화면에 보이는 글자마저 뒤집혀 있다.** CSS 가 시각적으로만 되돌리므로
+    #    사람은 `aidsrc [at] keti.re.kr` 로 읽지만, HTML 원문에는 그 문자열이 없다.
+    #    앞 판은 `[at]` 폼을 평문으로 두어서 `[at]`→`@` 로 바꾸는 수집기에 뚫렸다.
+    shown = email.replace("@", " [at] ")[::-1]
+    return (f'<a class="mail {cls}" href="#" rel="nofollow">'
+            f'<span class="rev">{e(shown)}</span></a>')
 
 
 def kicker(text: str) -> str:
@@ -688,26 +691,8 @@ def page_news_post(lg, site, n):
     return shell(lg, "news/", n["title"], n["summary"] or n["title"], body, site)
 
 
-def page_collaborate(lg, site, stats, projects):
+def page_collaborate(lg, site):
     t = T[lg]
-    # ⭐ 채우는 것은 문장이 아니라 **사실**이다 — 집계와 주관 과제는 이미 정본에서 온 값이다.
-    agencies = {p["agency"][lg] for p in projects if p["role"] != "contract"}
-    figs = "".join(
-        f'<div class="fig"><div class="ht v tnum">{v}</div><div class="figk">{e(k)}</div></div>'
-        for k, v in ((t["researchers"], stats["members"]),
-                     (t["active_projects"], stats["active"]),
-                     (t["lead_projects"], stats["lead"]),
-                     (t["funders"], len(agencies))))
-    leads = [p for p in projects if p["role"] == "lead" and p["status"] != "closed"]
-    rows = "".join(
-        f'<tr><td class="num">{i:02d}</td><td>'
-        f'<a class="ht rowtitle" href="/{lg}/research/{p["slug"]}/">{e(p["title"][lg])}</a>'
-        f'<div class="meta">{period(p)} · {e(p["agency_short"][lg])} · {e(p["pi"][lg])}</div>'
-        f'</td></tr>' for i, p in enumerate(leads, 1))
-    leadblock = (f'{kicker(t["k_lead"])}'
-                 f'<p class="lede-m">{e(site["collaborate"]["lead_lede"][lg])}</p>'
-                 f'<table class="table fixed leadlist"><tbody>{rows}</tbody></table>'
-                 f'<a class="btn btn-ghost flush" href="/{lg}/research/">{e(t["all_projects"])}</a>')
     ways = "".join(
         blueprint(f'<div class="ht cardtitle">{e(w["title"][lg])}</div>'
                   f'<p class="cardbody">{e(w["body"][lg])}</p>', cls="way")
@@ -721,10 +706,7 @@ def page_collaborate(lg, site, stats, projects):
 <div class="page narrow">
 {kicker(t['k_collab'])}
 <h1 class="ht h-sec">{e(site['collaborate']['title'][lg])}</h1>
-<p class="lede-m">{e(site['collaborate']['lede'][lg])}</p>
-<div class="figs">{figs}</div>
 <div class="ways">{ways}</div>
-<section class="leadsec">{leadblock}</section>
 <section id="contact" class="contact">
 {kicker(t['contact'])}
 <p class="lede-m">{e(site['collaborate']['contact_lede'][lg])}</p>
@@ -855,7 +837,7 @@ def main() -> int:
         write(f"{lg}/research/index.html", page_research(lg, site, projects))
         write(f"{lg}/people/index.html", page_people(lg, site, members, projects))
         write(f"{lg}/news/index.html", page_news_index(lg, site, news))
-        write(f"{lg}/collaborate/index.html", page_collaborate(lg, site, stats, projects))
+        write(f"{lg}/collaborate/index.html", page_collaborate(lg, site))
         write(f"{lg}/visit/index.html", page_visit(lg, site))
         for p in projects:
             f = ROOT / "content" / "projects" / f"{p['slug']}.{lg}.md"
