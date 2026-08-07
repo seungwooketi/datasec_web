@@ -1,7 +1,7 @@
 {
   "site_url": "https://www.datasec.work",
 
-  "center": {"ko": "인공지능데이터보안연구센터", "en": "AI Data and Security Research Center"},
+  "center": {"ko": "인공지능데이터·보안연구센터", "en": "AI Data and Security Research Center"},
 
   "_center_full": "머리말 띠와 바닥글에만 쓰는 정식 명칭. 본문은 위의 `center` 를 쓴다.",
   "center_full": {
@@ -38,11 +38,11 @@
 
   "_desc": "아래 둘은 화면에 안 나온다 — <meta name=\"description\"> 전용이다. 검색 결과에 실린다.",
   "research_desc": {
-    "ko": "지원기관·수행기간·참여형태와 함께 정리한 인공지능데이터보안연구센터의 연구 과제 목록.",
+    "ko": "지원기관·수행기간·참여형태와 함께 정리한 인공지능데이터·보안연구센터의 연구 과제 목록.",
     "en": "Research programmes of the AI Data and Security Research Center, with funder, period and the center's role."
   },
   "people_desc": {
-    "ko": "인공지능데이터보안연구센터 구성원과 각자가 수행 중인 과제.",
+    "ko": "인공지능데이터·보안연구센터 구성원과 각자가 수행 중인 과제.",
     "en": "Researchers of the AI Data and Security Research Center and the projects they work on."
   },
 
@@ -107,7 +107,7 @@
   "visit": {
     "title": {"ko": "찾아오시는 길", "en": "Visit"},
     "org_line": {
-      "ko": "한국전자기술연구원 인공지능연구본부 인공지능데이터보안연구센터",
+      "ko": "한국전자기술연구원 인공지능연구본부 인공지능데이터·보안연구센터",
       "en": "AI Data and Security Research Center · AI Research Division · KETI"
     },
     "address": {

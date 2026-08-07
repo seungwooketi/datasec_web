@@ -1047,6 +1047,14 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
 
     # ⛔ **메일 주소가 평문으로 새어 나갔는지 산출물에서 확인한다.** `mail()` 을 한 군데라도
     #    안 거치면 그 쪽만 조용히 수집 대상이 된다 — 실제로 홈의 「이메일」 줄을 놓쳤었다.
+    # ⛔ **센터명의 가운뎃점.** 정식 표기는 `인공지능데이터·보안연구센터` 다.
+    #    점 없는 표기가 섞이면 같은 조직이 두 이름으로 검색엔진에 잡히고, 문서마다 달라진다.
+    #    ⚠️ 사람이 지킬 규약으로 두면 반드시 다시 섞인다 — 산출물에서 직접 막는다.
+    for f in OUT.rglob("*.html"):
+        if "인공지능데이터보안" in f.read_text(encoding="utf-8"):
+            block(f"센터명에 가운뎃점이 빠졌다: {f.relative_to(OUT)} — "
+                  f"「인공지능데이터·보안연구센터」가 정식 표기다")
+
     # ⚠️ 일반 정규식으로 훑으면 `logo@2x.png` 같은 srcset 이 걸린다 — **지키려는 주소**만 본다.
     addr = site.get("contact", {}).get("email", "")
     for f in OUT.rglob("*.html"):

@@ -1,4 +1,4 @@
-# datasec-web — 인공지능데이터보안연구센터 홈페이지
+# datasec-web — 인공지능데이터·보안연구센터 홈페이지
 
 `www.datasec.work` · GitHub Pages · 정적 · 한국어/영어 두 판.
 
