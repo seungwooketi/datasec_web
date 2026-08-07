@@ -128,6 +128,37 @@ Enterprise Cloud 가 필요하다.
 
 ## 7. 남은 일
 
+**⛔ 사람이 계정에서 해야 하는 것 — 검색 노출**
+
+- [ ] **apex HTTPS 인증서.** DNS 는 고쳤고 `http://datasec.work/…` → `https://www.datasec.work/…`
+      301 이 동작한다. 그러나 GitHub 인증서의 SAN 에 `www` 만 있어 **`https://datasec.work/` 는
+      경고 화면**이다. 자동 발급이 안 되면 Settings → Pages 에서 커스텀 도메인을
+      **지웠다 다시 저장**한다(1~2분 끊기고 Enforce HTTPS 가 풀린다 — 다시 켤 것)
+- [ ] **Google Search Console** — **도메인 속성**으로 등록(Cloudflare DNS TXT).
+      파일 방식과 달리 `docs/` 재생성과 무관하고 apex·www·서브도메인을 한 번에 덮는다.
+      → 사이트맵 제출 → Bing Webmaster Tools 는 GSC 에서 import
+      ⚠️ 구글 색인에 **이전 소유자의 사이트**가 남아 있다(`IT2Werkz SG | DataSec.Work`).
+      재색인 요청이 필요하다
+- [ ] **네이버 서치어드바이저** — 소유확인은 `content/verify/` 에 HTML 파일을 넣어서.
+      ⚠️ 메타태그 방식은 실패한다(루트가 JS 리다이렉트라서). ⚠️ 소유확인 **1년 만료**
+- [ ] **다음(카카오) 검색등록** — 사람이 심사한다. 제목은 26자 이내인데
+      「한국전자기술연구원 인공지능데이터·보안연구센터」는 24자라 그대로 된다
+- [ ] **KETI 본원에서 백링크** — 조직도나 연구센터 목록에 링크 한 줄.
+      얻을 수 있는 백링크 중 값어치가 압도적이다
+- [ ] **`mcp`·`kb` 등 서브도메인 색인 차단** — Cloudflare Transform Rule 로
+      `X-Robots-Tag: noindex, nofollow`. 조건은 **화이트리스트**로:
+      hostname not in {`www.datasec.work`, `seungwoo.datasec.work`}.
+      ⚠️ 지금 두 호스트의 `robots.txt` 는 401·502 를 내는데, 4xx 는 크롤러가
+      **제한 없음**으로 해석한다
+
+**⛔ 쓰기 전에 정할 것**
+
+- [ ] 과제 소개문에 **무엇까지 쓸 수 있는가**. `data/meta.json` 의 `excluded` 가
+      공동연구기관·실행예산을 비공개로 못박았는데, 「이 센터가 맡은 부분」을 쓰다 보면
+      가장 부르기 쉬운 자리다. 국방 4건의 서술 범위도 함께
+- [ ] 머릿수 정의 — 지금 세 곳이 다르다: 홈 집계 27(연구인력) · `site.json` about 12 ·
+      구성원 쪽 28. 셋 다 다른 것을 세고 있다면 라벨을 명시하고, 아니면 하나로 통일한다
+
 **확인이 필요한 것**
 
 - [ ] 구성원 영문 이름 26명 — 본인이 논문에 쓰는 철자로 대조.
