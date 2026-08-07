@@ -258,6 +258,16 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 .pl.none { display: block; font-size: 14px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
 .extnote { margin-top: 10px; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
 
+/* 명단만 있는 구성원 — 이름과 직급만. 과제 행 형식에 넣으면 빈 칸만 길어진다. */
+.rosterhead { margin-top: 40px; }
+.stafflist { display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 0; }
+.sl {
+  padding: 13px 0; border-bottom: 1px solid var(--color-divider);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.nm-s { font-size: 17px; line-height: 20px; }
+.rk-s { font-size: 12px; color: color-mix(in srgb, var(--color-text) 62%, transparent); }
+
 /* ── 협력 ─────────────────────────────────────────────────────── */
 .ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; margin: 8px 0 44px; }
 .way { padding: 18px; }

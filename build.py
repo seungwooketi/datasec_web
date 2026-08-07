@@ -50,7 +50,7 @@ T = {
         "nav_home": "센터 소개", "nav_research": "연구", "nav_people": "구성원",
         "nav_news": "소식", "nav_collab": "협력", "nav_visit": "찾아오시는 길",
         "contact": "문의하기", "k_visit": "05 · 찾아오시는 길",
-        "addr": "주소", "phone": "대표전화",
+        "addr": "주소", "phone": "대표전화", "k_roster": "연구원 · 행정",
         "skip": "본문으로 건너뛰기",
         "k_latest": "01 · 새소식", "k_research": "02 · 연구 과제", "k_center": "03 · 센터 안내",
         "k_people": "03 · 구성원", "k_news": "01 · 새소식", "k_collab": "04 · 협력",
@@ -79,7 +79,7 @@ T = {
         "nav_home": "Overview", "nav_research": "Research", "nav_people": "People",
         "nav_news": "News", "nav_collab": "Collaborate", "nav_visit": "Visit",
         "contact": "Contact", "k_visit": "05 · Visit",
-        "addr": "Address", "phone": "Phone",
+        "addr": "Address", "phone": "Phone", "k_roster": "Researchers · Administration",
         "skip": "Skip to content",
         "k_latest": "01 · Latest", "k_research": "02 · Research programmes",
         "k_center": "03 · The center", "k_people": "03 · People",
@@ -584,8 +584,11 @@ def page_project(lg, site, p, members, summary):
 def page_people(lg, site, members, projects):
     t = T[lg]
     by_slug = {p["slug"]: p for p in projects}
+    # ⭐ 과제가 붙은 사람과 명단만 있는 사람을 나눈다 — 한 형식에 다 넣으면 빈 행만 길게 남는다.
+    detailed = [m for m in members if m["projects"]]
+    listed = [m for m in members if not m["projects"]]
     cards = []
-    for m in members:
+    for m in detailed:
         own = [x for x in m["projects"] if x["role"] == "lead"]
         rows = "".join(
             f'<div class="pl"><span class="rl {"own" if x["role"] == "lead" else "join"}">'
@@ -618,6 +621,15 @@ def page_people(lg, site, members, projects):
             f'<div class="ct tnum">{len(m["projects"])}{unit}{e(lead_note)}</div>'
             f'{linkbar}</div>'
             f'<div class="plist">{rows}{ext}</div></article>')
+    roster = ""
+    if listed:
+        items = "".join(
+            f'<div class="sl" id="{e(m["slug"])}">'
+            f'<span class="ht nm-s">{e(m["name"][lg])}</span>'
+            f'<span class="rk-s">{e(m["grade"][lg])}</span></div>' for m in listed)
+        roster = (f'<div class="rosterhead">{kicker(t["k_roster"])}</div>'
+                  f'<div class="stafflist">{items}</div>')
+
     body = f"""
 <div class="page">
 {kicker(t['k_people'])}
@@ -626,6 +638,7 @@ def page_people(lg, site, members, projects):
 <span class="count">{e(t['count_people'].format(n=len(members)))}</span>
 </div>
 <div class="people">{"".join(cards)}</div>
+{roster}
 </div>
 """
     return shell(lg, "people/", t["nav_people"], site["people_desc"][lg], body, site)
@@ -774,10 +787,12 @@ def main() -> int:
     projects = [p for p in projects if p.get("publish", True)]
     published = {p["slug"] for p in projects}
     for m in members:
+        had = len(m["projects"])
         m["projects"] = [x for x in m["projects"] if x["slug"] in published]
-    for m in members:
-        if not m["projects"]:
-            warn(f"구성원 {m['slug']} 에게 공개할 과제가 하나도 없다 — 「없음」으로 나간다")
+        # ⚠️ 애초에 과제가 없는 사람(명단만 있는 구성원)은 정상이다.
+        #    **있던 것이 전부 미공개로 걸러진 경우**만 알린다.
+        if had and not m["projects"]:
+            warn(f"구성원 {m['slug']} 의 과제가 전부 미공개로 걸러졌다 — 이름만 나간다")
     if withheld:
         warn(f"공개하지 않는 과제 {len(withheld)}건: "
              + " · ".join(f"{p['slug']}({p.get('withheld', '사유 없음')})" for p in withheld))
@@ -800,7 +815,8 @@ def main() -> int:
              "(content/site.json 의 contact.email)")
 
     stats = {
-        "members": len(members),
+        # ⚠️ 「연구인력」이라 적히는 숫자다 — 행정 인력은 빼야 라벨이 참이 된다.
+        "members": sum(1 for m in members if not m.get("admin")),
         "active": sum(1 for p in projects if p["status"] != "closed"),
         "lead": sum(1 for p in projects if p["role"] == "lead"),
         "new": sum(1 for p in projects if p.get("new_2026")),

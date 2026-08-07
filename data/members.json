@@ -460,5 +460,310 @@
     "role": "member"
    }
   ]
+ },
+ {
+  "slug": "yujeong-choi",
+  "name": {
+   "ko": "최유정",
+   "en": "Yujeong Choi"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "행정원",
+   "en": "Administrative Staff"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": [],
+  "admin": true
+ },
+ {
+  "slug": "handeok-lee",
+  "name": {
+   "ko": "이한덕",
+   "en": "Handeok Lee"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "jihyun-lee",
+  "name": {
+   "ko": "이지현",
+   "en": "Jihyun Lee"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "yeji-oh",
+  "name": {
+   "ko": "오예지",
+   "en": "Yeji Oh"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "daegeun-cho",
+  "name": {
+   "ko": "조대근",
+   "en": "Daegeun Cho"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "younggi-kim",
+  "name": {
+   "ko": "김영기",
+   "en": "Younggi Kim"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "hyochan-park",
+  "name": {
+   "ko": "박효찬",
+   "en": "Hyochan Park"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "hyein-jung",
+  "name": {
+   "ko": "정혜인",
+   "en": "Hyein Jung"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "jiyoung-baek",
+  "name": {
+   "ko": "백지영",
+   "en": "Jiyoung Baek"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "sera-kim",
+  "name": {
+   "ko": "김세라",
+   "en": "Sera Kim"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "wooseok-kim",
+  "name": {
+   "ko": "김우석",
+   "en": "Wooseok Kim"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "suin-jung",
+  "name": {
+   "ko": "정수인",
+   "en": "Suin Jung"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "yejin-jang",
+  "name": {
+   "ko": "장예진",
+   "en": "Yejin Jang"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "junyeol-lim",
+  "name": {
+   "ko": "임준열",
+   "en": "Junyeol Lim"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "hohyun-kim",
+  "name": {
+   "ko": "김호현",
+   "en": "Hohyun Kim"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "yumin-yang",
+  "name": {
+   "ko": "양유민",
+   "en": "Yumin Yang"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
  }
 ]
