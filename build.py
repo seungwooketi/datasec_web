@@ -290,7 +290,7 @@ def img_size(rel: str) -> tuple[int, int]:
     raise ValueError(f"크기를 못 읽는 이미지: {rel}")
 
 
-HERO_W, HERO_H = img_size("assets/brand/hero.png")
+HERO_W, HERO_H = img_size("assets/brand/hero-560.png")
 OG_W, OG_H = img_size("assets/brand/og-image.png")
 
 # ⭐ CI 의 심볼은 **인라인 SVG** 다 — 요청 0회이고 어느 배율에서도 또렷하다.
@@ -570,8 +570,10 @@ def page_home(lg, site, projects, members, news, stats, detailed):
 <p class="ht hero">{e(site['hero'][lg])}</p>
 <p class="lede">{e(site['lede'][lg])}</p>
 </div>
-<figure class="heroart"><img src="{stamp('/assets/brand/hero.png')}"
- alt="{e(site['hero_alt'][lg])}" width="{HERO_W}" height="{HERO_H}"></figure>
+<figure class="heroart"><picture>
+<source media="(max-width: 620px)" srcset="{stamp('/assets/brand/hero-small.png')}">
+<img src="{stamp('/assets/brand/hero-560.png')}" alt="{e(site['hero_alt'][lg])}"
+ width="{HERO_W}" height="{HERO_H}"></picture></figure>
 </div>
 <div class="figs">{figs}</div>
 <div class="threeup">

@@ -89,9 +89,10 @@ footer {
 /* 표제 왼쪽, 그림 오른쪽. 그림 칸은 560px.
    ⚠️ **크기와 라벨 가독성은 정면으로 맞바꿈이다.** 그림 속 라벨은 원본에서 32px 이라
    표시 폭 W 에서 `32 × W / 2400` px 로 그려진다:
-       1192px → 15.9px      938px → 12.5px      560px → 7.5px
-   여기서는 배치를 택했다 — 이 자리에서 라벨까지 읽히게 하려면 **그림의 라벨을 키워
-   다시 그려야** 한다(레이아웃으로는 안 된다).
+   ⭐ CI 가 **크기별로 다른 그림**을 준다(`assets/brand/CI.md`). 축소본이 아니라 다시 그린 것이다:
+       `hero-560.png`   560×418 슬롯 전용 — 아이콘을 빼고 번호가 강조를 맡는다
+       `hero-small.png` 620px 아래 — 라벨을 버리고 구조만 남긴다
+   그래서 `<picture>` 로 갈아 끼운다. 슬롯 크기를 바꾸면 **맞는 변종으로 바꿔야** 한다.
    ⚠️ CI 히어로는 바탕이 페이지와 같은 `#f2f2f3` 이고 **등록마크를 스스로 그린다** —
    그래서 `.blueprint` 로 감싸지 않는다(마크가 두 겹이 된다). */
 .herorow {
@@ -321,7 +322,10 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 /* ── 좁은 화면 ────────────────────────────────────────────────── */
 @media (max-width: 1080px) {
   .threeup { grid-template-columns: 1fr 1fr; }
-  .herorow { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 36px; }
+  /* ⚠️ 칸을 좁히지 않고 **한 단으로 내린다.** 400px 로 좁히면 `hero-560` 이 설계 크기
+     아래로 눌려 라벨이 다시 죽는다. 폭은 560px 에서 유지한다. */
+  .herorow { grid-template-columns: 1fr; gap: 30px; }
+  .heroart { max-width: 560px; }
   .threeup > section:last-child { grid-column: 1 / -1; }
   .hero { font-size: 68px; line-height: 70px; }
   /* ⚠️ 한글 크기 지정은 `body[data-lang]` 이 붙어 우선순위가 높다 — 좁은 화면에서도
@@ -337,7 +341,6 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
   .fig:nth-child(3) { padding-left: 0; border-left: 0; }
   .fig:nth-child(2) { padding-right: 0; }
   .fig:nth-child(3), .fig:nth-child(4) { border-top: 1px solid var(--color-divider); }
-  .herorow { grid-template-columns: 1fr; gap: 28px; }
   .hero { font-size: 46px; line-height: 48px; max-width: none; }
   .h-sec { font-size: 38px; line-height: 40px; }
   .h-proj { font-size: 34px; line-height: 36px; }

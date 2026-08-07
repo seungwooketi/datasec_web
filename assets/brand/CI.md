@@ -65,7 +65,21 @@ element; if it wraps, the lockup is broken.
 `hero.png` (2400 × 1792, 2× of 1200 × 896) replaces the current `hero.jpg` —
 the eight research topics drawn as the set diagram the symbol is built from:
 data and security as two overlapping fields, with Reliable AI — the goal, not
-a topic — named in the intersection. Icons are thin-stroke at 1.5, matching the frame weight. Redraw it from `ADSRC Assets.dc.html` if the areas change.
+a topic — named in the intersection. Icons are thin-stroke at 1.5, matching the frame weight.
+
+`hero-mid.png` (2000 × 1640, 2× of 1000 × 820) is the same diagram with the
+type set 1.25× larger relative to the frame — use it wherever the hero is
+placed below about 900px wide, where the full-size labels stop reading.
+
+`hero-small.png` (1440 × 1120, 2× of 720 × 560) drops the numbered legend and
+keeps only the structure — the two fields, Reliable AI, and the center name.
+Below roughly 600px wide the eight labels cannot be read at any size, so the
+small hero states the idea instead of listing it.
+
+`hero-560.png` (1120 × 836, 2× of 560 × 418) is drawn for a fixed 560 × 418
+slot and keeps all eight topics. Icons are dropped at this size — at 16px they
+turn to mush — and the numbers carry the accent instead. Titles are 15px at
+1:1, which is the smallest they stay comfortable. Redraw it from `ADSRC Assets.dc.html` if the areas change.
 
 `og-image.png` (1200 × 630, deep steel) is the social/preview card — point
 `og:image` at it. `adsrc-lockup-horizontal.png` (3600 × 900) is the primary
