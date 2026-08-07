@@ -30,8 +30,11 @@ a:hover { color: var(--color-accent); }
   padding: 13px 44px; border-bottom: 1px solid var(--color-divider);
   position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
 }
-.nav-brand { letter-spacing: .03em; display: flex; align-items: center; gap: 9px; }
-.nav-brand img { height: 26px; width: auto; display: block; }
+/* ⭐ 로고는 여기 한 곳에만 둔다(바닥글에는 두지 않는다). 그래서 크게 쓴다 —
+   로고 안의 부제는 로고 높이의 11.6% 라, 48px 에서 5.6px 다. 읽히라고 두는 줄이 아니라
+   로고의 일부다. 「AIDSRC」 는 이 크기에서 20px 로 또렷하다. */
+.nav-brand { display: flex; align-items: center; margin-right: auto; }
+.nav-brand img { height: 48px; width: auto; display: block; }
 .navlinks { display: flex; gap: var(--space-4); align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
 .langseg .seg-opt { letter-spacing: .04em; }
@@ -47,10 +50,6 @@ footer {
   display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
   font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
-/* ⚠️ 로고 안의 부제는 로고 높이의 7.7% 다 — 38px 로 두면 3px 이 되어 안 읽힌다.
-   지금은 84px 로 키워 뒀고(부제 ~6.5px), 근본 해결은 **작은 크기용으로 다시 그린 로고**다. */
-.footlogo { line-height: 0; }
-.footlogo img { height: 84px; width: auto; display: block; }
 
 /* ── 눈금 라벨 — 모든 쪽에서 되풀이되는 「눈금 위에 줄」 ────────── */
 .k {

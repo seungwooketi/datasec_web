@@ -327,8 +327,9 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <body data-lang="{lg}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
 <nav class="nav">
-<a href="/{lg}/" class="nav-brand"><img src="{stamp('/assets/brand/mark.png')}"
- srcset="{stamp('/assets/brand/mark@2x.png')} 2x" alt="" width="137" height="128">AIDSRC</a>
+<a href="/{lg}/" class="nav-brand"><img src="{stamp('/assets/brand/logo.png')}"
+ srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="AIDSRC — {e(center)}"
+ width="414" height="128"></a>
 <div class="navlinks">{nav}</div>
 {seg}
 <a class="btn btn-primary" href="/{lg}/collaborate/#contact">{e(t['contact'])}</a>
@@ -337,8 +338,7 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 {body}
 </main>
 <footer>
-<span class="footlogo"><img src="{stamp('/assets/brand/logo.png')}"
- srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="{e(center)}" width="324" height="128"></span>
+<span>{e(center)}</span>
 <span>{foot_mid}</span>
 </footer>
 <script src="{stamp('/assets/mail.js')}" defer></script>
