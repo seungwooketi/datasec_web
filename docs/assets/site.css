@@ -29,13 +29,14 @@ a:hover { color: var(--color-accent); }
 .nav {
   padding: 13px 44px; border-bottom: 1px solid var(--color-divider);
   position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
+  gap: 22px;
 }
 /* ⭐ 로고는 여기 한 곳에만 둔다(바닥글에는 두지 않는다). 그래서 크게 쓴다 —
    로고 안의 부제는 로고 높이의 11.6% 라, 48px 에서 5.6px 다. 읽히라고 두는 줄이 아니라
    로고의 일부다. 「AIDSRC」 는 이 크기에서 20px 로 또렷하다. */
 .nav-brand { display: flex; align-items: center; margin-right: auto; }
 .nav-brand img { height: 48px; width: auto; display: block; }
-.navlinks { display: flex; gap: var(--space-4); align-items: center; }
+.navlinks { display: flex; gap: 26px; align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
 .langseg .seg-opt { letter-spacing: .04em; }
 .langseg .seg-opt.is-on { color: var(--color-bg); }

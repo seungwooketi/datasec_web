@@ -417,7 +417,7 @@ def tags(p: dict, lg: str) -> str:
 # 페이지
 # ════════════════════════════════════════════════════════════════════
 
-def page_home(lg, site, projects, members, news, stats):
+def page_home(lg, site, projects, members, news, stats, detailed):
     t = T[lg]
     active = [p for p in projects if p["status"] != "closed"]
     latest = news[lg][:4]
@@ -439,7 +439,7 @@ def page_home(lg, site, projects, members, news, stats):
 
     rows = "".join(
         f'<tr><td class="num">{i:02d}</td><td>'
-        f'<a class="ht rowtitle" href="/{lg}/research/{p["slug"]}/">{e(p["title"][lg])}</a>'
+        f'{project_link(lg, p, detailed, e(p["title"][lg]), "ht rowtitle")}'
         f'<div class="meta">{period(p)} · {e(p["agency_short"][lg])}</div></td></tr>'
         for i, p in enumerate(active[:5], 1))
     col2 = (f'<table class="table fixed"><tbody>{rows}</tbody></table>'
@@ -495,6 +495,31 @@ def page_home(lg, site, projects, members, news, stats):
     return shell(lg, "", t["nav_home"], site["lede"][lg], body, site)
 
 
+def load_summaries() -> dict[str, dict[str, str]]:
+    """`content/projects/<slug>.<lang>.md`. ⭐ **두 언어가 다 있어야** 상세 쪽을 만든다 —
+    한쪽만 있으면 언어 전환이 404 로 간다."""
+    out: dict[str, dict[str, str]] = {}
+    d = ROOT / "content" / "projects"
+    if not d.exists():
+        return out
+    for f in sorted(d.glob("*.md")):
+        parts = f.name[:-3].rsplit(".", 1)
+        if len(parts) != 2 or parts[1] not in LANGS:
+            warn(f"과제 소개 파일 이름이 `<slug>.<lang>.md` 가 아니다: {f.name}")
+            continue
+        slug, lg = parts
+        out.setdefault(slug, {})[lg] = markdown(front_matter(f.read_text(encoding="utf-8"))[1])
+    return out
+
+
+def project_link(lg, p, detailed: set, inner: str, cls: str = "") -> str:
+    """소개가 있는 과제만 링크한다. ⚠️ 없으면 **빈 상세 쪽으로 보내지 않는다.**"""
+    c = f' class="{cls}"' if cls else ""
+    if p["slug"] in detailed:
+        return f'<a{c} href="/{lg}/research/{p["slug"]}/">{inner}</a>'
+    return f'<span{c}>{inner}</span>'
+
+
 def person_link(lg, pi, members):
     """담당자 이름 → 구성원 쪽의 그 사람. ⚠️ 명단에 없으면 **이름만** 남긴다 — 링크가 404 가 되느니."""
     m = next((x for x in members if x["name"]["ko"] == pi["ko"]), None)
@@ -503,7 +528,7 @@ def person_link(lg, pi, members):
     return f'<a href="/{lg}/people/#{e(m["slug"])}">{e(pi[lg])}</a>'
 
 
-def page_research(lg, site, projects, members):
+def page_research(lg, site, projects, members, detailed):
     t = T[lg]
     facets = [("all", t["filter_all"]), ("lead", t[ROLE_KEY["lead"]]),
               ("joint", t[ROLE_KEY["joint"]]), ("contract", t[ROLE_KEY["contract"]]),
@@ -521,7 +546,7 @@ def page_research(lg, site, projects, members):
         f'<tr data-role="{p["role"]}" data-new="{"1" if p.get("new_2026") else "0"}" '
         f'data-q="{e(haystack(p))}">'
         f'<td class="num">{i:02d}</td>'
-        f'<td><a class="ht rowtitle" href="/{lg}/research/{p["slug"]}/">{e(p["title"][lg])}</a></td>'
+        f'<td>{project_link(lg, p, detailed, e(p["title"][lg]), "ht rowtitle")}</td>'
         f'<td>{e(p["agency_short"][lg])}</td>'
         f'<td class="tnum">{e(p["start"])} – {e(p["end"])}</td>'
         f'<td>{person_link(lg, p["pi"], members)}</td>'
@@ -594,7 +619,7 @@ def page_project(lg, site, p, members, summary):
     return shell(lg, "research/", p["title"][lg], p["title"][lg], body, site)
 
 
-def page_people(lg, site, members, projects):
+def page_people(lg, site, members, projects, detailed):
     t = T[lg]
     by_slug = {p["slug"]: p for p in projects}
     # ⭐ 과제가 붙은 사람과 명단만 있는 사람을 나눈다 — 한 형식에 다 넣으면 빈 행만 길게 남는다.
@@ -606,13 +631,12 @@ def page_people(lg, site, members, projects):
         rows = "".join(
             f'<div class="pl"><span class="rl {"own" if x["role"] == "lead" else "join"}">'
             f'{e(t["own"] if x["role"] == "lead" else t["join"])}</span>'
-            f'<a href="/{lg}/research/{x["slug"]}/">{e(by_slug[x["slug"]]["title"][lg])}</a></div>'
+            f'{project_link(lg, by_slug[x["slug"]], detailed, e(by_slug[x["slug"]]["title"][lg]))}</div>'
             for x in sorted(m["projects"], key=lambda y: (y["role"] != "lead",
                                                           by_slug[y["slug"]]["title"][lg])))
         if not rows:
             rows = f'<div class="pl none">{e(t["no_projects"])}</div>'
-        ext = (f'<div class="extnote">{e(t["ext_n"].format(n=m["external_count"]))}</div>'
-               if m.get("external_count") else "")
+        ext = ""     # 「부서 외 과제 N건 참여」는 싣지 않는다
         role = m["org_role"][lg]
         badge = f'<div class="orgrole">{e(role)}</div>' if role else ""
         links = "".join(
@@ -839,30 +863,32 @@ def main() -> int:
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
 
-    missing_summary: list[str] = []
+    summaries = load_summaries()
+    # ⭐ 소개가 **두 언어 다** 있는 과제만 상세 쪽을 갖는다. 나머지는 링크도 걸지 않는다 —
+    #    빈 쪽으로 보내지 않고, sitemap 에도 넣지 않는다.
+    detailed = {p["slug"] for p in projects
+                if all(summaries.get(p["slug"], {}).get(x) for x in LANGS)}
+    partial = [s for s in summaries if s not in detailed and any(summaries[s].values())]
+    for s in partial:
+        warn(f"과제 소개가 한 언어에만 있다: {s} — 두 언어가 다 있어야 상세 쪽이 생긴다")
+    if len(detailed) < len(projects):
+        warn(f"상세 쪽이 없는 과제 {len(projects) - len(detailed)}건 — 목록에서 링크가 걸리지 않는다. "
+             f"content/projects/<slug>.ko.md 와 .en.md 를 만들면 생긴다")
+
     for lg in LANGS:
-        write(f"{lg}/index.html", page_home(lg, site, projects, members, news, stats))
-        write(f"{lg}/research/index.html", page_research(lg, site, projects, members))
-        write(f"{lg}/people/index.html", page_people(lg, site, members, projects))
+        write(f"{lg}/index.html", page_home(lg, site, projects, members, news, stats, detailed))
+        write(f"{lg}/research/index.html", page_research(lg, site, projects, members, detailed))
+        write(f"{lg}/people/index.html", page_people(lg, site, members, projects, detailed))
         write(f"{lg}/news/index.html", page_news_index(lg, site, news))
         write(f"{lg}/collaborate/index.html", page_collaborate(lg, site))
         write(f"{lg}/visit/index.html", page_visit(lg, site))
         for p in projects:
-            f = ROOT / "content" / "projects" / f"{p['slug']}.{lg}.md"
-            if f.exists():
-                summary = markdown(front_matter(f.read_text(encoding="utf-8"))[1])
-            else:
-                summary = ""
-                missing_summary.append(f"{p['slug']}.{lg}")
+            if p["slug"] not in detailed:
+                continue
             write(f"{lg}/research/{p['slug']}/index.html",
-                  page_project(lg, site, p, members, summary))
+                  page_project(lg, site, p, members, summaries[p["slug"]][lg]))
         for n in news[lg]:
             write(f"{lg}/news/{n['slug']}/index.html", page_news_post(lg, site, n))
-
-    if missing_summary:
-        warn(f"과제 소개가 없는 쪽 {len(missing_summary)}개 — 상세 쪽은 「준비 중」으로 나간다. "
-             f"채우려면 content/projects/<slug>.<lang>.md 를 만든다 "
-             f"(예: {missing_summary[0]}.md)")
 
     shutil.copytree(ROOT / "assets", OUT / "assets")
     # ⭐ 도메인은 `content/site.json` 의 `site_url` 하나에서 온다 — 여섯 군데에 박아 두면
@@ -877,7 +903,7 @@ def main() -> int:
     for lg in LANGS:
         urls += [f"/{lg}/", f"/{lg}/research/", f"/{lg}/people/", f"/{lg}/news/",
                  f"/{lg}/collaborate/", f"/{lg}/visit/"]
-        urls += [f"/{lg}/research/{p['slug']}/" for p in projects]
+        urls += [f"/{lg}/research/{p['slug']}/" for p in projects if p["slug"] in detailed]
         urls += [f"/{lg}/news/{n['slug']}/" for n in news[lg]]
     write("sitemap.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
