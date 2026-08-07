@@ -472,14 +472,10 @@ def page_home(lg, site, projects, members, news, stats):
 <div class="masthead">
 <span>{e(site['center'][lg])}</span>
 </div>
-<div class="herorow">
-<div>
 <h1 class="ht hero">{e(site['hero'][lg])}</h1>
 <p class="lede">{e(site['lede'][lg])}</p>
-</div>
-{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="" width="900" height="900">',
-           cls="heroart")}
-</div>
+{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="" width="1800" height="635">',
+           cls="heroband")}
 <div class="figs">{figs}</div>
 <div class="threeup">
 <section>{kicker(t['k_latest'])}{col1}</section>
