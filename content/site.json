@@ -2,7 +2,6 @@
   "site_url": "https://www.datasec.work",
 
   "center": {"ko": "인공지능데이터보안연구센터", "en": "AI Data and Security Research Center"},
-  "location": {"ko": "경기도 성남시", "en": "Seongnam, Republic of Korea"},
   "org_url": "https://www.keti.re.kr",
   "org_url_label": "www.keti.re.kr",
   "org_name": {"ko": "한국전자기술연구원", "en": "Korea Electronics Technology Institute"},
@@ -50,8 +49,8 @@
   "collaborate": {
     "title": {"ko": "함께 하기", "en": "Work with us"},
     "lede": {
-      "ko": "기업 수탁, 기술이전, 공동연구 제안을 받습니다. 부서에서 직접 다루지 않는 주제라면 연구원 내 다른 부서로 연결해 드립니다.",
-      "en": "We take on contract research, technology transfer and joint research. If a topic sits outside this center, we can connect you with another KETI center."
+      "ko": "다른 부서와의 협력 방안도 모색해 보겠습니다.",
+      "en": "We can also explore collaboration together with other KETI centers."
     },
     "ways": [
       {
@@ -84,13 +83,38 @@
       }
     ],
     "contact_lede": {
-      "ko": "제안이나 문의를 보내 주시면 담당 연구원이 회신합니다.",
-      "en": "Send a proposal or a question and the relevant researcher will reply."
+      "ko": "공동연구, 기술이전, 국제협력 등 문의사항은 아래의 연락처로 부탁드립니다.",
+      "en": "For joint research, technology transfer or international collaboration, please use the address below."
     },
     "no_contact": {
       "ko": "공개 연락처가 아직 설정되지 않았습니다. content/site.json 의 contact.email 을 채우면 여기에 표시됩니다.",
       "en": "A public contact address has not been set yet. Fill in contact.email in content/site.json and it appears here."
     }
+  },
+
+  "visit": {
+    "title": {"ko": "찾아오시는 길", "en": "Visit"},
+    "org_line": {
+      "ko": "한국전자기술연구원 인공지능연구본부 인공지능데이터보안연구센터",
+      "en": "AI Data and Security Research Center · AI Research Division · KETI"
+    },
+    "address": {
+      "ko": "(13509) 경기도 성남시 분당구 새나리로 25 (야탑동)",
+      "en": "25 Saenari-ro, Bundang-gu, Seongnam-si, Gyeonggi-do 13509, Republic of Korea"
+    },
+    "phone": "031-789-7000",
+    "map_url": "https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EC%84%B1%EB%82%A8%EC%8B%9C%20%EB%B6%84%EB%8B%B9%EA%B5%AC%20%EC%83%88%EB%82%98%EB%A6%AC%EB%A1%9C%2025",
+    "map_label": {"ko": "지도에서 보기 →", "en": "Open in maps →"},
+    "_notes": "notes 는 비워 두면 그 칸이 아예 안 나온다. 대중교통·주차 안내를 직접 채운다.",
+    "notes": [
+      {
+        "title": {"ko": "방문 전에", "en": "Before you visit"},
+        "body": {
+          "ko": "연구원 출입에는 사전 등록이 필요합니다. 방문 일정을 미리 알려 주시면 안내해 드리겠습니다.",
+          "en": "Entry to the institute requires prior registration. Let us know your visit in advance and we will arrange it."
+        }
+      }
+    ]
   },
 
   "contact": {

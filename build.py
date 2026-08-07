@@ -48,7 +48,9 @@ def block(msg: str) -> None:
 T = {
     "ko": {
         "nav_home": "센터 소개", "nav_research": "연구", "nav_people": "구성원",
-        "nav_news": "소식", "nav_collab": "협력", "contact": "문의하기",
+        "nav_news": "소식", "nav_collab": "협력", "nav_visit": "찾아오시는 길",
+        "contact": "문의하기", "k_visit": "05 · 찾아오시는 길",
+        "addr": "주소", "phone": "대표전화",
         "skip": "본문으로 건너뛰기",
         "k_latest": "01 · 새소식", "k_research": "02 · 연구 과제", "k_center": "03 · 센터 안내",
         "k_people": "03 · 구성원", "k_news": "01 · 새소식", "k_collab": "04 · 협력",
@@ -56,7 +58,7 @@ T = {
         "researchers": "연구인력", "active_projects": "수행중 과제",
         "lead_projects": "주관 과제", "new_projects": "26년 신규",
         "project": "과제명", "period": "수행기간", "funder": "지원기관",
-        "role": "참여형태", "status": "상태", "pi": "책임자", "no": "번호",
+        "role": "참여형태", "status": "상태", "pi": "담당자", "no": "번호",
         "members_n": "참여 구성원",
         "role_lead": "주관", "role_joint": "참여·공동", "role_contract": "기업수탁",
         "st_active": "수행중", "st_closing": "종료예정", "st_closed": "종료",
@@ -75,7 +77,9 @@ T = {
     },
     "en": {
         "nav_home": "Overview", "nav_research": "Research", "nav_people": "People",
-        "nav_news": "News", "nav_collab": "Collaborate", "contact": "Contact",
+        "nav_news": "News", "nav_collab": "Collaborate", "nav_visit": "Visit",
+        "contact": "Contact", "k_visit": "05 · Visit",
+        "addr": "Address", "phone": "Phone",
         "skip": "Skip to content",
         "k_latest": "01 · Latest", "k_research": "02 · Research programmes",
         "k_center": "03 · The center", "k_people": "03 · People",
@@ -86,7 +90,7 @@ T = {
         "project": "Project", "period": "Period", "funder": "Funder",
         "role": "Role", "status": "Status", "pi": "PI", "no": "No.",
         "members_n": "Members",
-        "role_lead": "Lead", "role_joint": "Joint", "role_contract": "Contract",
+        "role_lead": "Lead", "role_joint": "Partner", "role_contract": "Contract",
         "st_active": "Active", "st_closing": "Closing", "st_closed": "Closed",
         "tag_new": "New in 2026",
         "filter_all": "All", "count_projects": "{n} projects",
@@ -273,7 +277,7 @@ def other(lg: str) -> str:
 
 
 NAVS = [("", "nav_home"), ("research/", "nav_research"), ("people/", "nav_people"),
-        ("news/", "nav_news"), ("collaborate/", "nav_collab")]
+        ("news/", "nav_news"), ("collaborate/", "nav_collab"), ("visit/", "nav_visit")]
 
 
 def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> str:
@@ -291,7 +295,7 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
            .format(e(t["lang_switch"]), opt("en", "EN"), opt("ko", "한국어")))
     center = site["center"][lg]
     email = site.get("contact", {}).get("email", "")
-    foot_mid = f'<a href="mailto:{e(email)}">{e(email)}</a>' if email else e(site["org_url_label"])
+    foot_mid = mail(email) if email else e(site["org_url_label"])
     base = site["site_url"].rstrip("/")
     canonical = f"{base}/{lg}/{here}"
     return f"""<!doctype html>
@@ -336,8 +340,8 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <span class="footlogo"><img src="{stamp('/assets/brand/logo.png')}"
  srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="{e(center)}" width="324" height="128"></span>
 <span>{foot_mid}</span>
-<span>{e(site['location'][lg])}</span>
 </footer>
+<script src="{stamp('/assets/mail.js')}" defer></script>
 </body>
 </html>
 """
@@ -366,6 +370,17 @@ def icon(kind: str) -> str:
     return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
             f'{ICONS[kind]}</svg>')
+
+
+def mail(email: str, cls: str = "") -> str:
+    """메일 주소를 **뒤집어서** 심는다 — `assets/mail.js` 가 사람에게만 되돌린다.
+
+    ⛔ `mailto:` 나 `user@domain` 문자열을 HTML 에 두면 수집 봇의 정규식에 그대로 걸린다.
+    ⚠️ 스크립트가 없으면 `aidsrc [at] keti.re.kr` 로 남는다 — 사람은 읽고 쓸 수 있다.
+    """
+    user, _, dom = email.partition("@")
+    return (f'<a class="mail {cls}" data-m="{e(email[::-1])}" href="#" rel="nofollow">'
+            f'{e(user)}<span class="at"> [at] </span>{e(dom)}</a>')
 
 
 def kicker(text: str) -> str:
@@ -435,7 +450,7 @@ def page_home(lg, site, projects, members, news, stats):
             v = v.get(lg)
         if not v:
             continue
-        val = f'<a href="mailto:{e(v)}">{e(v)}</a>' if key == "email" else e(v)
+        val = mail(v) if key == "email" else e(v)
         dl.append(f'<div class="dl"><span class="dt">{e(label)}</span><span>{val}</span></div>')
     org_link = (f'<div class="dl"><span class="dt">{"소속" if lg == "ko" else "Institute"}</span>'
                 f'<span><a href="{e(site["org_url"])}" rel="noopener">{e(site["org_name"][lg])}</a>'
@@ -504,8 +519,6 @@ def page_research(lg, site, projects):
 {kicker(t['k_research'])}
 <h1 class="ht h-sec">{e(site['research_title'][lg])}</h1>
 <div class="filters">
-<input class="input" type="search" id="q" placeholder="{e(t['search_projects'])}"
-       aria-label="{e(t['search_projects'])}">
 <div class="seg">{seg}</div>
 <span class="count" id="count">{e(t['count_projects'].format(n=len(projects)))}</span>
 </div>
@@ -610,13 +623,10 @@ def page_people(lg, site, members, projects):
 {kicker(t['k_people'])}
 <h1 class="ht h-sec">{e(site['people_title'][lg])}</h1>
 <div class="filters">
-<input class="input" type="search" id="q" placeholder="{e(t['search_people'])}"
-       aria-label="{e(t['search_people'])}">
-<span class="count" id="count">{e(t['count_people'].format(n=len(members)))}</span>
+<span class="count">{e(t['count_people'].format(n=len(members)))}</span>
 </div>
 <div class="people">{"".join(cards)}</div>
 </div>
-<script src="{stamp('/assets/filter.js')}" defer></script>
 """
     return shell(lg, "people/", t["nav_people"], site["people_desc"][lg], body, site)
 
@@ -671,7 +681,7 @@ def page_collaborate(lg, site, stats):
         for w in site["collaborate"]["ways"])
     email = site.get("contact", {}).get("email", "")
     if email:
-        contact = (f'<a class="btn btn-primary" href="mailto:{e(email)}">{e(email)}</a>')
+        contact = mail(email, cls="btn btn-primary")
     else:
         contact = f'<p class="empty">{e(site["collaborate"]["no_contact"][lg])}</p>'
     body = f"""
@@ -685,12 +695,39 @@ def page_collaborate(lg, site, stats):
 <p class="lede-m">{e(site['collaborate']['contact_lede'][lg])}</p>
 {contact}
 <p class="asof"><a href="{e(site['org_url'])}" rel="noopener">{e(site['org_name'][lg])}</a>
-{e(site['org_division'][lg])} · {e(site['location'][lg])}</p>
+{e(site['org_division'][lg])}</p>
 </section>
 </div>
 """
     return shell(lg, "collaborate/", t["nav_collab"],
                  site["collaborate"]["lede"][lg], body, site)
+
+
+def page_visit(lg, site):
+    t = T[lg]
+    v = site["visit"]
+    rows = [(t["addr"], f'{e(v["org_line"][lg])}<br>{e(v["address"][lg])}')]
+    if v.get("phone"):
+        rows.append((t["phone"], f'<span class="tnum">{e(v["phone"])}</span>'))
+    dl = "".join(f'<div class="dl reg"><span class="dt">{e(k)}</span><span>{val}</span></div>'
+                 for k, val in rows)
+    cards = "".join(
+        blueprint(f'<div class="ht cardtitle">{e(n["title"][lg])}</div>'
+                  f'<p class="cardbody">{e(n["body"][lg])}</p>', cls="way")
+        for n in v.get("notes", []) if n["body"][lg].strip())
+    body = f"""
+<div class="page narrow">
+{kicker(t['k_visit'])}
+<h1 class="ht h-sec">{e(v['title'][lg])}</h1>
+<div class="visitbox">
+{blueprint(f'<div class="reg-inner">{dl}</div>', style="padding:18px")}
+<a class="btn btn-secondary" href="{e(v['map_url'])}" rel="noopener"
+   target="_blank">{e(v['map_label'][lg])}</a>
+</div>
+{f'<div class="ways">{cards}</div>' if cards else ''}
+</div>
+"""
+    return shell(lg, "visit/", v["title"][lg], v["address"][lg], body, site)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -780,6 +817,7 @@ def main() -> int:
         write(f"{lg}/people/index.html", page_people(lg, site, members, projects))
         write(f"{lg}/news/index.html", page_news_index(lg, site, news))
         write(f"{lg}/collaborate/index.html", page_collaborate(lg, site, stats))
+        write(f"{lg}/visit/index.html", page_visit(lg, site))
         for p in projects:
             f = ROOT / "content" / "projects" / f"{p['slug']}.{lg}.md"
             if f.exists():
@@ -809,7 +847,7 @@ def main() -> int:
     urls = []
     for lg in LANGS:
         urls += [f"/{lg}/", f"/{lg}/research/", f"/{lg}/people/", f"/{lg}/news/",
-                 f"/{lg}/collaborate/"]
+                 f"/{lg}/collaborate/", f"/{lg}/visit/"]
         urls += [f"/{lg}/research/{p['slug']}/" for p in projects]
         urls += [f"/{lg}/news/{n['slug']}/" for n in news[lg]]
     write("sitemap.xml",
@@ -839,6 +877,17 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
 <p><a href="/ko/">한국어</a> · <a href="/en/">English</a></p>
 </div></main></body></html>
 """)
+
+    # ⛔ **메일 주소가 평문으로 새어 나갔는지 산출물에서 확인한다.** `mail()` 을 한 군데라도
+    #    안 거치면 그 쪽만 조용히 수집 대상이 된다 — 실제로 홈의 「이메일」 줄을 놓쳤었다.
+    # ⚠️ 일반 정규식으로 훑으면 `logo@2x.png` 같은 srcset 이 걸린다 — **지키려는 주소**만 본다.
+    addr = site.get("contact", {}).get("email", "")
+    for f in OUT.rglob("*.html"):
+        text = f.read_text(encoding="utf-8")
+        if "mailto:" in text:
+            block(f"평문 mailto: 가 남았다: {f.relative_to(OUT)} — mail() 을 거쳐라")
+        if addr and addr in text:
+            block(f"평문 메일 주소가 남았다: {f.relative_to(OUT)} — mail() 을 거쳐라")
 
     # ⛔ **미공개 과제가 새어 나갔는지 산출물에서 직접 확인한다.** 걸러 냈다고 믿지 않는다 —
     #    뉴스 글이나 과제 소개문이 제목·slug 를 그대로 적어 두면 거르기를 통과한다.
