@@ -482,8 +482,8 @@ def page_home(lg, site, projects, members, news, stats, detailed):
 <h1 class="ht hero">{e(site['hero'][lg])}</h1>
 <p class="lede">{e(site['lede'][lg])}</p>
 </div>
-{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="" width="1100" height="1100">',
-           cls="heroart")}
+{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="'
+           + e(site['hero_alt'][lg]) + '" width="1100" height="1100">', cls="heroart")}
 </div>
 <div class="figs">{figs}</div>
 <div class="threeup">

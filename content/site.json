@@ -21,6 +21,12 @@
     "ko": "인공지능데이터·보안연구센터는 인공지능의 성능 향상을 위한 데이터 활용 고도화 기법, 엣지 운용, 멀티모달 데이터 분석, 그리고 데이터 및 모델의 투명성과 안전성의 문제를 다룹니다.",
     "en": "The AI Data and Security Research Center works on advanced use of data to improve AI performance, on edge operation, on multimodal data analysis, and on the transparency and safety of data and models."
   },
+  "_hero_alt": "⚠️ 그림 안의 여섯 라벨은 주변 글에 없는 정보다 — 빈 alt 로 두면 그 정보가 사라진다. 반대로 구성원 사진은 이름이 바로 옆에 글자로 있어 alt 를 비우는 것이 맞다.",
+  "hero_alt": {
+    "ko": "센터의 연구 영역 — 데이터 품질, 멀티모달 데이터, 모델 신뢰성, 엣지 컴퓨팅, 영상보안, 물리보안",
+    "en": "The center's research areas — data quality, multimodal data, model reliability, edge computing, video security, physical security"
+  },
+
   "about": {
     "ko": "임베디드로부터 데이터 분석, 인공지능 모델에 이르기까지 다양한 경험을 보유한 12명의 연구진이 국내외 파트너들과 다양한 연구를 수행 중에 있습니다.",
     "en": "Twelve researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
