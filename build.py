@@ -310,6 +310,11 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <meta property="og:type" content="website">
 <meta property="og:url" content="{e(canonical)}">
 <meta property="og:locale" content="{'ko_KR' if lg == 'ko' else 'en_US'}">
+<meta property="og:image" content="{base}/assets/brand/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="{stamp('/assets/brand/favicon-32.png')}">
+<link rel="icon" type="image/png" sizes="512x512" href="{stamp('/assets/brand/favicon-512.png')}">
+<link rel="apple-touch-icon" href="{stamp('/assets/brand/favicon-180.png')}">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{stamp('/assets/industry.css')}">
@@ -318,7 +323,8 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <body data-lang="{lg}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
 <nav class="nav">
-<a href="/{lg}/" class="nav-brand">AIDSRC</a>
+<a href="/{lg}/" class="nav-brand"><img src="{stamp('/assets/brand/mark.png')}"
+ srcset="{stamp('/assets/brand/mark@2x.png')} 2x" alt="" width="137" height="128">AIDSRC</a>
 <div class="navlinks">{nav}</div>
 {seg}
 <a class="btn btn-primary" href="/{lg}/collaborate/#contact">{e(t['contact'])}</a>
@@ -327,7 +333,8 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 {body}
 </main>
 <footer>
-<span>{e(center)}</span>
+<span class="footlogo"><img src="{stamp('/assets/brand/logo.png')}"
+ srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="{e(center)}" width="324" height="128"></span>
 <span>{foot_mid}</span>
 <span>{e(site['location'][lg])}</span>
 </footer>
@@ -450,8 +457,14 @@ def page_home(lg, site, projects, members, news, stats):
 <div class="masthead">
 <span>{e(site['center'][lg])}</span>
 </div>
+<div class="herorow">
+<div>
 <h1 class="ht hero">{e(site['hero'][lg])}</h1>
 <p class="lede">{e(site['lede'][lg])}</p>
+</div>
+{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="" width="900" height="900">',
+           cls="heroart")}
+</div>
 <div class="figs">{figs}</div>
 <div class="threeup">
 <section>{kicker(t['k_latest'])}{col1}</section>

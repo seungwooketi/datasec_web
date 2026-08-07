@@ -30,7 +30,8 @@ a:hover { color: var(--color-accent); }
   padding: 13px 44px; border-bottom: 1px solid var(--color-divider);
   position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
 }
-.nav-brand { letter-spacing: .03em; }
+.nav-brand { letter-spacing: .03em; display: flex; align-items: center; gap: 9px; }
+.nav-brand img { height: 26px; width: auto; display: block; }
 .navlinks { display: flex; gap: var(--space-4); align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
 .langseg .seg-opt { letter-spacing: .04em; }
@@ -43,9 +44,11 @@ main { flex: 1; padding: 0 44px 56px; }
 
 footer {
   border-top: 1px solid var(--color-divider); padding: 22px 44px;
-  display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
   font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
+.footlogo { line-height: 0; }
+.footlogo img { height: 38px; width: auto; display: block; }
 
 /* ── 눈금 라벨 — 모든 쪽에서 되풀이되는 「눈금 위에 줄」 ────────── */
 .k {
@@ -66,9 +69,18 @@ footer {
   font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
   color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
+/* 표제와 그림을 나란히. 그림은 브랜드 도해라 `.duotone` 을 씌우지 않는다 —
+   시스템의 규칙은 **사진**에 대한 것이고, 이 그림은 자체 색(청록·감청)이 내용이다. */
+.herorow {
+  display: grid; grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 48px; align-items: center; padding-top: 44px;
+}
+.heroart { line-height: 0; }
+.heroart img { width: 100%; height: auto; display: block; }
+
 .hero {
   font-size: 88px; line-height: 90px; letter-spacing: .01em; text-transform: uppercase;
-  margin: 44px 0 0 -.052em; max-width: 17ch;
+  margin: 0 0 0 -.052em; max-width: 17ch;
 }
 /* ⚠️ 88px 는 Barlow Condensed 대문자 기준이다. 한글은 같은 크기에서 훨씬 넓게 잡히고
    대문자 변환도 걸리지 않아, 크기와 줄폭을 따로 준다. */
@@ -267,6 +279,8 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
   .fig:nth-child(3) { padding-left: 0; border-left: 0; }
   .fig:nth-child(2) { padding-right: 0; }
   .fig:nth-child(3), .fig:nth-child(4) { border-top: 1px solid var(--color-divider); }
+  .herorow { grid-template-columns: 1fr; gap: 28px; }
+  .heroart { max-width: 320px; }
   .hero { font-size: 46px; line-height: 48px; max-width: none; }
   .h-sec { font-size: 38px; line-height: 40px; }
   .h-proj { font-size: 34px; line-height: 36px; }
