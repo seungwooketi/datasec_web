@@ -16,6 +16,11 @@ body[data-lang="ko"] { word-break: keep-all; }
 a { color: var(--color-accent-700); text-decoration: none; }
 a:hover { color: var(--color-accent); }
 .ht { font-family: var(--font-heading); font-weight: 600; }
+/* ⭐ 제목 태그(h1~h3)를 **의미로** 쓰되 모양은 클래스가 정한다 — 검색엔진에 절 구조를 주면서
+   시각 변화는 0 이다. industry.css 의 태그 기본값(font-size·margin)만 되돌린다. */
+h2.k, h3.k { font: inherit; letter-spacing: inherit; text-transform: inherit; }
+h2.ht, h3.ht { font-size: inherit; line-height: inherit; letter-spacing: inherit; margin: 0; }
+.masthead h1 { font: inherit; letter-spacing: inherit; margin: 0; }
 .tnum { font-feature-settings: "tnum" 1; }
 .muted { color: color-mix(in srgb, var(--color-text) 62%, transparent); }
 

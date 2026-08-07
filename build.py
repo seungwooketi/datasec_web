@@ -245,12 +245,14 @@ def load_news() -> dict[str, list[dict]]:
             "sample": meta.get("sample", "").lower() in ("true", "yes", "1"),
             "body": markdown(body),
         })
-    for slug, langs in seen.items():
-        missing = set(LANGS) - langs
-        if missing:
-            warn(f"뉴스 `{slug}` 에 {'/'.join(sorted(missing))} 판이 없다 — 그 언어에서는 안 보인다")
+    # ⛔ 한 언어만 있는 글은 **아예 싣지 않는다.** 싣으면 그 쪽의 hreflang 과 언어 전환기가
+    #    없는 쪽을 가리켜 404 가 된다 — 과제 상세와 같은 규칙이다.
+    only_one = {s for s, langs in seen.items() if set(LANGS) - langs}
+    for slug in sorted(only_one):
+        warn(f"소식 `{slug}` 이 한 언어에만 있다 — 두 언어가 다 있어야 실린다")
     for lg in LANGS:
-        news[lg].sort(key=lambda x: x["date"], reverse=True)
+        news[lg] = sorted((n for n in news[lg] if n["slug"] not in only_one),
+                          key=lambda x: x["date"], reverse=True)
     return news
 
 
@@ -260,6 +262,37 @@ def load_news() -> dict[str, list[dict]]:
 
 def e(s) -> str:
     return html.escape(str(s if s is not None else ""), quote=True)
+
+
+def img_size(rel: str) -> tuple[int, int]:
+    """이미지의 **실제** 픽셀 크기. ⛔ `width`/`height` 를 손으로 적지 않는다.
+
+    실측: 히어로를 1100×1100 이라 적어 두었는데 파일은 1200×896 이었고, 로고는 414×128 로
+    적었는데 450×128 이었다. CSS 가 `width:100%; height:auto` 라 브라우저가 **틀린 비율로
+    자리를 예약**해 레이아웃이 밀린다(CLS). 그림을 바꿀 때마다 숫자를 고쳐야 하는 구조가
+    문제였다 — 파일에서 읽는다.
+    """
+    b = (ROOT / rel.lstrip("/")).read_bytes()
+    if b[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(b[16:20], "big"), int.from_bytes(b[20:24], "big")
+    if b[:2] == b"\xff\xd8":                                   # JPEG — SOF 마커를 찾는다
+        i = 2
+        while i < len(b) - 9:
+            if b[i] != 0xFF:
+                i += 1
+                continue
+            mk = b[i + 1]
+            if mk in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7,
+                      0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                return (int.from_bytes(b[i + 7:i + 9], "big"),
+                        int.from_bytes(b[i + 5:i + 7], "big"))
+            i += 2 + int.from_bytes(b[i + 2:i + 4], "big")
+    raise ValueError(f"크기를 못 읽는 이미지: {rel}")
+
+
+HERO_W, HERO_H = img_size("assets/brand/hero.jpg")
+LOGO_W, LOGO_H = img_size("assets/brand/logo.png")
+PORTRAIT_MAX = 900
 
 
 def stamp(rel: str) -> str:
@@ -282,16 +315,26 @@ NAVS = [("", "nav_home"), ("research/", "nav_research"), ("people/", "nav_people
         ("news/", "nav_news"), ("collaborate/", "nav_collab"), ("visit/", "nav_visit")]
 
 
-def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> str:
+def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, site: dict,
+          og_type: str = "website", jsonld: str = "", head_extra: str = "") -> str:
+    """⛔ `nav_key` 와 `path` 는 **다른 것**이다.
+
+    `nav_key` = 내비게이션에서 어느 항목을 현재로 표시할지 (상세 쪽도 목록 항목을 밝힌다).
+    `path`    = 이 쪽의 **실제 주소** — canonical · hreflang · og:url · 언어 전환기가 쓴다.
+
+    ⛔ 둘을 하나로 합쳐 두었더니 소식 상세 4쪽이 **자기를 목록 쪽으로 canonical** 시켰다.
+       색인이 불가능해지고(구글은 canonical 을 따른다) 언어 전환 버튼도 목록으로 갔다.
+       에러는 나지 않았다.
+    """
     t = T[lg]
     CUR = ' aria-current="page"'
     nav = "".join(
-        '<a href="/{}/{}"{}>{}</a>'.format(lg, path, CUR if path == here else "", e(t[key]))
-        for path, key in NAVS)
+        '<a href="/{}/{}"{}>{}</a>'.format(lg, p, CUR if p == nav_key else "", e(t[key]))
+        for p, key in NAVS)
     def opt(code: str, label: str) -> str:
         on = code == lg
         return ('<a class="seg-opt{}" hreflang="{}" href="/{}/{}"{}>{}</a>'
-                .format(" is-on" if on else "", code, code, here,
+                .format(" is-on" if on else "", code, code, path,
                         ' aria-current="true"' if on else "", label))
     seg = ('<div class="seg langseg" role="group" aria-label="{}">{}{}</div>'
            .format(e(t["lang_switch"]), opt("en", "EN"), opt("ko", "한국어")))
@@ -299,7 +342,7 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
     email = site.get("contact", {}).get("email", "")
     foot_mid = mail(email) if email else e(site["org_url_label"])
     base = site["site_url"].rstrip("/")
-    canonical = f"{base}/{lg}/{here}"
+    canonical = f"{base}/{lg}/{path}"
     return f"""<!doctype html>
 <html lang="{lg}">
 <head>
@@ -308,16 +351,20 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <title>{e(title)} — {e(center)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(canonical)}">
-<link rel="alternate" hreflang="ko" href="{base}/ko/{here}">
-<link rel="alternate" hreflang="en" href="{base}/en/{here}">
-<link rel="alternate" hreflang="x-default" href="{base}/{DEFAULT_LANG}/{here}">
+<link rel="alternate" hreflang="ko" href="{base}/ko/{path}">
+<link rel="alternate" hreflang="en" href="{base}/en/{path}">
+<link rel="alternate" hreflang="x-default" href="{base}/{DEFAULT_LANG}/{path}">
 <meta property="og:title" content="{e(title)} — {e(center)}">
 <meta property="og:description" content="{e(desc)}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:url" content="{e(canonical)}">
+<meta property="og:site_name" content="{e(center)}">
 <meta property="og:locale" content="{'ko_KR' if lg == 'ko' else 'en_US'}">
 <meta property="og:image" content="{base}/assets/brand/hero.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:width" content="{HERO_W}">
+<meta property="og:image:height" content="{HERO_H}">
+<meta property="og:image:alt" content="{e(site['hero_alt'][lg])}">
+<meta name="twitter:card" content="summary_large_image">{head_extra}{jsonld}
 <link rel="icon" type="image/png" sizes="32x32" href="{stamp('/assets/brand/favicon-32.png')}">
 <link rel="icon" type="image/png" sizes="512x512" href="{stamp('/assets/brand/favicon-512.png')}">
 <link rel="apple-touch-icon" href="{stamp('/assets/brand/favicon-180.png')}">
@@ -331,7 +378,7 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <nav class="nav">
 <a href="/{lg}/" class="nav-brand"><img src="{stamp('/assets/brand/logo.png')}"
  srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="AIDSRC — {e(center)}"
- width="414" height="128"></a>
+ width="{LOGO_W}" height="{LOGO_H}"></a>
 <div class="navlinks">{nav}</div>
 {seg}
 <a class="btn btn-primary" href="/{lg}/collaborate/#contact">{e(t['contact'])}</a>
@@ -388,8 +435,43 @@ def mail(email: str, cls: str = "") -> str:
             f'<span class="rev">{e(shown)}</span></a>')
 
 
-def kicker(text: str) -> str:
-    return f'<span class="k">{e(text)}</span><hr class="cr">'
+def org_jsonld(lg: str, site: dict, stats: dict) -> str:
+    """조직 구조화 데이터 — **홈 한 쪽에만** 넣는다.
+
+    ⚠️ 기대를 낮춰 둔다. 구글의 Organization 지원 속성에 `parentOrganization` 은 **없고**
+       `ResearchOrganization` 은 리치결과 타입이 아니다. 이건 순위 요인이 아니라
+       *이 이름들이 같은 조직이고 KETI 산하다* 를 밝히는 **디스앰비규에이션**이다 —
+       갓 만든 `.work` 도메인이 무관한 datasec 업체들과 섞이지 않게 하는 것이 목적이다.
+    ⛔ 주소는 여기 한 곳에만 둔다. 네이버가 사이트 공통 주소를 여러 쪽에 뿌리지 말라고 한다.
+    ⛔ 화면에 없는 사실을 넣지 않는다 — 본문과 어긋나는 마크업은 무시되거나 감점이다.
+    """
+    base = site["site_url"].rstrip("/")
+    v = site["visit"]
+    d = {
+        "@context": "https://schema.org",
+        "@type": ["Organization", "ResearchOrganization"],
+        "@id": f"{base}/#center",
+        "name": site["center_full"][lg],
+        "alternateName": [site["center"]["ko"], site["center"]["en"],
+                          site["center_full"]["ko"], site["center_full"]["en"], "AIDSRC"],
+        "url": f"{base}/{lg}/",
+        "logo": f"{base}/assets/brand/logo@2x.png",
+        "image": f"{base}/assets/brand/hero.jpg",
+        "description": site["lede"][lg],
+        "telephone": v["phone"],
+        "address": {"@type": "PostalAddress", "streetAddress": v["address"][lg],
+                    "addressCountry": "KR"},
+        "parentOrganization": {
+            "@type": "Organization", "name": site["org_name"][lg], "url": site["org_url"],
+            "sameAs": ["https://ror.org/039k6f508", "https://www.wikidata.org/wiki/Q30281929"]},
+    }
+    body = json.dumps(d, ensure_ascii=False, separators=(",", ":"))
+    return f'\n<script type="application/ld+json">{body}</script>'
+
+
+def kicker(text: str, tag: str = "span") -> str:
+    """눈금 라벨. ⭐ 절의 제목 노릇을 할 때는 `tag="h2"` 로 — 모양은 `.k` 가 그대로 정한다."""
+    return f'<{tag} class="k">{e(text)}</{tag}><hr class="cr">'
 
 
 def blueprint(inner: str, cls: str = "", style: str = "") -> str:
@@ -475,24 +557,25 @@ def page_home(lg, site, projects, members, news, stats, detailed):
 
     body = f"""
 <div class="masthead">
-<span>{e(site['center_full'][lg])}</span>
+<h1>{e(site['center_full'][lg])}</h1>
 </div>
 <div class="herorow">
 <div>
-<h1 class="ht hero">{e(site['hero'][lg])}</h1>
+<p class="ht hero">{e(site['hero'][lg])}</p>
 <p class="lede">{e(site['lede'][lg])}</p>
 </div>
 {blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="'
-           + e(site['hero_alt'][lg]) + '" width="1100" height="1100">', cls="heroart")}
+           + e(site['hero_alt'][lg]) + f'" width="{HERO_W}" height="{HERO_H}">', cls="heroart")}
 </div>
 <div class="figs">{figs}</div>
 <div class="threeup">
-<section>{kicker(t['k_latest'])}{col1}</section>
-<section>{kicker(t['k_research'])}{col2}</section>
-<section>{kicker(t['k_center'])}{col3}</section>
+<section>{kicker(t['k_latest'], 'h2')}{col1}</section>
+<section>{kicker(t['k_research'], 'h2')}{col2}</section>
+<section>{kicker(t['k_center'], 'h2')}{col3}</section>
 </div>
 """
-    return shell(lg, "", t["nav_home"], site["lede"][lg], body, site)
+    return shell(lg, "", "", t["nav_home"], site["lede"][lg], body, site,
+                 jsonld=org_jsonld(lg, site, stats))
 
 
 def load_summaries() -> dict[str, dict[str, str]]:
@@ -576,7 +659,8 @@ def page_research(lg, site, projects, members, detailed):
 </div>
 <script src="{stamp('/assets/filter.js')}" defer></script>
 """
-    return shell(lg, "research/", T[lg]["nav_research"], site["research_desc"][lg], body, site)
+    return shell(lg, "research/", "research/", T[lg]["nav_research"],
+                 site["research_desc"][lg], body, site)
 
 
 def page_project(lg, site, p, members, summary):
@@ -616,7 +700,8 @@ def page_project(lg, site, p, members, summary):
 </div>
 </div>
 """
-    return shell(lg, "research/", p["title"][lg], p["title"][lg], body, site)
+    return shell(lg, "research/", f'research/{p["slug"]}/', p["title"][lg],
+                 p["title"][lg], body, site)
 
 
 def page_people(lg, site, members, projects, detailed):
@@ -646,15 +731,16 @@ def page_people(lg, site, members, projects, detailed):
         linkbar = f'<div class="exts">{links}</div>' if links else ""
         photo = ""
         if m.get("photo"):
+            pw, ph = img_size(f"assets/people/{m['photo']}")
             photo = blueprint(
-                f'<img src="/assets/people/{e(m["photo"])}" alt="" loading="lazy">',
-                cls="duotone portrait")
+                f'<img src="/assets/people/{e(m["photo"])}" alt="" loading="lazy" '
+                f'width="{pw}" height="{ph}">', cls="duotone portrait")
         unit = "건" if lg == "ko" else ""
         lead_note = " · {} {}".format(t["own"], len(own)) if own else ""
         cards.append(
             f'<article class="person" id="{e(m["slug"])}">'
             f'<div class="pid">'
-            f'<div class="pidtext">{badge}<div class="ht nm">{e(m["name"][lg])}</div>'
+            f'<div class="pidtext">{badge}<h2 class="ht nm">{e(m["name"][lg])}</h2>'
             f'<div class="rk">{e(m["grade"][lg])}</div>'
             f'<div class="ct tnum">{len(m["projects"])}{unit}{e(lead_note)}</div>'
             f'{linkbar}</div>{photo}</div>'
@@ -663,7 +749,7 @@ def page_people(lg, site, members, projects, detailed):
     if listed:
         items = "".join(
             f'<div class="sl" id="{e(m["slug"])}">'
-            f'<span class="ht nm-s">{e(m["name"][lg])}</span>'
+            f'<h2 class="ht nm-s">{e(m["name"][lg])}</h2>'
             f'<span class="rk-s">{e(m["grade"][lg])}</span></div>' for m in listed)
         roster = (f'<div class="rosterhead">{kicker(t["k_roster"])}</div>'
                   f'<div class="stafflist">{items}</div>')
@@ -679,7 +765,7 @@ def page_people(lg, site, members, projects, detailed):
 {roster}
 </div>
 """
-    return shell(lg, "people/", t["nav_people"], site["people_desc"][lg], body, site)
+    return shell(lg, "people/", "people/", t["nav_people"], site["people_desc"][lg], body, site)
 
 
 def page_news_index(lg, site, news):
@@ -706,7 +792,7 @@ def page_news_index(lg, site, news):
 <div class="newslist">{inner}</div>
 </div>
 """
-    return shell(lg, "news/", t["nav_news"], site["news_lede"][lg], body, site)
+    return shell(lg, "news/", "news/", t["nav_news"], site["news_lede"][lg], body, site)
 
 
 def page_news_post(lg, site, n):
@@ -721,13 +807,15 @@ def page_news_post(lg, site, n):
 <div class="prose">{n['body']}</div>
 </div>
 """
-    return shell(lg, "news/", n["title"], n["summary"] or n["title"], body, site)
+    return shell(lg, "news/", f'news/{n["slug"]}/', n["title"],
+                 n["summary"] or n["title"], body, site, og_type="article",
+                 head_extra=f'\n<meta property="article:published_time" content="{e(n["date"])}">')
 
 
 def page_collaborate(lg, site):
     t = T[lg]
     ways = "".join(
-        blueprint(f'<div class="ht cardtitle">{e(w["title"][lg])}</div>'
+        blueprint(f'<h2 class="ht cardtitle">{e(w["title"][lg])}</h2>'
                   f'<p class="cardbody">{e(w["body"][lg])}</p>', cls="way")
         for w in site["collaborate"]["ways"])
     email = site.get("contact", {}).get("email", "")
@@ -749,7 +837,7 @@ def page_collaborate(lg, site):
 </section>
 </div>
 """
-    return shell(lg, "collaborate/", t["nav_collab"],
+    return shell(lg, "collaborate/", "collaborate/", t["nav_collab"],
                  site["collaborate"]["lede"][lg], body, site)
 
 
@@ -761,11 +849,13 @@ def page_visit(lg, site):
                f'{e(v["map_label"][lg])} ↗</a>')
     rows = [(t["addr"], f'{e(v["org_line"][lg])}<br>{e(v["address"][lg])}<br>{maplink}')]
     if v.get("phone"):
-        rows.append((t["phone"], f'<span class="tnum">{e(v["phone"])}</span>'))
+        tel = "+82" + re.sub(r"\D", "", v["phone"].split(")", 1)[-1])
+        rows.append((t["phone"],
+                     f'<a class="tnum" href="tel:{e(tel)}">{e(v["phone"])}</a>'))
     dl = "".join(f'<div class="dl reg"><span class="dt">{e(k)}</span><span>{val}</span></div>'
                  for k, val in rows)
     cards = "".join(
-        blueprint(f'<div class="ht cardtitle">{e(n["title"][lg])}</div>'
+        blueprint(f'<h2 class="ht cardtitle">{e(n["title"][lg])}</h2>'
                   f'<p class="cardbody">{e(n["body"][lg])}</p>', cls="way")
         for n in v.get("notes", []) if n["body"][lg].strip())
     body = f"""
@@ -778,7 +868,7 @@ def page_visit(lg, site):
 {f'<div class="ways">{cards}</div>' if cards else ''}
 </div>
 """
-    return shell(lg, "visit/", v["title"][lg], v["address"][lg], body, site)
+    return shell(lg, "visit/", "visit/", v["title"][lg], v["address"][lg], body, site)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -892,6 +982,14 @@ def main() -> int:
             write(f"{lg}/news/{n['slug']}/index.html", page_news_post(lg, site, n))
 
     shutil.copytree(ROOT / "assets", OUT / "assets")
+    # ⛔ 검색엔진 소유확인 파일은 **여기** 둔다. `docs/` 루트에 직접 두면 다음 빌드의
+    #    `shutil.rmtree(OUT)` 가 조용히 지우고, 소유확인이 에러 없이 끊긴다.
+    #    ⚠️ 네이버 소유확인은 만료가 있다(1년, 30일 전 알림) — 파일을 지우면 안 된다.
+    vdir = ROOT / "content" / "verify"
+    if vdir.exists():
+        for f in sorted(vdir.iterdir()):
+            if f.is_file() and not f.name.startswith(".") and f.name != "README.md":
+                shutil.copy2(f, OUT / f.name)
     # ⭐ 도메인은 `content/site.json` 의 `site_url` 하나에서 온다 — 여섯 군데에 박아 두면
     #    도메인을 바꿀 때 한 군데를 반드시 빠뜨린다(그리고 에러는 안 난다).
     base = site["site_url"].rstrip("/")
@@ -900,16 +998,23 @@ def main() -> int:
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
 
-    urls = []
+    # ⚠️ `lastmod` 는 **결정적인 값**이어야 한다. `datetime.now()` 나 파일 mtime 을 쓰면
+    #    실행마다 결과가 달라져 CI 의 「docs/ 가 원본과 같은가」 검사가 즉시 깨진다.
+    #    커밋된 값만 쓴다 — 데이터 파생 쪽은 `data/meta.json` 의 asof, 소식은 그 글의 date.
+    asof = json.loads((ROOT / "data" / "meta.json").read_text(encoding="utf-8")).get("asof", "")
+    urls: list[tuple[str, str]] = []
     for lg in LANGS:
-        urls += [f"/{lg}/", f"/{lg}/research/", f"/{lg}/people/", f"/{lg}/news/",
-                 f"/{lg}/collaborate/", f"/{lg}/visit/"]
-        urls += [f"/{lg}/research/{p['slug']}/" for p in projects if p["slug"] in detailed]
-        urls += [f"/{lg}/news/{n['slug']}/" for n in news[lg]]
+        urls += [(f"/{lg}/{s}", asof) for s in
+                 ("", "research/", "people/", "news/", "collaborate/", "visit/")]
+        urls += [(f"/{lg}/research/{p['slug']}/", asof)
+                 for p in projects if p["slug"] in detailed]
+        urls += [(f"/{lg}/news/{n['slug']}/", n["date"]) for n in news[lg]]
     write("sitemap.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          + "".join(f"<url><loc>{base}{u}</loc></url>\n" for u in urls)
+          + "".join(f"<url><loc>{base}{u}</loc>"
+                    + (f"<lastmod>{d}</lastmod>" if d else "") + "</url>\n"
+                    for u, d in urls)
           + "</urlset>\n")
 
     write("index.html", f"""<!doctype html>
@@ -955,6 +1060,21 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
             for n in needles:
                 if n in text:
                     block(f"미공개 과제가 산출물에 실렸다: {f.relative_to(OUT)} ← \"{n[:40]}…\"")
+
+    # ⛔ **canonical 이 자기 주소를 가리키는지 확인한다.** 목록 쪽 주소를 넘기면 그 쪽은
+    #    색인이 불가능해진다 — 구글은 canonical 을 따른다. 실제로 소식 상세 4쪽이 그랬다.
+    #    ⚠️ 예외 둘: 루트(`/`)는 기본 언어를 가리키고, 404 는 canonical 이 없다.
+    for f in OUT.rglob("*.html"):
+        rel = f.relative_to(OUT)
+        if rel.as_posix() in ("index.html", "404.html"):
+            continue
+        want = f"{base}/{rel.parent.as_posix()}/".replace("/./", "/")
+        m = re.search(r'<link rel="canonical" href="([^"]+)"', f.read_text(encoding="utf-8"))
+        if not m:
+            block(f"canonical 이 없다: {rel}")
+        elif m.group(1) != want:
+            block(f"canonical 이 자기 주소가 아니다: {rel}\n"
+                  f"      있는 값 {m.group(1)}\n      있어야 할 값 {want}")
 
     n_pages = sum(1 for _ in OUT.rglob("*.html"))
     print(f"✅ {n_pages}쪽 · 과제 {len(projects)} · 구성원 {len(members)} · "
