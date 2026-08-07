@@ -1,10 +1,8 @@
-# 배포 게이트 — ⭐ 규약을 문서가 아니라 CI 가 강제한다.
+# 검사 → 배포. ⭐ **게이트가 배포를 막는다.** `--strict` 가 실패하면 아무것도 올라가지 않는다.
 #
-# 두 가지를 본다:
-#   ① `--strict` — 공개하면 안 되는 것이 남아 있나 (미확인 영문명 · 예시 뉴스 · 미공개 과제 유출)
-#   ② docs/ 가 원본과 맞나 — data/ 나 content/ 만 고치고 다시 굽지 않으면 Pages 는 옛 내용을 서빙한다
-#
-# ⚠️ 지금은 ①이 **의도적으로 실패한다.** 빨간불이 곧 "아직 공개할 상태가 아니다"라는 뜻이다.
+# ⚠️ 이 리포의 Pages 는 `build_type: workflow` 다. 즉 브랜치에 푸시한다고 저절로 배포되지 않고,
+#    `actions/deploy-pages` 를 부르는 워크플로가 있어야 한다. 그게 없어서 커밋 넷이
+#    **에러 없이** 배포되지 않은 채로 있었다 — CI 는 초록이고 사이트만 옛 모습이었다.
 name: check
 
 on:
@@ -12,8 +10,17 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,3 +56,20 @@ jobs:
 
       - name: ⛔ 공개 차단 사유가 남아 있나
         run: python3 build.py --strict
+
+      - name: 산출물을 올린다
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: check
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
