@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="ADSRC">
+  <title>ADSRC — AI Data and Security Research Center</title>
+  
+  <g fill="none" stroke="#5980A6" stroke-width="4">
+    <rect x="7" y="7" width="22" height="22"></rect>
+    <rect x="19" y="19" width="22" height="22"></rect>
+  </g>
+  <rect x="19" y="19" width="10" height="10" fill="#5980A6"></rect>
+</svg>

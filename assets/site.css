@@ -36,11 +36,21 @@ h2.ht, h3.ht { font-size: inherit; line-height: inherit; letter-spacing: inherit
   position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
   gap: 22px;
 }
-/* ⭐ 로고는 여기 한 곳에만 둔다(바닥글에는 두지 않는다). 그래서 크게 쓴다.
-   ⚠️ 원본 로고는 부제가 로고 높이의 11.6% 라 48px 에서 5.6px 이었다 — 글자 블록만
-   마크 높이까지 키워 다시 조립했다(19.1%). 52px 에서 부제가 10px 로 읽힌다. */
-.nav-brand { display: flex; align-items: center; margin-right: auto; }
-.nav-brand img { height: 52px; width: auto; display: block; }
+/* ⭐ ADSRC CI 의 잠금장치. **워드마크는 라이브 타입이다** — PNG 로 내보내지 않는다.
+   어느 배율에서도 또렷하고, 검색·번역·선택이 되며, 심볼은 인라인 SVG 라 요청이 0회다.
+   ⚠️ 서술부(`em`)의 `white-space: nowrap` 은 선택이 아니다 — 줄바꿈되면 잠금장치가 깨진다. */
+.nav-brand { display: flex; align-items: center; gap: 13px; margin-right: auto; color: var(--color-text); }
+.nav-brand svg { display: block; flex: none; }
+.brand-text { border-left: 1px solid var(--color-divider); padding-left: 13px; }
+.brand-text b {
+  display: block; font: 600 24px/.86 var(--font-heading); letter-spacing: .03em;
+}
+.brand-text em {
+  display: block; margin-top: 5px; font: 500 6px/1 var(--font-body);
+  letter-spacing: .07em; font-style: normal; white-space: nowrap;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+}
+.nav-brand:hover { color: var(--color-accent); }
 .navlinks { display: flex; gap: 26px; align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
 .langseg .seg-opt { letter-spacing: .04em; }

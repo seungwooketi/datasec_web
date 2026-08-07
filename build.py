@@ -291,8 +291,14 @@ def img_size(rel: str) -> tuple[int, int]:
 
 
 HERO_W, HERO_H = img_size("assets/brand/hero.jpg")
-LOGO_W, LOGO_H = img_size("assets/brand/logo.png")
-PORTRAIT_MAX = 900
+OG_W, OG_H = img_size("assets/brand/og-image.png")
+
+# ⭐ CI 의 심볼은 **인라인 SVG** 다 — 요청 0회이고 어느 배율에서도 또렷하다.
+#    ⚠️ 세 굵기는 축소본이 아니라 **다른 그림**이다(2.5 / 4 / 5). 놓을 크기에 맞는 것을 쓴다.
+SYMBOL = ('<svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true" focusable="false">'
+          '<g fill="none" stroke="#5980A6" stroke-width="2.5">'
+          '<rect x="6" y="6" width="24" height="24"/><rect x="18" y="18" width="24" height="24"/>'
+          '</g><rect x="18" y="18" width="12" height="12" fill="#5980A6"/></svg>')
 
 
 def stamp(rel: str) -> str:
@@ -360,14 +366,15 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 <meta property="og:url" content="{e(canonical)}">
 <meta property="og:site_name" content="{e(center)}">
 <meta property="og:locale" content="{'ko_KR' if lg == 'ko' else 'en_US'}">
-<meta property="og:image" content="{base}/assets/brand/hero.jpg">
-<meta property="og:image:width" content="{HERO_W}">
-<meta property="og:image:height" content="{HERO_H}">
-<meta property="og:image:alt" content="{e(site['hero_alt'][lg])}">
+<meta property="og:image" content="{base}/assets/brand/og-image.png">
+<meta property="og:image:width" content="{OG_W}">
+<meta property="og:image:height" content="{OG_H}">
+<meta property="og:image:alt" content="ADSRC — {e(center)}">
 <meta name="twitter:card" content="summary_large_image">{head_extra}{jsonld}
+<link rel="icon" type="image/svg+xml" href="{stamp('/assets/brand/adsrc-symbol-16.svg')}">
 <link rel="icon" type="image/png" sizes="32x32" href="{stamp('/assets/brand/favicon-32.png')}">
-<link rel="icon" type="image/png" sizes="512x512" href="{stamp('/assets/brand/favicon-512.png')}">
-<link rel="apple-touch-icon" href="{stamp('/assets/brand/favicon-180.png')}">
+<link rel="icon" type="image/png" sizes="64x64" href="{stamp('/assets/brand/favicon-64.png')}">
+<link rel="apple-touch-icon" href="{stamp('/assets/brand/apple-touch-icon-180.png')}">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{stamp('/assets/industry.css')}">
@@ -376,9 +383,8 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 <body data-lang="{lg}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
 <nav class="nav">
-<a href="/{lg}/" class="nav-brand"><img src="{stamp('/assets/brand/logo.png')}"
- srcset="{stamp('/assets/brand/logo@2x.png')} 2x" alt="AIDSRC — {e(center)}"
- width="{LOGO_W}" height="{LOGO_H}"></a>
+<a href="/{lg}/" class="nav-brand" aria-label="ADSRC — {e(center)}">{SYMBOL}
+<span class="brand-text"><b>ADSRC</b><em>AI Data and Security Research Center</em></span></a>
 <div class="navlinks">{nav}</div>
 {seg}
 <a class="btn btn-primary" href="/{lg}/collaborate/#contact">{e(t['contact'])}</a>
@@ -453,10 +459,10 @@ def org_jsonld(lg: str, site: dict, stats: dict) -> str:
         "@id": f"{base}/#center",
         "name": site["center_full"][lg],
         "alternateName": [site["center"]["ko"], site["center"]["en"],
-                          site["center_full"]["ko"], site["center_full"]["en"], "AIDSRC"],
+                          site["center_full"]["ko"], site["center_full"]["en"], "ADSRC"],
         "url": f"{base}/{lg}/",
-        "logo": f"{base}/assets/brand/logo@2x.png",
-        "image": f"{base}/assets/brand/hero.jpg",
+        "logo": f"{base}/assets/brand/symbol-1024.png",
+        "image": f"{base}/assets/brand/og-image.png",
         "description": site["lede"][lg],
         "telephone": v["phone"],
         "address": {"@type": "PostalAddress", "streetAddress": v["address"][lg],
