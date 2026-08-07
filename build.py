@@ -495,7 +495,15 @@ def page_home(lg, site, projects, members, news, stats):
     return shell(lg, "", t["nav_home"], site["lede"][lg], body, site)
 
 
-def page_research(lg, site, projects):
+def person_link(lg, pi, members):
+    """담당자 이름 → 구성원 쪽의 그 사람. ⚠️ 명단에 없으면 **이름만** 남긴다 — 링크가 404 가 되느니."""
+    m = next((x for x in members if x["name"]["ko"] == pi["ko"]), None)
+    if not m:
+        return e(pi[lg])
+    return f'<a href="/{lg}/people/#{e(m["slug"])}">{e(pi[lg])}</a>'
+
+
+def page_research(lg, site, projects, members):
     t = T[lg]
     facets = [("all", t["filter_all"]), ("lead", t[ROLE_KEY["lead"]]),
               ("joint", t[ROLE_KEY["joint"]]), ("contract", t[ROLE_KEY["contract"]]),
@@ -516,7 +524,7 @@ def page_research(lg, site, projects):
         f'<td><a class="ht rowtitle" href="/{lg}/research/{p["slug"]}/">{e(p["title"][lg])}</a></td>'
         f'<td>{e(p["agency_short"][lg])}</td>'
         f'<td class="tnum">{e(p["start"])} – {e(p["end"])}</td>'
-        f'<td>{e(p["pi"][lg])}</td>'
+        f'<td>{person_link(lg, p["pi"], members)}</td>'
         f'<td class="tagcell">{tags(p, lg)}</td></tr>'
         for i, p in enumerate(projects, 1))
     body = f"""
@@ -553,7 +561,7 @@ def page_project(lg, site, p, members, summary):
         (t["funder"], e(p["agency"][lg])),
         (t["period"], f'<span class="tnum">{e(p["start"])} – {e(p["end"])}</span>'),
         (t["role"], e(t[ROLE_KEY[p["role"]]])),
-        (t["pi"], e(p["pi"][lg])),
+        (t["pi"], person_link(lg, p["pi"], members)),
         (t["members_n"], f'<span class="tnum">{len(who)}</span>' if who else "—"),
         (t["status"], f'<span class="tag {"tag-accent" if p["status"] == "active" else "tag-neutral"}">'
                       f'{e(t[STATUS_KEY[p["status"]]])}</span>'),
@@ -834,7 +842,7 @@ def main() -> int:
     missing_summary: list[str] = []
     for lg in LANGS:
         write(f"{lg}/index.html", page_home(lg, site, projects, members, news, stats))
-        write(f"{lg}/research/index.html", page_research(lg, site, projects))
+        write(f"{lg}/research/index.html", page_research(lg, site, projects, members))
         write(f"{lg}/people/index.html", page_people(lg, site, members, projects))
         write(f"{lg}/news/index.html", page_news_index(lg, site, news))
         write(f"{lg}/collaborate/index.html", page_collaborate(lg, site))
