@@ -290,7 +290,7 @@ def img_size(rel: str) -> tuple[int, int]:
     raise ValueError(f"크기를 못 읽는 이미지: {rel}")
 
 
-HERO_W, HERO_H = img_size("assets/brand/hero.jpg")
+HERO_W, HERO_H = img_size("assets/brand/hero.png")
 OG_W, OG_H = img_size("assets/brand/og-image.png")
 
 # ⭐ CI 의 심볼은 **인라인 SVG** 다 — 요청 0회이고 어느 배율에서도 또렷하다.
@@ -565,15 +565,11 @@ def page_home(lg, site, projects, members, news, stats, detailed):
 <div class="masthead">
 <h1>{e(site['center_full'][lg])}</h1>
 </div>
-<div class="herorow">
-<div>
 <p class="ht hero">{e(site['hero'][lg])}</p>
 <p class="lede">{e(site['lede'][lg])}</p>
-</div>
-{blueprint('<img src="' + stamp('/assets/brand/hero.jpg') + '" alt="'
-           + e(site['hero_alt'][lg]) + f'" width="{HERO_W}" height="{HERO_H}">', cls="heroart")}
-</div>
 <div class="figs">{figs}</div>
+<figure class="heroband"><img src="{stamp('/assets/brand/hero.png')}"
+ alt="{e(site['hero_alt'][lg])}" width="{HERO_W}" height="{HERO_H}"></figure>
 <div class="threeup">
 <section>{kicker(t['k_latest'], 'h2')}{col1}</section>
 <section>{kicker(t['k_research'], 'h2')}{col2}</section>

@@ -1,8 +1,9 @@
 {
   "site_url": "https://www.datasec.work",
-
-  "center": {"ko": "인공지능데이터·보안연구센터", "en": "AI Data and Security Research Center"},
-
+  "center": {
+    "ko": "인공지능데이터·보안연구센터",
+    "en": "AI Data and Security Research Center"
+  },
   "_center_full": "머리말 띠와 바닥글에만 쓰는 정식 명칭. 본문은 위의 `center` 를 쓴다.",
   "center_full": {
     "ko": "한국전자기술연구원 인공지능데이터·보안연구센터",
@@ -10,9 +11,14 @@
   },
   "org_url": "https://www.keti.re.kr",
   "org_url_label": "www.keti.re.kr",
-  "org_name": {"ko": "한국전자기술연구원", "en": "Korea Electronics Technology Institute"},
-  "org_division": {"ko": "인공지능연구본부", "en": "AI Research Division"},
-
+  "org_name": {
+    "ko": "한국전자기술연구원",
+    "en": "Korea Electronics Technology Institute"
+  },
+  "org_division": {
+    "ko": "인공지능연구본부",
+    "en": "AI Research Division"
+  },
   "hero": {
     "ko": "인공지능을 위한 데이터 사용성의 향상과 안전한 사용 기술을 연구합니다.",
     "en": "We connect and secure the data, and the judgment built on it."
@@ -23,19 +29,21 @@
   },
   "_hero_alt": "⚠️ 그림 안의 여섯 라벨은 주변 글에 없는 정보다 — 빈 alt 로 두면 그 정보가 사라진다. 반대로 구성원 사진은 이름이 바로 옆에 글자로 있어 alt 를 비우는 것이 맞다.",
   "hero_alt": {
-    "ko": "센터의 연구 영역 — 데이터 품질, 멀티모달 데이터, 모델 신뢰성, 엣지 컴퓨팅, 영상보안, 물리보안",
-    "en": "The center's research areas — data quality, multimodal data, model reliability, edge computing, video security, physical security"
+    "ko": "센터의 연구 영역 — 데이터 축(데이터 품질 · 멀티모달 데이터 · 콘텐츠 · 엣지 컴퓨팅)과 보안 축(영상보안 · 물리보안 · AI 투명성 · 신뢰 실행 환경)이 겹치는 자리에 「신뢰할 수 있는 AI」",
+    "en": "The center's research areas — a data axis (data quality, multimodal data, contents, edge computing) and a security axis (video security, physical security, AI transparency, trusted execution environment) overlapping at reliable AI"
   },
-
   "about": {
     "ko": "임베디드로부터 데이터 분석, 인공지능 모델에 이르기까지 다양한 경험을 보유한 12명의 연구진이 국내외 파트너들과 다양한 연구를 수행 중에 있습니다.",
     "en": "Twelve researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
   },
-
-  "research_title": {"ko": "정부 R&D와 민간 수탁 과제.", "en": "Government R&D and contract research."},
-
-  "people_title": {"ko": "Staff", "en": "Staff"},
-
+  "research_title": {
+    "ko": "정부 R&D와 민간 수탁 과제.",
+    "en": "Government R&D and contract research."
+  },
+  "people_title": {
+    "ko": "Staff",
+    "en": "Staff"
+  },
   "_desc": "아래 둘은 화면에 안 나온다 — <meta name=\"description\"> 전용이다. 검색 결과에 실린다.",
   "research_desc": {
     "ko": "지원기관·수행기간·참여형태와 함께 정리한 인공지능데이터·보안연구센터의 연구 과제 목록.",
@@ -45,49 +53,73 @@
     "ko": "인공지능데이터·보안연구센터 구성원과 각자가 수행 중인 과제.",
     "en": "Researchers of the AI Data and Security Research Center and the projects they work on."
   },
-
-  "news_title": {"ko": "소식", "en": "News"},
+  "news_title": {
+    "ko": "소식",
+    "en": "News"
+  },
   "news_lede": {
     "ko": "과제 착수, 학회 발표, 표준화 활동, 협력 — 부서에서 일어난 일을 적습니다.",
     "en": "Project starts, conference results, standards activity and collaboration."
   },
-
   "cta": {
-    "title": {"ko": "협력 문의", "en": "Work with us"},
-    "body": {"ko": "기업 수탁 · 기술이전 · 공동연구.", "en": "Contract research, technology transfer, joint research."},
-    "action": {"ko": "협력 안내 보기", "en": "How to work with us"}
+    "title": {
+      "ko": "협력 문의",
+      "en": "Work with us"
+    },
+    "body": {
+      "ko": "기업 수탁 · 기술이전 · 공동연구.",
+      "en": "Contract research, technology transfer, joint research."
+    },
+    "action": {
+      "ko": "협력 안내 보기",
+      "en": "How to work with us"
+    }
   },
-
   "collaborate": {
-    "title": {"ko": "함께 하기", "en": "Work with us"},
+    "title": {
+      "ko": "함께 하기",
+      "en": "Work with us"
+    },
     "lede": {
       "ko": "다른 부서와의 협력 방안도 모색해 보겠습니다.",
       "en": "We can also explore collaboration together with other KETI centers."
     },
     "ways": [
       {
-        "title": {"ko": "기업 수탁", "en": "Contract research"},
+        "title": {
+          "ko": "기업 수탁",
+          "en": "Contract research"
+        },
         "body": {
           "ko": "필요한 기술을 과제로 정의해 수행합니다. 2026년에는 민간 수탁 1건을 수행 중입니다.",
           "en": "We scope the work as a project and run it. One private-sector contract is under way in 2026."
         }
       },
       {
-        "title": {"ko": "공동연구", "en": "Joint research"},
+        "title": {
+          "ko": "공동연구",
+          "en": "Joint research"
+        },
         "body": {
           "ko": "정부 R&D 과제에 공동연구기관으로 참여하거나, 저희가 주관하는 과제에 함께합니다.",
           "en": "As a joint institute on government R&D programmes, or as a partner on the programmes this center leads."
         }
       },
       {
-        "title": {"ko": "기술이전", "en": "Technology transfer"},
+        "title": {
+          "ko": "기술이전",
+          "en": "Technology transfer"
+        },
         "body": {
           "ko": "수행한 과제의 결과물에 대해 이전을 협의합니다.",
           "en": "Results from completed projects are available for transfer."
         }
       },
       {
-        "title": {"ko": "국제공동연구", "en": "International collaboration"},
+        "title": {
+          "ko": "국제공동연구",
+          "en": "International collaboration"
+        },
         "body": {
           "ko": "Bilateral program, Horizon Europe, Eureka 등 다양한 협력 채널에 열려 있습니다.",
           "en": "Open to bilateral programmes, Horizon Europe, Eureka and other channels."
@@ -103,9 +135,11 @@
       "en": "A public contact address has not been set yet. Fill in contact.email in content/site.json and it appears here."
     }
   },
-
   "visit": {
-    "title": {"ko": "찾아오시는 길", "en": "Visit"},
+    "title": {
+      "ko": "찾아오시는 길",
+      "en": "Visit"
+    },
     "org_line": {
       "ko": "한국전자기술연구원 인공지능연구본부 인공지능데이터·보안연구센터",
       "en": "AI Data and Security Research Center · AI Research Division · KETI"
@@ -116,14 +150,19 @@
     },
     "phone": "+82 (0)31-737-0539",
     "map_url": "https://map.naver.com/p/search/%ED%8C%90%EA%B5%90%EA%B8%80%EB%A1%9C%EB%B2%8C%EB%B9%84%EC%A6%88%EC%84%BC%ED%84%B0%20%EC%97%85%EB%AC%B4%EB%8F%99",
-    "map_label": {"ko": "네이버 지도", "en": "Naver Map"},
+    "map_label": {
+      "ko": "네이버 지도",
+      "en": "Naver Map"
+    },
     "_notes": "제목/본문 쌍을 넣으면 주소 아래에 카드로 나온다. 비어 있으면 그 칸이 아예 안 나온다.",
     "notes": []
   },
-
   "contact": {
     "email": "adsrc@keti.re.kr",
-    "address": {"ko": "", "en": ""},
+    "address": {
+      "ko": "",
+      "en": ""
+    },
     "phone": ""
   }
 }

@@ -62,6 +62,11 @@ element; if it wraps, the lockup is broken.
 
 ## Rendered artwork
 
+`hero.png` (2400 × 1792, 2× of 1200 × 896) replaces the current `hero.jpg` —
+the eight research topics drawn as the set diagram the symbol is built from:
+data and security as two overlapping fields, with Reliable AI — the goal, not
+a topic — named in the intersection. Icons are thin-stroke at 1.5, matching the frame weight. Redraw it from `ADSRC Assets.dc.html` if the areas change.
+
 `og-image.png` (1200 × 630, deep steel) is the social/preview card — point
 `og:image` at it. `adsrc-lockup-horizontal.png` (3600 × 900) is the primary
 lockup at 3× for slides, Word documents and print proofs. Use it where live
