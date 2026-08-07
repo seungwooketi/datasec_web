@@ -31,11 +31,11 @@ a:hover { color: var(--color-accent); }
   position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
   gap: 22px;
 }
-/* ⭐ 로고는 여기 한 곳에만 둔다(바닥글에는 두지 않는다). 그래서 크게 쓴다 —
-   로고 안의 부제는 로고 높이의 11.6% 라, 48px 에서 5.6px 다. 읽히라고 두는 줄이 아니라
-   로고의 일부다. 「AIDSRC」 는 이 크기에서 20px 로 또렷하다. */
+/* ⭐ 로고는 여기 한 곳에만 둔다(바닥글에는 두지 않는다). 그래서 크게 쓴다.
+   ⚠️ 원본 로고는 부제가 로고 높이의 11.6% 라 48px 에서 5.6px 이었다 — 글자 블록만
+   마크 높이까지 키워 다시 조립했다(19.1%). 52px 에서 부제가 10px 로 읽힌다. */
 .nav-brand { display: flex; align-items: center; margin-right: auto; }
-.nav-brand img { height: 48px; width: auto; display: block; }
+.nav-brand img { height: 52px; width: auto; display: block; }
 .navlinks { display: flex; gap: 26px; align-items: center; }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
 .langseg .seg-opt { letter-spacing: .04em; }
@@ -226,13 +226,16 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
    사진이 들어오면 이 블록을 격자로 되돌린다. */
 .people { display: flex; flex-direction: column; border-top: 1px solid var(--color-divider); }
 .person {
-  display: grid; grid-template-columns: 230px 1fr; gap: 10px 36px;
+  display: grid; grid-template-columns: 320px 1fr; gap: 10px 36px;
   padding: 22px 0; border-bottom: 1px solid var(--color-divider); align-items: start;
 }
 .person[hidden] { display: none; }
 /* 앵커로 뛰어올 때 고정 머리말 아래로 숨지 않게. */
 .person, .sl { scroll-margin-top: 96px; }
-.pid { position: sticky; top: 78px; }
+/* 이름·직급·링크는 사진 **왼쪽**에 둔다(사진 밑이 아니라). 사진이 없는 사람은
+   글자가 칸을 그대로 채운다. */
+.pid { position: sticky; top: 78px; display: flex; gap: 14px; align-items: flex-start; }
+.pidtext { flex: 1; min-width: 0; }
 .orgrole {
   display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: .06em;
   text-transform: uppercase; padding: 2px 8px; margin-bottom: 8px;
@@ -242,7 +245,7 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 .rk { font-size: 13px; margin-top: 4px; color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .ct { font-size: 11.5px; letter-spacing: .08em; margin-top: 8px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
 /* 초상 — 디자인 시스템의 규칙대로 `.blueprint.duotone` 을 통과시킨다(강철색으로 물든다). */
-.portrait { width: 132px; aspect-ratio: 3/4; margin: 0 0 16px; }
+.portrait { width: 108px; flex: none; aspect-ratio: 3/4; margin: 4px 0 0; }
 .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .exts { display: flex; gap: 10px; margin-top: 12px; }

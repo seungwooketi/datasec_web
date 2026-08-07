@@ -653,10 +653,11 @@ def page_people(lg, site, members, projects, detailed):
         lead_note = " · {} {}".format(t["own"], len(own)) if own else ""
         cards.append(
             f'<article class="person" id="{e(m["slug"])}">'
-            f'<div class="pid">{photo}{badge}<div class="ht nm">{e(m["name"][lg])}</div>'
+            f'<div class="pid">'
+            f'<div class="pidtext">{badge}<div class="ht nm">{e(m["name"][lg])}</div>'
             f'<div class="rk">{e(m["grade"][lg])}</div>'
             f'<div class="ct tnum">{len(m["projects"])}{unit}{e(lead_note)}</div>'
-            f'{linkbar}</div>'
+            f'{linkbar}</div>{photo}</div>'
             f'<div class="plist">{rows}{ext}</div></article>')
     roster = ""
     if listed:
