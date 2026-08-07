@@ -22,7 +22,7 @@ except ImportError:                                        # pragma: no cover
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "brand" / "hero.png"
-DISPLAY_PX = 938       # 실제 표시 폭(.heroband 의 max-height 700px 기준)
+DISPLAY_PX = 560       # 실제 표시 폭(.herorow 의 그림 칸)
 TARGET_W = 1800        # 고밀도 화면용으로 1.5×
 MIN_LABEL_PX = 12
 

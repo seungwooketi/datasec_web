@@ -565,11 +565,15 @@ def page_home(lg, site, projects, members, news, stats, detailed):
 <div class="masthead">
 <h1>{e(site['center_full'][lg])}</h1>
 </div>
+<div class="herorow">
+<div>
 <p class="ht hero">{e(site['hero'][lg])}</p>
 <p class="lede">{e(site['lede'][lg])}</p>
-<div class="figs">{figs}</div>
-<figure class="heroband"><img src="{stamp('/assets/brand/hero.png')}"
+</div>
+<figure class="heroart"><img src="{stamp('/assets/brand/hero.png')}"
  alt="{e(site['hero_alt'][lg])}" width="{HERO_W}" height="{HERO_H}"></figure>
+</div>
+<div class="figs">{figs}</div>
 <div class="threeup">
 <section>{kicker(t['k_latest'], 'h2')}{col1}</section>
 <section>{kicker(t['k_research'], 'h2')}{col2}</section>

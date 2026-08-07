@@ -86,24 +86,24 @@ footer {
   font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
   color: color-mix(in srgb, var(--color-text) 62%, transparent);
 }
-/* ⭐ 그림은 **전폭 띠**다. 옆칸(560px)에 두면 그림 속 라벨이 7.5px 이라 못 읽는다 —
-   실측으로 12px 을 넘기려면 930px 이상이 필요하고, 전폭(1192px)이면 15.9px 이다.
+/* 표제 왼쪽, 그림 오른쪽. 그림 칸은 560px.
+   ⚠️ **크기와 라벨 가독성은 정면으로 맞바꿈이다.** 그림 속 라벨은 원본에서 32px 이라
+   표시 폭 W 에서 `32 × W / 2400` px 로 그려진다:
+       1192px → 15.9px      938px → 12.5px      560px → 7.5px
+   여기서는 배치를 택했다 — 이 자리에서 라벨까지 읽히게 하려면 **그림의 라벨을 키워
+   다시 그려야** 한다(레이아웃으로는 안 된다).
    ⚠️ CI 히어로는 바탕이 페이지와 같은 `#f2f2f3` 이고 **등록마크를 스스로 그린다** —
    그래서 `.blueprint` 로 감싸지 않는다(마크가 두 겹이 된다). */
-.heroband { margin: 40px 0 0; line-height: 0; }
-/* ⭐ 높이를 제한하고 가운데 놓는다. 전폭(1192px)이면 890px 이라 집계·본문이 한참 밀린다.
-   ⚠️ **크기와 라벨 가독성이 정면으로 맞바꿈**이다 — 그림 속 라벨은 원본에서 32px 이라
-   표시 폭 W 에서 `32 × W / 2400` px 로 그려진다:
-       1192px → 15.9px      938px → 12.5px      804px → 10.7px      560px → 7.5px ⛔
-   높이만 고치면 되도록 한 곳에 둔다. 12px 밑으로 내리지 않는다. */
-.heroband img {
-  max-height: 700px; width: auto; max-width: 100%; height: auto;
-  display: block; margin: 0 auto;
+.herorow {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  gap: 48px; align-items: center; padding-top: 44px;
 }
+.heroart { line-height: 0; margin: 0; }
+.heroart img { width: 100%; height: auto; display: block; }
 
 .hero {
   font-size: 88px; line-height: 90px; letter-spacing: .01em; text-transform: uppercase;
-  margin: 44px 0 0 -.052em; max-width: 17ch;
+  margin: 0 0 0 -.052em; max-width: 17ch;
 }
 /* ⚠️ 88px 는 Barlow Condensed 대문자 기준이다. 한글은 같은 크기에서 훨씬 넓게 잡히고
    대문자 변환도 걸리지 않아, 크기와 줄폭을 따로 준다. */
@@ -321,6 +321,7 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 /* ── 좁은 화면 ────────────────────────────────────────────────── */
 @media (max-width: 1080px) {
   .threeup { grid-template-columns: 1fr 1fr; }
+  .herorow { grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 36px; }
   .threeup > section:last-child { grid-column: 1 / -1; }
   .hero { font-size: 68px; line-height: 70px; }
   /* ⚠️ 한글 크기 지정은 `body[data-lang]` 이 붙어 우선순위가 높다 — 좁은 화면에서도
@@ -336,6 +337,7 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
   .fig:nth-child(3) { padding-left: 0; border-left: 0; }
   .fig:nth-child(2) { padding-right: 0; }
   .fig:nth-child(3), .fig:nth-child(4) { border-top: 1px solid var(--color-divider); }
+  .herorow { grid-template-columns: 1fr; gap: 28px; }
   .hero { font-size: 46px; line-height: 48px; max-width: none; }
   .h-sec { font-size: 38px; line-height: 40px; }
   .h-proj { font-size: 34px; line-height: 36px; }
