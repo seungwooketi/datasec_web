@@ -1,0 +1,92 @@
+{
+  "center": {"ko": "인공지능데이터보안연구센터", "en": "AI Data and Security Research Center"},
+  "location": {"ko": "경기도 성남시", "en": "Seongnam, Republic of Korea"},
+  "org_url": "https://www.keti.re.kr",
+  "org_url_label": "www.keti.re.kr",
+
+  "hero": {
+    "ko": "데이터가 믿을 만한지 묻는 일부터 합니다.",
+    "en": "We start by asking whether the data can be trusted."
+  },
+  "lede": {
+    "ko": "인공지능데이터보안연구센터는 현장에 나간 인공지능이 계속 맞게 동작하도록 만드는 기술을 연구합니다. 멀티모달 데이터 분석, 영상보안, 그리고 모델이 시간이 지나며 조용히 나빠지는 문제를 다룹니다.",
+    "en": "The AI Data and Security Research Center works on keeping artificial intelligence correct after it is deployed. The work spans multimodal data analysis, video security, and the problem of models quietly degrading over time."
+  },
+  "about": {
+    "ko": "12명의 연구원이 과학기술정보통신부·해양수산부·산업통상자원부·문화체육관광부의 정부 R&D 과제와 민간 수탁 과제를 수행합니다. 주관기관으로 이끄는 과제와 공동연구기관으로 참여하는 과제가 함께 있습니다.",
+    "en": "Twelve researchers on government R&D programmes funded by MSIT, MOF, MOTIE and MCST, and on private-sector contracts — as lead institute on some, as a joint institute on others."
+  },
+
+  "research_title": {"ko": "정부 R&D와 민간 수탁 과제.", "en": "Government R&D and contract research."},
+  "research_lede": {
+    "ko": "지원기관·수행기간·참여형태와 함께 정리했습니다. 종료된 과제도 목록에 남습니다. 값은 사내 정본 파일에서 그대로 옮겨 온 것입니다.",
+    "en": "Listed with funder, period and the center's role. Closed projects stay on the list. Values are carried over verbatim from the center's internal source-of-truth files."
+  },
+  "research_note": {
+    "ko": "대외 공개가 가능한 과제만 싣습니다",
+    "en": "Only projects cleared for public listing appear here"
+  },
+
+  "people_title": {"ko": "12명의 연구원.", "en": "Twelve researchers."},
+  "people_lede": {
+    "ko": "각자가 2026년에 수행 중인 과제입니다. 「책임」은 그 과제의 책임자, 「참여」는 참여연구원입니다.",
+    "en": "What each researcher is working on in 2026. PI marks the principal investigator; Member marks a participating researcher."
+  },
+
+  "news_title": {"ko": "소식", "en": "News"},
+  "news_lede": {
+    "ko": "과제 착수, 학회 발표, 표준화 활동, 협력 — 부서에서 일어난 일을 적습니다.",
+    "en": "Project starts, conference results, standards activity and collaboration."
+  },
+
+  "cta": {
+    "title": {"ko": "협력 문의", "en": "Work with us"},
+    "body": {"ko": "기업 수탁 · 기술이전 · 공동연구.", "en": "Contract research, technology transfer, joint research."},
+    "action": {"ko": "협력 안내 보기", "en": "How to work with us"}
+  },
+
+  "collaborate": {
+    "title": {"ko": "함께 하기", "en": "Work with us"},
+    "lede": {
+      "ko": "기업 수탁, 기술이전, 공동연구 제안을 받습니다. 부서에서 직접 다루지 않는 주제라면 연구원 내 다른 부서로 연결해 드립니다.",
+      "en": "We take on contract research, technology transfer and joint research. If a topic sits outside this center, we can connect you with another KETI center."
+    },
+    "ways": [
+      {
+        "title": {"ko": "기업 수탁", "en": "Contract research"},
+        "body": {
+          "ko": "필요한 기술을 과제로 정의해 수행합니다. 2026년에는 민간 수탁 1건을 수행 중입니다.",
+          "en": "We scope the work as a project and run it. One private-sector contract is under way in 2026."
+        }
+      },
+      {
+        "title": {"ko": "공동연구", "en": "Joint research"},
+        "body": {
+          "ko": "정부 R&D 과제에 공동연구기관으로 참여하거나, 저희가 주관하는 과제에 함께합니다.",
+          "en": "As a joint institute on government R&D programmes, or as a partner on the programmes this center leads."
+        }
+      },
+      {
+        "title": {"ko": "기술이전", "en": "Technology transfer"},
+        "body": {
+          "ko": "수행한 과제의 결과물에 대해 이전을 협의합니다.",
+          "en": "Results from completed projects are available for transfer."
+        }
+      }
+    ],
+    "contact_lede": {
+      "ko": "제안이나 문의를 보내 주시면 담당 연구원이 회신합니다.",
+      "en": "Send a proposal or a question and the relevant researcher will reply."
+    },
+    "no_contact": {
+      "ko": "공개 연락처가 아직 설정되지 않았습니다. content/site.json 의 contact.email 을 채우면 여기에 표시됩니다.",
+      "en": "A public contact address has not been set yet. Fill in contact.email in content/site.json and it appears here."
+    }
+  },
+
+  "contact": {
+    "email": "",
+    "address": {"ko": "", "en": ""},
+    "phone": ""
+  }
+}

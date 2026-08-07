@@ -1,0 +1,165 @@
+[
+{
+  "slug": "seungwoo-kum",
+  "name": {"ko": "금승우", "en": "Seungwoo Kum"}, "name_en_confirmed": true,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "센터장", "en": "Center Director"},
+  "links": {"homepage": "https://seungwooketi.github.io"},
+  "external_count": 0,
+  "projects": [
+    {"slug": "human-foundation-model", "role": "lead"},
+    {"slug": "mission-data-fusion", "role": "member"},
+    {"slug": "data-drift-management", "role": "member"}
+  ]
+},
+{
+  "slug": "dalwon-jang",
+  "name": {"ko": "장달원", "en": "Dalwon Jang"}, "name_en_confirmed": false,
+  "grade": {"ko": "책임연구원", "en": "Principal Researcher"},
+  "org_role": {"ko": "팀장", "en": "Team Leader"},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "virtual-space-audio", "role": "lead"},
+    {"slug": "ai-crowd-dynamics", "role": "lead"},
+    {"slug": "cross-device-sensory-sharing", "role": "lead"},
+    {"slug": "low-visibility-3d", "role": "member"},
+    {"slug": "hybrid-sound-masking", "role": "member"}
+  ]
+},
+{
+  "slug": "dongchil-kim",
+  "name": {"ko": "김동칠", "en": "Dongchil Kim"}, "name_en_confirmed": false,
+  "grade": {"ko": "책임연구원", "en": "Principal Researcher"},
+  "org_role": {"ko": "팀장", "en": "Team Leader"},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "multimodal-security-response", "role": "lead"},
+    {"slug": "on-device-video-security-platform", "role": "lead"},
+    {"slug": "physical-security-interworking", "role": "lead"},
+    {"slug": "edge-video-surveillance", "role": "member"}
+  ]
+},
+{
+  "slug": "kyoungwon-kim",
+  "name": {"ko": "김경원", "en": "Kyoungwon Kim"}, "name_en_confirmed": false,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "multimodal-rag", "role": "lead"},
+    {"slug": "dil-data-sharing", "role": "lead"},
+    {"slug": "manned-unmanned-ai-collaboration", "role": "lead"},
+    {"slug": "maritime-aton-info-cooperation", "role": "lead"},
+    {"slug": "mission-data-fusion", "role": "member"},
+    {"slug": "battlefield-decision-support", "role": "member"},
+    {"slug": "data-drift-management", "role": "member"},
+    {"slug": "marine-battery-data-hub", "role": "member"}
+  ]
+},
+{
+  "slug": "jongbin-park",
+  "name": {"ko": "박종빈", "en": "Jongbin Park"}, "name_en_confirmed": false,
+  "grade": {"ko": "책임연구원", "en": "Principal Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 1,
+  "projects": [
+    {"slug": "mission-data-fusion", "role": "lead"},
+    {"slug": "battlefield-decision-support", "role": "lead"},
+    {"slug": "data-drift-management", "role": "lead"},
+    {"slug": "marine-battery-data-hub", "role": "lead"},
+    {"slug": "multimodal-rag", "role": "member"},
+    {"slug": "dil-data-sharing", "role": "member"},
+    {"slug": "manned-unmanned-ai-collaboration", "role": "member"}
+  ]
+},
+{
+  "slug": "jongseol-lee",
+  "name": {"ko": "이종설", "en": "Jongseol Lee"}, "name_en_confirmed": false,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 1,
+  "projects": [
+    {"slug": "low-visibility-3d", "role": "lead"},
+    {"slug": "hybrid-sound-masking", "role": "lead"},
+    {"slug": "virtual-space-audio", "role": "member"},
+    {"slug": "ai-crowd-dynamics", "role": "member"},
+    {"slug": "cross-device-sensory-sharing", "role": "member"}
+  ]
+},
+{
+  "slug": "changmo-yang",
+  "name": {"ko": "양창모", "en": "Changmo Yang"}, "name_en_confirmed": false,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "edge-video-surveillance", "role": "lead"},
+    {"slug": "multimodal-security-response", "role": "member"},
+    {"slug": "on-device-video-security-platform", "role": "member"}
+  ]
+},
+{
+  "slug": "jongjin-jung",
+  "name": {"ko": "정종진", "en": "Jongjin Jung"}, "name_en_confirmed": false,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 1,
+  "projects": [
+    {"slug": "mission-data-fusion", "role": "member"},
+    {"slug": "battlefield-decision-support", "role": "member"},
+    {"slug": "multimodal-rag", "role": "member"},
+    {"slug": "data-drift-management", "role": "member"},
+    {"slug": "dil-data-sharing", "role": "member"},
+    {"slug": "manned-unmanned-ai-collaboration", "role": "member"},
+    {"slug": "marine-battery-data-hub", "role": "member"}
+  ]
+},
+{
+  "slug": "jaejong-song",
+  "name": {"ko": "송재종", "en": "Jaejong Song"}, "name_en_confirmed": false,
+  "grade": {"ko": "책임연구원", "en": "Principal Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "battlefield-decision-support", "role": "member"},
+    {"slug": "data-drift-management", "role": "member"},
+    {"slug": "human-foundation-model", "role": "member"},
+    {"slug": "marine-battery-data-hub", "role": "member"}
+  ]
+},
+{
+  "slug": "sejin-jang",
+  "name": {"ko": "장세진", "en": "Sejin Jang"}, "name_en_confirmed": false,
+  "grade": {"ko": "책임연구원", "en": "Principal Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 2,
+  "projects": [
+    {"slug": "mission-data-fusion", "role": "member"},
+    {"slug": "human-foundation-model", "role": "member"}
+  ]
+},
+{
+  "slug": "sungju-park",
+  "name": {"ko": "박성주", "en": "Sungju Park"}, "name_en_confirmed": false,
+  "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 2,
+  "projects": [
+    {"slug": "human-foundation-model", "role": "member"},
+    {"slug": "low-visibility-3d", "role": "member"}
+  ]
+},
+{
+  "slug": "jaewon-lee",
+  "name": {"ko": "이재원", "en": "Jaewon Lee"}, "name_en_confirmed": false,
+  "grade": {"ko": "선임연구원", "en": "Senior Researcher"},
+  "org_role": {"ko": "", "en": ""},
+  "links": {}, "external_count": 0,
+  "projects": [
+    {"slug": "virtual-space-audio", "role": "member"},
+    {"slug": "ai-crowd-dynamics", "role": "member"},
+    {"slug": "cross-device-sensory-sharing", "role": "member"},
+    {"slug": "low-visibility-3d", "role": "member"}
+  ]
+}
+]

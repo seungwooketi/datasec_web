@@ -1,0 +1,275 @@
+/* 페이지 층 — 디자인 시스템 위에 이 사이트만의 배치를 얹는다.
+   ⚠️ 색·간격·글꼴은 여기서 새로 정하지 않는다. `industry.css` 의 토큰을 쓴다. */
+
+/* Barlow 에는 한글 글리프가 없다. 라틴은 Barlow 로, 한글만 IBM Plex Sans KR 로 떨어지게
+   **페이지 층에서** 스택을 늘린다 — 디자인 시스템은 건드리지 않는다. */
+body {
+  --font-heading: "Barlow Condensed", "IBM Plex Sans KR", system-ui, sans-serif;
+  --font-body: "Barlow", "IBM Plex Sans KR", system-ui, sans-serif;
+  font-family: var(--font-body);
+  text-wrap: pretty;
+  display: flex; flex-direction: column; min-height: 100vh;
+}
+/* 한글은 어절 단위로 끊는다. 이게 없으면 단어 중간에서 줄이 바뀐다. */
+body[data-lang="ko"] { word-break: keep-all; }
+
+a { color: var(--color-accent-700); text-decoration: none; }
+a:hover { color: var(--color-accent); }
+.ht { font-family: var(--font-heading); font-weight: 600; }
+.tnum { font-feature-settings: "tnum" 1; }
+.muted { color: color-mix(in srgb, var(--color-text) 62%, transparent); }
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 20;
+  background: var(--color-accent); color: var(--color-bg); padding: 10px 16px; font-size: 14px;
+}
+.skip:focus { left: 0; color: var(--color-bg); }
+
+/* ── 껍데기 ───────────────────────────────────────────────────── */
+.nav {
+  padding: 13px 44px; border-bottom: 1px solid var(--color-divider);
+  position: sticky; top: 0; background: var(--color-bg); z-index: 5; flex-wrap: wrap;
+}
+.nav-brand { letter-spacing: .03em; }
+.navlinks { display: flex; gap: var(--space-4); align-items: center; }
+.nav a:hover, .nav a[aria-current="page"] { color: var(--color-accent); }
+.langseg .seg-opt { letter-spacing: .04em; }
+.langseg .seg-opt.is-on { color: var(--color-bg); }
+.langseg .seg-opt.is-on:hover { color: var(--color-bg); }
+
+main { flex: 1; padding: 0 44px 56px; }
+.page { padding: 36px 0 0; }
+.page.narrow { max-width: 760px; }
+
+footer {
+  border-top: 1px solid var(--color-divider); padding: 22px 44px;
+  display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+
+/* ── 눈금 라벨 — 모든 쪽에서 되풀이되는 「눈금 위에 줄」 ────────── */
+.k {
+  display: block; font-size: 12px; line-height: 12px; letter-spacing: .09em;
+  text-transform: uppercase; font-weight: 600; color: var(--color-accent-700); margin: 0 0 11px;
+}
+.cr { height: 1px; border: 0; margin: 0 0 16px; background: var(--color-divider); }
+.num {
+  font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  color: var(--color-accent-700); font-feature-settings: "tnum" 1;
+}
+.meta { font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 62%, transparent); }
+
+/* ── 표지 ─────────────────────────────────────────────────────── */
+.masthead {
+  display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  padding: 11px 0; border-bottom: 1px solid var(--color-divider);
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+.hero {
+  font-size: 88px; line-height: 90px; letter-spacing: .01em; text-transform: uppercase;
+  margin: 44px 0 0 -.052em; max-width: 17ch;
+}
+/* ⚠️ 88px 는 Barlow Condensed 대문자 기준이다. 한글은 같은 크기에서 훨씬 넓게 잡히고
+   대문자 변환도 걸리지 않아, 크기와 줄폭을 따로 준다. */
+body[data-lang="ko"] .hero {
+  text-transform: none; letter-spacing: -.02em;
+  font-size: 66px; line-height: 78px; max-width: 20ch;
+}
+.lede {
+  font-size: 17px; line-height: 28px; max-width: 64ch; margin: 30px 0 0;
+  color: color-mix(in srgb, var(--color-text) 84%, transparent);
+}
+.lede-m {
+  font-size: 16px; line-height: 26px; max-width: 58ch; margin: 20px 0 32px;
+  color: color-mix(in srgb, var(--color-text) 82%, transparent);
+}
+.lede-s {
+  font-size: 14px; line-height: 23px; margin: 0;
+  color: color-mix(in srgb, var(--color-text) 80%, transparent);
+}
+.h-sec {
+  font-size: 52px; line-height: 54px; letter-spacing: .01em; text-transform: uppercase;
+  margin: 0 0 0 -.052em; max-width: 24ch;
+}
+.h-proj {
+  font-size: 46px; line-height: 48px; letter-spacing: .01em; text-transform: uppercase;
+  margin: 0 0 0 -.052em;
+}
+body[data-lang="ko"] .h-sec,
+body[data-lang="ko"] .h-proj { text-transform: none; letter-spacing: -.02em; }
+body[data-lang="ko"] .h-sec { font-size: 44px; line-height: 54px; max-width: 26ch; }
+body[data-lang="ko"] .h-proj { font-size: 38px; line-height: 50px; }
+
+/* ── 통계 띠 — 위쪽 줄이 이 쪽에서 가장 진한 선이다 ───────────── */
+.figs {
+  display: grid; grid-template-columns: repeat(4, 1fr); margin: 38px 0 0;
+  border-top: 1px solid var(--color-text); border-bottom: 1px solid var(--color-divider);
+}
+.fig { padding: 15px 20px; border-left: 1px solid var(--color-divider); }
+.fig:first-child { padding-left: 0; border-left: 0; }
+.fig:last-child { padding-right: 0; }
+.fig .v { font-size: 42px; line-height: 44px; }
+.figk {
+  font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent); margin-top: 4px;
+}
+
+/* ── 3단 ──────────────────────────────────────────────────────── */
+.threeup { display: grid; grid-template-columns: 5fr 4fr 3fr; gap: 40px; padding: 44px 0 0; }
+/* 번호 칸은 두 자리 폭이면 된다. `table-layout:fixed` 는 첫 칸 폭을 안 주면 균등 분할한다. */
+.threeup .table.fixed td:first-child { width: 34px; }
+
+/* ── 소식 ─────────────────────────────────────────────────────── */
+.newsitem { display: block; color: inherit; padding: 0 0 16px; }
+.newsitem.ruled { border-top: 1px solid var(--color-divider); padding: 16px 0; }
+.newsitem:hover .newstitle { color: var(--color-accent); }
+.newstitle {
+  display: block; font-family: var(--font-heading); font-weight: 600;
+  font-size: 26px; line-height: 29px; margin-top: 6px;
+}
+.newssum {
+  font-size: 14px; line-height: 22px; margin: 8px 0 0;
+  color: color-mix(in srgb, var(--color-text) 76%, transparent);
+}
+.newslist { margin-top: 8px; }
+.postdate { margin-top: 26px; letter-spacing: .09em; text-transform: uppercase; }
+.samplenote {
+  margin: 16px 0 0; padding: 10px 14px; font-size: 13px; line-height: 20px;
+  border-left: 2px solid var(--color-accent); background: var(--color-accent-100);
+  color: var(--color-accent-900);
+}
+.empty {
+  border: 1px dashed var(--color-divider); padding: 28px 22px; margin: 0;
+  font-size: 14px; color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+
+/* ── 목록 표 ──────────────────────────────────────────────────── */
+.table.fixed { table-layout: fixed; }
+.table.fixed td { padding: 11px 0; vertical-align: top; }
+.rowtitle { display: block; font-size: 21px; line-height: 23px; color: inherit; }
+.rowtitle:hover { color: var(--color-accent); }
+.tablewrap { overflow-x: auto; }
+.listing { min-width: 880px; }
+.listing td { padding: 11px var(--space-2) 11px 0; vertical-align: top; }
+.listing .rowtitle { font-size: 19px; line-height: 21px; }
+.listing .c-no { width: 48px; } .listing .c-fund { width: 120px; }
+.listing .c-per { width: 128px; } .listing .c-pi { width: 92px; }
+.listing .c-role { width: 150px; }
+.tagcell { display: flex; gap: 6px; flex-wrap: wrap; }
+.listing tr[hidden] { display: none; }
+
+.filters { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+.filters .input { max-width: 300px; }
+.count {
+  margin-left: auto; font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+  font-weight: 600; color: color-mix(in srgb, var(--color-text) 55%, transparent);
+  font-feature-settings: "tnum" 1;
+}
+.asof {
+  margin-top: 22px; font-size: 12px; letter-spacing: .06em;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent);
+}
+.flush { margin-top: 14px; padding-left: 0; }
+
+/* ── 과제 상세 ────────────────────────────────────────────────── */
+.back { font-size: 12px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600; }
+.titleblock { display: flex; flex-wrap: wrap; align-items: stretch; }
+.tb {
+  padding: 11px 20px; font-size: 13px; line-height: 22px; letter-spacing: .08em;
+  text-transform: uppercase; font-weight: 600; white-space: nowrap;
+  border-left: 1px solid var(--color-divider);
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+.tb-title { flex: 1; min-width: 16ch; white-space: normal; border-left: 0; color: var(--color-text); }
+body[data-lang="ko"] .tb { text-transform: none; letter-spacing: 0; }
+.twoup { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 52px; margin-top: 44px; }
+.prose { font-size: 16px; line-height: 26px; margin-top: 26px; color: color-mix(in srgb, var(--color-text) 84%, transparent); }
+.prose h2 { font-size: 23px; line-height: 25px; margin: 30px 0 10px; text-transform: uppercase; }
+body[data-lang="ko"] .prose h2 { text-transform: none; }
+.prose li { margin-bottom: 4px; }
+.reg-inner .dl:last-child { border-bottom: 0; }
+.dl { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 9px 0; font-size: 14px; line-height: 21px; }
+.dl.reg { border-bottom: 1px solid var(--color-divider); }
+.dt {
+  font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase; font-weight: 600;
+  color: color-mix(in srgb, var(--color-text) 55%, transparent); padding-top: 2px;
+}
+.dlist { margin-top: 22px; display: flex; flex-direction: column; }
+.dlist .dl { grid-template-columns: 66px 1fr; gap: 10px; padding: 5px 0; font-size: 13.5px; line-height: 20px; color: color-mix(in srgb, var(--color-text) 74%, transparent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.chip { font-size: 12.5px; padding: 4px 10px; border: 1px solid var(--color-divider); }
+.chip:hover { border-color: var(--color-accent); }
+.cardtitle { font-size: 20px; line-height: 22px; text-transform: uppercase; }
+body[data-lang="ko"] .cardtitle { text-transform: none; }
+.cardbody { font-size: 13px; line-height: 20px; margin: 8px 0 12px; color: color-mix(in srgb, var(--color-text) 74%, transparent); }
+
+/* ── 구성원 ───────────────────────────────────────────────────── */
+/* ⚠️ 시안의 6단 초상 격자를 쓰지 않는다 — **사진이 없다.** 빗금 자리표시자를 대외
+   공개물에 내보내는 대신, 이름과 수행 과제를 읽히는 형태로 둔다.
+   사진이 들어오면 이 블록을 격자로 되돌린다. */
+.people { display: flex; flex-direction: column; border-top: 1px solid var(--color-divider); }
+.person {
+  display: grid; grid-template-columns: 230px 1fr; gap: 10px 36px;
+  padding: 22px 0; border-bottom: 1px solid var(--color-divider); align-items: start;
+}
+.person[hidden] { display: none; }
+.pid { position: sticky; top: 78px; }
+.orgrole {
+  display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; padding: 2px 8px; margin-bottom: 8px;
+  background: var(--color-accent-100); color: var(--color-accent-800);
+}
+.nm { font-size: 24px; line-height: 26px; }
+.rk { font-size: 13px; margin-top: 4px; color: color-mix(in srgb, var(--color-text) 70%, transparent); }
+.ct { font-size: 11.5px; letter-spacing: .08em; margin-top: 8px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.exts { display: flex; gap: 8px; margin-top: 10px; }
+.ext { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--color-divider); }
+.plist { display: flex; flex-direction: column; }
+.pl { display: grid; grid-template-columns: 46px 1fr; gap: 12px; align-items: baseline; padding: 4px 0; font-size: 15px; line-height: 22px; }
+.pl a { color: inherit; }
+.pl a:hover { color: var(--color-accent); }
+.pl .rl { font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-align: center; padding: 2px 0; text-transform: uppercase; }
+.pl .rl.own { background: var(--color-accent); color: var(--color-bg); }
+.pl .rl.join { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.pl.none { display: block; font-size: 14px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+.extnote { margin-top: 10px; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
+
+/* ── 협력 ─────────────────────────────────────────────────────── */
+.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 26px; margin: 8px 0 44px; }
+.way { padding: 18px; }
+.contact { margin-top: 44px; }
+
+/* ── 좁은 화면 ────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .threeup { grid-template-columns: 1fr 1fr; }
+  .threeup > section:last-child { grid-column: 1 / -1; }
+  .hero { font-size: 68px; line-height: 70px; }
+  /* ⚠️ 한글 크기 지정은 `body[data-lang]` 이 붙어 우선순위가 높다 — 좁은 화면에서도
+     같은 선택자로 다시 써 줘야 줄어든다. */
+  body[data-lang="ko"] .hero { font-size: 54px; line-height: 66px; }
+}
+@media (max-width: 860px) {
+  .nav, main, footer { padding-left: 24px; padding-right: 24px; }
+  .threeup { grid-template-columns: 1fr; gap: 36px; }
+  .twoup { grid-template-columns: 1fr; gap: 36px; }
+  .figs { grid-template-columns: 1fr 1fr; }
+  .fig { padding: 14px 16px; }
+  .fig:nth-child(3) { padding-left: 0; border-left: 0; }
+  .fig:nth-child(2) { padding-right: 0; }
+  .fig:nth-child(3), .fig:nth-child(4) { border-top: 1px solid var(--color-divider); }
+  .hero { font-size: 46px; line-height: 48px; max-width: none; }
+  .h-sec { font-size: 38px; line-height: 40px; }
+  .h-proj { font-size: 34px; line-height: 36px; }
+  body[data-lang="ko"] .hero { font-size: 36px; line-height: 48px; max-width: none; }
+  body[data-lang="ko"] .h-sec { font-size: 30px; line-height: 40px; max-width: none; }
+  body[data-lang="ko"] .h-proj { font-size: 26px; line-height: 36px; }
+  .person { grid-template-columns: 1fr; gap: 14px; }
+  .pid { position: static; }
+  .navlinks { order: 3; width: 100%; overflow-x: auto; padding-top: 4px; }
+  .masthead { font-size: 11px; gap: 12px; }
+  .count { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
