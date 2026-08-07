@@ -323,6 +323,31 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 """
 
 
+# ── 아이콘 — Lucide, stroke 1.5 (디자인 시스템이 정한 굵기). 인라인이라 요청이 0회다.
+ICONS = {
+    "homepage": ('<circle cx="12" cy="12" r="10"/>'
+                 '<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>'),
+    "github": ('<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5'
+               '.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 '
+               '2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 '
+               '1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>'),
+    "linkedin": ('<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>'
+                 '<rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>'),
+    "scholar": ('<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/>'
+                '<path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/>'),
+}
+ICON_LABEL = {"homepage": {"ko": "개인 홈페이지", "en": "Homepage"},
+              "github": {"ko": "GitHub", "en": "GitHub"},
+              "linkedin": {"ko": "LinkedIn", "en": "LinkedIn"},
+              "scholar": {"ko": "Google Scholar", "en": "Google Scholar"}}
+
+
+def icon(kind: str) -> str:
+    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
+            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            f'{ICONS[kind]}</svg>')
+
+
 def kicker(text: str) -> str:
     return f'<span class="k">{e(text)}</span><hr class="cr">'
 
@@ -452,7 +477,6 @@ def page_research(lg, site, projects):
 <div class="page">
 {kicker(t['k_research'])}
 <h1 class="ht h-sec">{e(site['research_title'][lg])}</h1>
-<p class="lede-m">{e(site['research_lede'][lg])}</p>
 <div class="filters">
 <input class="input" type="search" id="q" placeholder="{e(t['search_projects'])}"
        aria-label="{e(t['search_projects'])}">
@@ -475,7 +499,7 @@ def page_research(lg, site, projects):
 </div>
 <script src="/assets/filter.js" defer></script>
 """
-    return shell(lg, "research/", T[lg]["nav_research"], site["research_lede"][lg], body, site)
+    return shell(lg, "research/", T[lg]["nav_research"], site["research_desc"][lg], body, site)
 
 
 def page_project(lg, site, p, members, summary):
@@ -537,14 +561,20 @@ def page_people(lg, site, members, projects):
         role = m["org_role"][lg]
         badge = f'<div class="orgrole">{e(role)}</div>' if role else ""
         links = "".join(
-            f'<a class="ext" href="{e(u)}" rel="noopener">{e(k)}</a>'
-            for k, u in (m.get("links") or {}).items())
+            f'<a class="ext" href="{e(u)}" rel="noopener" target="_blank" '
+            f'title="{e(ICON_LABEL[k][lg])}" aria-label="{e(ICON_LABEL[k][lg])}">{icon(k)}</a>'
+            for k, u in (m.get("links") or {}).items() if k in ICONS)
         linkbar = f'<div class="exts">{links}</div>' if links else ""
+        photo = ""
+        if m.get("photo"):
+            photo = blueprint(
+                f'<img src="/assets/people/{e(m["photo"])}" alt="" loading="lazy">',
+                cls="duotone portrait")
         unit = "건" if lg == "ko" else ""
         lead_note = " · {} {}".format(t["own"], len(own)) if own else ""
         cards.append(
             f'<article class="person" id="{e(m["slug"])}">'
-            f'<div class="pid">{badge}<div class="ht nm">{e(m["name"][lg])}</div>'
+            f'<div class="pid">{photo}{badge}<div class="ht nm">{e(m["name"][lg])}</div>'
             f'<div class="rk">{e(m["grade"][lg])}</div>'
             f'<div class="ct tnum">{len(m["projects"])}{unit}{e(lead_note)}</div>'
             f'{linkbar}</div>'
@@ -553,7 +583,6 @@ def page_people(lg, site, members, projects):
 <div class="page">
 {kicker(t['k_people'])}
 <h1 class="ht h-sec">{e(site['people_title'][lg])}</h1>
-<p class="lede-m">{e(site['people_lede'][lg])}</p>
 <div class="filters">
 <input class="input" type="search" id="q" placeholder="{e(t['search_people'])}"
        aria-label="{e(t['search_people'])}">
@@ -563,7 +592,7 @@ def page_people(lg, site, members, projects):
 </div>
 <script src="/assets/filter.js" defer></script>
 """
-    return shell(lg, "people/", t["nav_people"], site["people_lede"][lg], body, site)
+    return shell(lg, "people/", t["nav_people"], site["people_desc"][lg], body, site)
 
 
 def page_news_index(lg, site, news):

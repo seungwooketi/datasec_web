@@ -223,8 +223,17 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 .nm { font-size: 24px; line-height: 26px; }
 .rk { font-size: 13px; margin-top: 4px; color: color-mix(in srgb, var(--color-text) 70%, transparent); }
 .ct { font-size: 11.5px; letter-spacing: .08em; margin-top: 8px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
-.exts { display: flex; gap: 8px; margin-top: 10px; }
-.ext { font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid var(--color-divider); }
+/* 초상 — 디자인 시스템의 규칙대로 `.blueprint.duotone` 을 통과시킨다(강철색으로 물든다). */
+.portrait { width: 132px; aspect-ratio: 3/4; margin: 0 0 16px; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.exts { display: flex; gap: 10px; margin-top: 12px; }
+.ext {
+  display: inline-flex; width: 30px; height: 30px; align-items: center; justify-content: center;
+  border: 1px solid var(--color-divider); color: color-mix(in srgb, var(--color-text) 62%, transparent);
+}
+.ext svg { width: 16px; height: 16px; }
+.ext:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .plist { display: flex; flex-direction: column; }
 .pl { display: grid; grid-template-columns: 46px 1fr; gap: 12px; align-items: baseline; padding: 4px 0; font-size: 15px; line-height: 22px; }
 .pl a { color: inherit; }
@@ -236,7 +245,7 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 .extnote { margin-top: 10px; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 55%, transparent); }
 
 /* ── 협력 ─────────────────────────────────────────────────────── */
-.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 26px; margin: 8px 0 44px; }
+.ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; margin: 8px 0 44px; }
 .way { padding: 18px; }
 .contact { margin-top: 44px; }
 

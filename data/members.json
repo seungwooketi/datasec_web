@@ -14,8 +14,12 @@
    "ko": "센터장",
    "en": "Center Director"
   },
+  "photo": "seungwoo-kum.jpg",
   "links": {
-   "homepage": "https://seungwooketi.github.io"
+   "homepage": "https://seungwoo.datasec.work",
+   "linkedin": "https://www.linkedin.com/in/seung-woo-kum-80907980",
+   "github": "https://github.com/seungwooketi",
+   "scholar": "https://scholar.google.com/citations?user=8DEsYMsAAAAJ"
   },
   "external_count": 0,
   "projects": [

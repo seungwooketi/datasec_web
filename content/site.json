@@ -22,15 +22,17 @@
   },
 
   "research_title": {"ko": "정부 R&D와 민간 수탁 과제.", "en": "Government R&D and contract research."},
-  "research_lede": {
-    "ko": "지원기관·수행기간·참여형태와 함께 정리했습니다. 종료된 과제도 목록에 남습니다. 값은 사내 정본 파일에서 그대로 옮겨 온 것입니다.",
-    "en": "Listed with funder, period and the center's role. Closed projects stay on the list. Values are carried over verbatim from the center's internal source-of-truth files."
-  },
 
-  "people_title": {"ko": "12명의 연구원.", "en": "Twelve researchers."},
-  "people_lede": {
-    "ko": "각자가 2026년에 수행 중인 과제입니다. 「책임」은 그 과제의 책임자, 「참여」는 참여연구원입니다.",
-    "en": "What each researcher is working on in 2026. PI marks the principal investigator; Member marks a participating researcher."
+  "people_title": {"ko": "Staff", "en": "Staff"},
+
+  "_desc": "아래 둘은 화면에 안 나온다 — <meta name=\"description\"> 전용이다. 검색 결과에 실린다.",
+  "research_desc": {
+    "ko": "지원기관·수행기간·참여형태와 함께 정리한 인공지능데이터보안연구센터의 연구 과제 목록.",
+    "en": "Research programmes of the AI Data and Security Research Center, with funder, period and the center's role."
+  },
+  "people_desc": {
+    "ko": "인공지능데이터보안연구센터 구성원과 각자가 수행 중인 과제.",
+    "en": "Researchers of the AI Data and Security Research Center and the projects they work on."
   },
 
   "news_title": {"ko": "소식", "en": "News"},
@@ -72,6 +74,13 @@
           "ko": "수행한 과제의 결과물에 대해 이전을 협의합니다.",
           "en": "Results from completed projects are available for transfer."
         }
+      },
+      {
+        "title": {"ko": "국제공동연구", "en": "International collaboration"},
+        "body": {
+          "ko": "Bilateral program, Horizon Europe, Eureka 등 다양한 협력 채널에 열려 있습니다.",
+          "en": "Open to bilateral programmes, Horizon Europe, Eureka and other channels."
+        }
       }
     ],
     "contact_lede": {
@@ -85,7 +94,7 @@
   },
 
   "contact": {
-    "email": "",
+    "email": "aidsrc@keti.re.kr",
     "address": {"ko": "", "en": ""},
     "phone": ""
   }
