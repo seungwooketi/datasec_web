@@ -139,8 +139,8 @@
   ]
 },
 {
-  "slug": "sungju-park",
-  "name": {"ko": "박성주", "en": "Sungju Park"}, "name_en_confirmed": false,
+  "slug": "sungjoo-park",
+  "name": {"ko": "박성주", "en": "Sungjoo Park"}, "name_en_confirmed": true,
   "grade": {"ko": "수석연구원", "en": "Chief Researcher"},
   "org_role": {"ko": "", "en": ""},
   "links": {}, "external_count": 2,
