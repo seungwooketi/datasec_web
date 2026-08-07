@@ -416,9 +416,6 @@ def page_home(lg, site, projects, members, news, stats):
     body = f"""
 <div class="masthead">
 <span>{e(site['center'][lg])}</span>
-<span>{e(t['org'])}</span>
-<span>{e(site['location'][lg])}</span>
-<span class="tnum">{e(stats['asof'])}</span>
 </div>
 <h1 class="ht hero">{e(site['hero'][lg])}</h1>
 <p class="lede">{e(site['lede'][lg])}</p>
