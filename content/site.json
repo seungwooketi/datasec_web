@@ -102,8 +102,7 @@
       "ko": "(13449) 경기도 성남시 수정구 창업로 43 판교글로벌비즈센터 업무동 907호",
       "en": "Room 907, Office Bldg., Pangyo Global Biz Center, 43 Changeop-ro, Sujeong-gu, Seongnam-si, Gyeonggi-do 13449, Republic of Korea"
     },
-    "_phone": "⚠️ 031-789-7000 은 야탑 본원 대표전화라 이 주소와 맞지 않아 비워 뒀다.",
-    "phone": "",
+    "phone": "+82 (0)31-737-0539",
     "map_url": "https://map.naver.com/p/search/%ED%8C%90%EA%B5%90%EA%B8%80%EB%A1%9C%EB%B2%8C%EB%B9%84%EC%A6%88%EC%84%BC%ED%84%B0%20%EC%97%85%EB%AC%B4%EB%8F%99",
     "map_label": {"ko": "네이버 지도", "en": "Naver Map"},
     "_notes": "notes 는 비워 두면 그 칸이 아예 안 나온다. 대중교통·주차 안내를 직접 채운다.",
