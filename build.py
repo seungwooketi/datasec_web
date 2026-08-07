@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import html
 import json
 import pathlib
@@ -255,6 +256,18 @@ def e(s) -> str:
     return html.escape(str(s if s is not None else ""), quote=True)
 
 
+def stamp(rel: str) -> str:
+    """`/assets/site.css?v=<내용 해시>`.
+
+    ⛔ 이게 없으면 **배포해도 방문자는 옛 CSS 를 본다** — 브라우저가 같은 주소를 캐시하고,
+       내용이 바뀐 걸 알 방법이 없다. 에러는 안 나고 화면만 틀어진다.
+    """
+    p = ROOT / rel.lstrip("/")
+    if not p.exists():
+        return rel
+    return f"{rel}?v={hashlib.sha256(p.read_bytes()).hexdigest()[:10]}"
+
+
 def other(lg: str) -> str:
     return "en" if lg == "ko" else "ko"
 
@@ -299,8 +312,8 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <meta property="og:locale" content="{'ko_KR' if lg == 'ko' else 'en_US'}">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="/assets/industry.css">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="{stamp('/assets/industry.css')}">
+<link rel="stylesheet" href="{stamp('/assets/site.css')}">
 </head>
 <body data-lang="{lg}">
 <a class="skip" href="#main">{e(t['skip'])}</a>
@@ -497,7 +510,7 @@ def page_research(lg, site, projects):
 </table>
 </div>
 </div>
-<script src="/assets/filter.js" defer></script>
+<script src="{stamp('/assets/filter.js')}" defer></script>
 """
     return shell(lg, "research/", T[lg]["nav_research"], site["research_desc"][lg], body, site)
 
@@ -590,7 +603,7 @@ def page_people(lg, site, members, projects):
 </div>
 <div class="people">{"".join(cards)}</div>
 </div>
-<script src="/assets/filter.js" defer></script>
+<script src="{stamp('/assets/filter.js')}" defer></script>
 """
     return shell(lg, "people/", t["nav_people"], site["people_desc"][lg], body, site)
 
