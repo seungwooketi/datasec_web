@@ -1,0 +1,51 @@
+# 배포 게이트 — ⭐ 규약을 문서가 아니라 CI 가 강제한다.
+#
+# 두 가지를 본다:
+#   ① `--strict` — 공개하면 안 되는 것이 남아 있나 (미확인 영문명 · 예시 뉴스 · 미공개 과제 유출)
+#   ② docs/ 가 원본과 맞나 — data/ 나 content/ 만 고치고 다시 굽지 않으면 Pages 는 옛 내용을 서빙한다
+#
+# ⚠️ 지금은 ①이 **의도적으로 실패한다.** 빨간불이 곧 "아직 공개할 상태가 아니다"라는 뜻이다.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 다시 굽는다
+        run: python3 build.py
+
+      - name: docs/ 가 원본과 맞나
+        run: |
+          if ! git diff --quiet -- docs; then
+            echo '::error::docs/ 가 원본과 다르다 — python3 build.py 를 돌리고 결과를 함께 커밋하라.'
+            git diff --stat -- docs
+            exit 1
+          fi
+
+      - name: 깨진 내부 링크가 있나
+        run: |
+          python3 - <<'PY'
+          import pathlib, re, sys
+          out = pathlib.Path("docs")
+          bad = []
+          for f in out.rglob("*.html"):
+              for m in re.finditer(r'(?:href|src)="(/[^"#?]*)', f.read_text(encoding="utf-8")):
+                  p = out / m.group(1).lstrip("/")
+                  if p.is_dir():
+                      p = p / "index.html"
+                  if not p.exists():
+                      bad.append(f"{f.relative_to(out)} → {m.group(1)}")
+          for b in sorted(set(bad)):
+              print(f"::error::깨진 링크 {b}")
+          sys.exit(1 if bad else 0)
+          PY
+
+      - name: ⛔ 공개 차단 사유가 남아 있나
+        run: python3 build.py --strict
