@@ -338,7 +338,7 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 {body}
 </main>
 <footer>
-<span>{e(center)}</span>
+<span>{e(site['center_full'][lg])}</span>
 <span>{foot_mid}</span>
 </footer>
 <script src="{stamp('/assets/mail.js')}" defer></script>
@@ -470,7 +470,7 @@ def page_home(lg, site, projects, members, news, stats):
 
     body = f"""
 <div class="masthead">
-<span>{e(site['center'][lg])}</span>
+<span>{e(site['center_full'][lg])}</span>
 </div>
 <div class="herorow">
 <div>

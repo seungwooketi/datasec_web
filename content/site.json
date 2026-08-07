@@ -2,6 +2,12 @@
   "site_url": "https://www.datasec.work",
 
   "center": {"ko": "인공지능데이터보안연구센터", "en": "AI Data and Security Research Center"},
+
+  "_center_full": "머리말 띠와 바닥글에만 쓰는 정식 명칭. 본문은 위의 `center` 를 쓴다.",
+  "center_full": {
+    "ko": "한국전자기술연구원 인공지능데이터·보안연구센터",
+    "en": "AI Data and Security Research Center, Korea Electronics Technology Institute"
+  },
   "org_url": "https://www.keti.re.kr",
   "org_url_label": "www.keti.re.kr",
   "org_name": {"ko": "한국전자기술연구원", "en": "Korea Electronics Technology Institute"},
