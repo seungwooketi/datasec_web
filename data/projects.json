@@ -1,168 +1,416 @@
 [
-{
+ {
   "slug": "maritime-aton-info-cooperation",
-  "title": {"ko": "해양 디지털 항로표지 정보협력시스템 개발",
-            "en": "Maritime Digital Aids-to-Navigation Information Cooperation System"},
-  "agency": {"ko": "해양수산부", "en": "Ministry of Oceans and Fisheries"},
-  "agency_short": {"ko": "해수부", "en": "MOF"},
-  "role": "joint", "start": "2021-04", "end": "2026-06",
-  "pi": {"ko": "김경원", "en": "Kyoungwon Kim"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "해양 디지털 항로표지 정보협력시스템 개발",
+   "en": "Maritime Digital Aids-to-Navigation Information Cooperation System"
+  },
+  "agency": {
+   "ko": "해양수산부",
+   "en": "Ministry of Oceans and Fisheries"
+  },
+  "agency_short": {
+   "ko": "해수부",
+   "en": "MOF"
+  },
+  "role": "joint",
+  "start": "2021-04",
+  "end": "2026-06",
+  "pi": {
+   "ko": "김경원",
+   "en": "Kyoungwon Kim"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "hybrid-sound-masking",
-  "title": {"ko": "가변적 소음환경에 대응하는 하이브리드 사운드마스킹 기술기반 실시간 반응형 AI 소음 청정 시스템 및 서비스 개발",
-            "en": "Real-Time Responsive AI Noise-Cleaning System and Service Based on Hybrid Sound Masking for Variable Noise Environments"},
-  "agency": {"ko": "산업통상자원부", "en": "Ministry of Trade, Industry and Energy"},
-  "agency_short": {"ko": "산업부", "en": "MOTIE"},
-  "role": "joint", "start": "2025-07", "end": "2028-12",
-  "pi": {"ko": "이종설", "en": "Jongseol Lee"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "가변적 소음환경에 대응하는 하이브리드 사운드마스킹 기술기반 실시간 반응형 AI 소음 청정 시스템 및 서비스 개발",
+   "en": "Real-Time Responsive AI Noise-Cleaning System and Service Based on Hybrid Sound Masking for Variable Noise Environments"
+  },
+  "agency": {
+   "ko": "산업통상자원부",
+   "en": "Ministry of Trade, Industry and Energy"
+  },
+  "agency_short": {
+   "ko": "산업부",
+   "en": "MOTIE"
+  },
+  "role": "joint",
+  "start": "2025-07",
+  "end": "2028-12",
+  "pi": {
+   "ko": "이종설",
+   "en": "Jongseol Lee"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "edge-video-surveillance",
-  "title": {"ko": "엣지-분석서버 연계 기반 성능 자율 개선형 영상보안시스템 기술 개발",
-            "en": "Edge–Analysis Server Video Surveillance System with Autonomous Performance Improvement"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2024-06", "end": "2026-12",
-  "pi": {"ko": "양창모", "en": "Changmo Yang"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "엣지-분석서버 연계 기반 성능 자율 개선형 영상보안시스템 기술 개발",
+   "en": "Edge–Analysis Server Video Surveillance System with Autonomous Performance Improvement"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2024-06",
+  "end": "2026-12",
+  "pi": {
+   "ko": "양창모",
+   "en": "Changmo Yang"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "multimodal-security-response",
-  "title": {"ko": "멀티모달 데이터 통합 분석 기반 지능형 보안·위험대응 시스템 개발",
-            "en": "Intelligent Security and Risk-Response System Based on Integrated Multimodal Data Analysis"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2024-06", "end": "2027-12",
-  "pi": {"ko": "김동칠", "en": "Dongchil Kim"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "멀티모달 데이터 통합 분석 기반 지능형 보안·위험대응 시스템 개발",
+   "en": "Intelligent Security and Risk-Response System Based on Integrated Multimodal Data Analysis"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2024-06",
+  "end": "2027-12",
+  "pi": {
+   "ko": "김동칠",
+   "en": "Dongchil Kim"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "data-drift-management",
-  "title": {"ko": "분석 모델의 성능저하 극복을 위한 데이터 드리프트 관리 기술 개발",
-            "en": "Data Drift Management to Overcome Performance Degradation in Analytic Models"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2024-04", "end": "2027-12",
-  "pi": {"ko": "박종빈", "en": "Jongbin Park"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "분석 모델의 성능저하 극복을 위한 데이터 드리프트 관리 기술 개발",
+   "en": "Data Drift Management to Overcome Performance Degradation in Analytic Models"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2024-04",
+  "end": "2027-12",
+  "pi": {
+   "ko": "박종빈",
+   "en": "Jongbin Park"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "human-foundation-model",
-  "title": {"ko": "인간 중심의 범용 인공지능을 위한 휴먼 파운데이션 모델 개발 및 인력양성",
-            "en": "Human Foundation Models for Human-Centered General-Purpose AI, with Researcher Training"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2025-07", "end": "2028-12",
-  "pi": {"ko": "금승우", "en": "Seungwoo Kum"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "인간 중심의 범용 인공지능을 위한 휴먼 파운데이션 모델 개발 및 인력양성",
+   "en": "Human Foundation Models for Human-Centered General-Purpose AI, with Researcher Training"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2025-07",
+  "end": "2028-12",
+  "pi": {
+   "ko": "금승우",
+   "en": "Seungwoo Kum"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "multimodal-rag",
-  "title": {"ko": "멀티모달 데이터 입력 기반 검색 증강 생성 기술 개발",
-            "en": "Retrieval-Augmented Generation for Multimodal Data Input"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2024-07", "end": "2027-12",
-  "pi": {"ko": "김경원", "en": "Kyoungwon Kim"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "멀티모달 데이터 입력 기반 검색 증강 생성 기술 개발",
+   "en": "Retrieval-Augmented Generation for Multimodal Data Input"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2024-07",
+  "end": "2027-12",
+  "pi": {
+   "ko": "김경원",
+   "en": "Kyoungwon Kim"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "manned-unmanned-ai-collaboration",
-  "title": {"ko": "유·무인 복합체계 대상 신속한 상황인지 및 맞춤형 대응을 위한 복합지능이 가능한 AI 분석 모델 자동 협업 기술 개발",
-            "en": "Automated Collaboration of Composite-Intelligence AI Models for Rapid Situation Awareness and Tailored Response in Manned–Unmanned Teaming"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2025-04", "end": "2028-12",
-  "pi": {"ko": "김경원", "en": "Kyoungwon Kim"}, "new_2026": false,
-  "publish": false, "withheld": "국방 성격 과제 — 대외 미공개"
-},
-{
+  "title": {
+   "ko": "유·무인 복합체계 대상 신속한 상황인지 및 맞춤형 대응을 위한 복합지능이 가능한 AI 분석 모델 자동 협업 기술 개발",
+   "en": "Automated Collaboration of Composite-Intelligence AI Models for Rapid Situation Awareness and Tailored Response in Manned–Unmanned Teaming"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2025-04",
+  "end": "2028-12",
+  "pi": {
+   "ko": "김경원",
+   "en": "Kyoungwon Kim"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "ai-crowd-dynamics",
-  "title": {"ko": "멀티-뷰 기반 군중 이상상황 자율대응을 위한 AI Crowd Dynamics 기술 및 실증시스템 개발",
-            "en": "AI Crowd Dynamics and Demonstration System for Multi-View Autonomous Response to Crowd Anomalies"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2024-07", "end": "2026-12",
-  "pi": {"ko": "장달원", "en": "Dalwon Jang"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "멀티-뷰 기반 군중 이상상황 자율대응을 위한 AI Crowd Dynamics 기술 및 실증시스템 개발",
+   "en": "AI Crowd Dynamics and Demonstration System for Multi-View Autonomous Response to Crowd Anomalies"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2024-07",
+  "end": "2026-12",
+  "pi": {
+   "ko": "장달원",
+   "en": "Dalwon Jang"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "on-device-video-security-platform",
-  "title": {"ko": "온-디바이스 자율보호가 내재화된 개방형 영상보안플랫폼 기술 개발",
-            "en": "Open Video Security Platform with Embedded On-Device Autonomous Protection"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2024-04", "end": "2027-12",
-  "pi": {"ko": "김동칠", "en": "Dongchil Kim"}, "new_2026": false
-},
-{
+  "title": {
+   "ko": "온-디바이스 자율보호가 내재화된 개방형 영상보안플랫폼 기술 개발",
+   "en": "Open Video Security Platform with Embedded On-Device Autonomous Protection"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2024-04",
+  "end": "2027-12",
+  "pi": {
+   "ko": "김동칠",
+   "en": "Dongchil Kim"
+  },
+  "new_2026": false
+ },
+ {
   "slug": "low-visibility-3d",
-  "title": {"ko": "저가시-비가시 환경에 대한 3D 공간 구성과 시각화 기술 개발",
-            "en": "3D Spatial Reconstruction and Visualization for Low-Visibility and Non-Visible Environments"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2026-04", "end": "2028-12",
-  "pi": {"ko": "이종설", "en": "Jongseol Lee"}, "new_2026": true
-},
-{
+  "title": {
+   "ko": "저가시-비가시 환경에 대한 3D 공간 구성과 시각화 기술 개발",
+   "en": "3D Spatial Reconstruction and Visualization for Low-Visibility and Non-Visible Environments"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2026-04",
+  "end": "2028-12",
+  "pi": {
+   "ko": "이종설",
+   "en": "Jongseol Lee"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "cross-device-sensory-sharing",
-  "title": {"ko": "이기종 디바이스의 개인화 감각 정보 공유와 상호작용 기술 개발",
-            "en": "Personalized Sensory Information Sharing and Interaction Across Heterogeneous Devices"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "lead", "start": "2026-04", "end": "2028-12",
-  "pi": {"ko": "장달원", "en": "Dalwon Jang"}, "new_2026": true
-},
-{
+  "title": {
+   "ko": "이기종 디바이스의 개인화 감각 정보 공유와 상호작용 기술 개발",
+   "en": "Personalized Sensory Information Sharing and Interaction Across Heterogeneous Devices"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "lead",
+  "start": "2026-04",
+  "end": "2028-12",
+  "pi": {
+   "ko": "장달원",
+   "en": "Dalwon Jang"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "battlefield-decision-support",
-  "title": {"ko": "단계적으로 전장 상황을 분석하고 작전계획을 수립하는 능동적인 전장 대응을 위한 지능형 의사결정 지원체계 개발",
-            "en": "Intelligent Decision-Support System for Active Response, Analyzing the Situation and Planning Operations Stepwise"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2026-04", "end": "2029-12",
-  "pi": {"ko": "박종빈", "en": "Jongbin Park"}, "new_2026": true,
-  "publish": false, "withheld": "국방 성격 과제 — 대외 미공개"
-},
-{
+  "title": {
+   "ko": "단계적으로 전장 상황을 분석하고 작전계획을 수립하는 능동적인 전장 대응을 위한 지능형 의사결정 지원체계 개발",
+   "en": "Intelligent Decision-Support System for Active Response, Analyzing the Situation and Planning Operations Stepwise"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2026-04",
+  "end": "2029-12",
+  "pi": {
+   "ko": "박종빈",
+   "en": "Jongbin Park"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "mission-data-fusion",
-  "title": {"ko": "군 작전 임무에 필요한 맞춤형 데이터를 적시에 동적으로 제공하는 지능형 데이터 융합 및 가상화 기술개발",
-            "en": "Intelligent Data Fusion and Virtualization for Timely, Dynamic Delivery of Mission-Tailored Data"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2026-04", "end": "2028-12",
-  "pi": {"ko": "박종빈", "en": "Jongbin Park"}, "new_2026": true,
-  "publish": false, "withheld": "국방 성격 과제 — 대외 미공개"
-},
-{
+  "title": {
+   "ko": "군 작전 임무에 필요한 맞춤형 데이터를 적시에 동적으로 제공하는 지능형 데이터 융합 및 가상화 기술개발",
+   "en": "Intelligent Data Fusion and Virtualization for Timely, Dynamic Delivery of Mission-Tailored Data"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2026-04",
+  "end": "2028-12",
+  "pi": {
+   "ko": "박종빈",
+   "en": "Jongbin Park"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "dil-data-sharing",
-  "title": {"ko": "불안정한 네트워크(DIL) 환경에서 강건한 이기종 다중 전장 데이터 실시간 지능형 변환 및 공유 기술개발",
-            "en": "Real-Time Intelligent Conversion and Sharing of Heterogeneous Multi-Source Data, Robust to DIL Network Environments"},
-  "agency": {"ko": "과학기술정보통신부", "en": "Ministry of Science and ICT"},
-  "agency_short": {"ko": "과기정통부", "en": "MSIT"},
-  "role": "joint", "start": "2026-04", "end": "2029-12",
-  "pi": {"ko": "김경원", "en": "Kyoungwon Kim"}, "new_2026": true,
-  "publish": false, "withheld": "국방 성격 과제 — 대외 미공개"
-},
-{
+  "title": {
+   "ko": "불안정한 네트워크(DIL) 환경에서 강건한 이기종 다중 전장 데이터 실시간 지능형 변환 및 공유 기술개발",
+   "en": "Real-Time Intelligent Conversion and Sharing of Heterogeneous Multi-Source Data, Robust to DIL Network Environments"
+  },
+  "agency": {
+   "ko": "과학기술정보통신부",
+   "en": "Ministry of Science and ICT"
+  },
+  "agency_short": {
+   "ko": "과기정통부",
+   "en": "MSIT"
+  },
+  "role": "joint",
+  "start": "2026-04",
+  "end": "2029-12",
+  "pi": {
+   "ko": "김경원",
+   "en": "Kyoungwon Kim"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "virtual-space-audio",
-  "title": {"ko": "가상공간 기반 음향 자동생성 및 공간분석 랜더링 기술 개발",
-            "en": "Automatic Sound Generation and Spatial-Analysis Rendering for Virtual Spaces"},
-  "agency": {"ko": "문화체육관광부", "en": "Ministry of Culture, Sports and Tourism"},
-  "agency_short": {"ko": "문체부", "en": "MCST"},
-  "role": "joint", "start": "2026-04", "end": "2027-12",
-  "pi": {"ko": "장달원", "en": "Dalwon Jang"}, "new_2026": true
-},
-{
+  "title": {
+   "ko": "가상공간 기반 음향 자동생성 및 공간분석 랜더링 기술 개발",
+   "en": "Automatic Sound Generation and Spatial-Analysis Rendering for Virtual Spaces"
+  },
+  "agency": {
+   "ko": "문화체육관광부",
+   "en": "Ministry of Culture, Sports and Tourism"
+  },
+  "agency_short": {
+   "ko": "문체부",
+   "en": "MCST"
+  },
+  "role": "joint",
+  "start": "2026-04",
+  "end": "2027-12",
+  "pi": {
+   "ko": "장달원",
+   "en": "Dalwon Jang"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "marine-battery-data-hub",
-  "title": {"ko": "해양배터리 특화 데이터 허브 플랫폼 구축 기술개발",
-            "en": "Data Hub Platform for Marine Batteries"},
-  "agency": {"ko": "해양수산부", "en": "Ministry of Oceans and Fisheries"},
-  "agency_short": {"ko": "해수부", "en": "MOF"},
-  "role": "lead", "start": "2026-04", "end": "2030-12",
-  "pi": {"ko": "박종빈", "en": "Jongbin Park"}, "new_2026": true
-},
-{
+  "title": {
+   "ko": "해양배터리 특화 데이터 허브 플랫폼 구축 기술개발",
+   "en": "Data Hub Platform for Marine Batteries"
+  },
+  "agency": {
+   "ko": "해양수산부",
+   "en": "Ministry of Oceans and Fisheries"
+  },
+  "agency_short": {
+   "ko": "해수부",
+   "en": "MOF"
+  },
+  "role": "lead",
+  "start": "2026-04",
+  "end": "2030-12",
+  "pi": {
+   "ko": "박종빈",
+   "en": "Jongbin Park"
+  },
+  "new_2026": true
+ },
+ {
   "slug": "physical-security-interworking",
-  "title": {"ko": "물리보안 연동 절차서 및 연동성 시험 안내서 개발",
-            "en": "Physical Security Interworking Procedures and Interoperability Test Guide"},
-  "agency": {"ko": "민간 수탁", "en": "Private-sector contract"},
-  "agency_short": {"ko": "민간", "en": "Private"},
-  "role": "contract", "start": "2026-05", "end": "2026-10",
-  "pi": {"ko": "김동칠", "en": "Dongchil Kim"}, "new_2026": true
-}
+  "title": {
+   "ko": "물리보안 연동 절차서 및 연동성 시험 안내서 개발",
+   "en": "Physical Security Interworking Procedures and Interoperability Test Guide"
+  },
+  "agency": {
+   "ko": "민간 수탁",
+   "en": "Private-sector contract"
+  },
+  "agency_short": {
+   "ko": "민간",
+   "en": "Private"
+  },
+  "role": "contract",
+  "start": "2026-05",
+  "end": "2026-10",
+  "pi": {
+   "ko": "김동칠",
+   "en": "Dongchil Kim"
+  },
+  "new_2026": true
+ }
 ]
