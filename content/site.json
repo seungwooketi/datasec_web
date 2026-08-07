@@ -105,16 +105,8 @@
     "phone": "+82 (0)31-737-0539",
     "map_url": "https://map.naver.com/p/search/%ED%8C%90%EA%B5%90%EA%B8%80%EB%A1%9C%EB%B2%8C%EB%B9%84%EC%A6%88%EC%84%BC%ED%84%B0%20%EC%97%85%EB%AC%B4%EB%8F%99",
     "map_label": {"ko": "네이버 지도", "en": "Naver Map"},
-    "_notes": "notes 는 비워 두면 그 칸이 아예 안 나온다. 대중교통·주차 안내를 직접 채운다.",
-    "notes": [
-      {
-        "title": {"ko": "방문 전에", "en": "Before you visit"},
-        "body": {
-          "ko": "연구원 출입에는 사전 등록이 필요합니다. 방문 일정을 미리 알려 주시면 안내해 드리겠습니다.",
-          "en": "Entry to the institute requires prior registration. Let us know your visit in advance and we will arrange it."
-        }
-      }
-    ]
+    "_notes": "제목/본문 쌍을 넣으면 주소 아래에 카드로 나온다. 비어 있으면 그 칸이 아예 안 나온다.",
+    "notes": []
   },
 
   "contact": {
