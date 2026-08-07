@@ -276,6 +276,12 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 .visitbox .blueprint { width: 100%; }
 .visitbox .dl { grid-template-columns: 92px 1fr; }
 .visitbox .dl:last-child { border-bottom: 0; }
+.maplink {
+  display: inline-block; margin-top: 8px; font-size: 12px; letter-spacing: .06em;
+  text-transform: uppercase; font-weight: 600;
+  border: 1px solid var(--color-divider); padding: 4px 10px;
+}
+.maplink:hover { border-color: var(--color-accent); }
 
 /* ── 좁은 화면 ────────────────────────────────────────────────── */
 @media (max-width: 1080px) {

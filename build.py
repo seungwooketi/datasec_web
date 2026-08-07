@@ -719,7 +719,10 @@ def page_collaborate(lg, site, stats):
 def page_visit(lg, site):
     t = T[lg]
     v = site["visit"]
-    rows = [(t["addr"], f'{e(v["org_line"][lg])}<br>{e(v["address"][lg])}')]
+    # 지도는 주소 바로 아래의 **작은 링크**다 — 큰 버튼을 하나 더 두면 문의 버튼과 경쟁한다.
+    maplink = (f'<a class="maplink" href="{e(v["map_url"])}" rel="noopener" target="_blank">'
+               f'{e(v["map_label"][lg])} ↗</a>')
+    rows = [(t["addr"], f'{e(v["org_line"][lg])}<br>{e(v["address"][lg])}<br>{maplink}')]
     if v.get("phone"):
         rows.append((t["phone"], f'<span class="tnum">{e(v["phone"])}</span>'))
     dl = "".join(f'<div class="dl reg"><span class="dt">{e(k)}</span><span>{val}</span></div>'
@@ -734,8 +737,6 @@ def page_visit(lg, site):
 <h1 class="ht h-sec">{e(v['title'][lg])}</h1>
 <div class="visitbox">
 {blueprint(f'<div class="reg-inner">{dl}</div>', style="padding:18px")}
-<a class="btn btn-secondary" href="{e(v['map_url'])}" rel="noopener"
-   target="_blank">{e(v['map_label'][lg])}</a>
 </div>
 {f'<div class="ways">{cards}</div>' if cards else ''}
 </div>

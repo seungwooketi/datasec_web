@@ -99,12 +99,13 @@
       "en": "AI Data and Security Research Center · AI Research Division · KETI"
     },
     "address": {
-      "ko": "(13509) 경기도 성남시 분당구 새나리로 25 (야탑동)",
-      "en": "25 Saenari-ro, Bundang-gu, Seongnam-si, Gyeonggi-do 13509, Republic of Korea"
+      "ko": "(13449) 경기도 성남시 수정구 창업로 43 판교글로벌비즈센터 업무동 907호",
+      "en": "Room 907, Office Bldg., Pangyo Global Biz Center, 43 Changeop-ro, Sujeong-gu, Seongnam-si, Gyeonggi-do 13449, Republic of Korea"
     },
-    "phone": "031-789-7000",
-    "map_url": "https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%EC%84%B1%EB%82%A8%EC%8B%9C%20%EB%B6%84%EB%8B%B9%EA%B5%AC%20%EC%83%88%EB%82%98%EB%A6%AC%EB%A1%9C%2025",
-    "map_label": {"ko": "지도에서 보기 →", "en": "Open in maps →"},
+    "_phone": "⚠️ 031-789-7000 은 야탑 본원 대표전화라 이 주소와 맞지 않아 비워 뒀다.",
+    "phone": "",
+    "map_url": "https://map.naver.com/p/search/%ED%8C%90%EA%B5%90%EA%B8%80%EB%A1%9C%EB%B2%8C%EB%B9%84%EC%A6%88%EC%84%BC%ED%84%B0%20%EC%97%85%EB%AC%B4%EB%8F%99",
+    "map_label": {"ko": "네이버 지도", "en": "Naver Map"},
     "_notes": "notes 는 비워 두면 그 칸이 아예 안 나온다. 대중교통·주차 안내를 직접 채운다.",
     "notes": [
       {
