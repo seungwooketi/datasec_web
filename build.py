@@ -285,7 +285,8 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
     center = site["center"][lg]
     email = site.get("contact", {}).get("email", "")
     foot_mid = f'<a href="mailto:{e(email)}">{e(email)}</a>' if email else e(site["org_url_label"])
-    canonical = f"https://www.datasec.work/{lg}/{here}"
+    base = site["site_url"].rstrip("/")
+    canonical = f"{base}/{lg}/{here}"
     return f"""<!doctype html>
 <html lang="{lg}">
 <head>
@@ -294,9 +295,9 @@ def shell(lg: str, here: str, title: str, desc: str, body: str, site: dict) -> s
 <title>{e(title)} — {e(center)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(canonical)}">
-<link rel="alternate" hreflang="ko" href="https://www.datasec.work/ko/{here}">
-<link rel="alternate" hreflang="en" href="https://www.datasec.work/en/{here}">
-<link rel="alternate" hreflang="x-default" href="https://www.datasec.work/{DEFAULT_LANG}/{here}">
+<link rel="alternate" hreflang="ko" href="{base}/ko/{here}">
+<link rel="alternate" hreflang="en" href="{base}/en/{here}">
+<link rel="alternate" hreflang="x-default" href="{base}/{DEFAULT_LANG}/{here}">
 <meta property="og:title" content="{e(title)} — {e(center)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:type" content="website">
@@ -755,9 +756,13 @@ def main() -> int:
              f"(예: {missing_summary[0]}.md)")
 
     shutil.copytree(ROOT / "assets", OUT / "assets")
-    write("CNAME", "www.datasec.work\n")
+    # ⭐ 도메인은 `content/site.json` 의 `site_url` 하나에서 온다 — 여섯 군데에 박아 두면
+    #    도메인을 바꿀 때 한 군데를 반드시 빠뜨린다(그리고 에러는 안 난다).
+    base = site["site_url"].rstrip("/")
+    host = base.split("://", 1)[-1].strip("/")
+    write("CNAME", host + "\n")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
-    write("robots.txt", "User-agent: *\nAllow: /\nSitemap: https://www.datasec.work/sitemap.xml\n")
+    write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
 
     urls = []
     for lg in LANGS:
@@ -768,14 +773,14 @@ def main() -> int:
     write("sitemap.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          + "".join(f"<url><loc>https://www.datasec.work{u}</loc></url>\n" for u in urls)
+          + "".join(f"<url><loc>{base}{u}</loc></url>\n" for u in urls)
           + "</urlset>\n")
 
     write("index.html", f"""<!doctype html>
 <html lang="{DEFAULT_LANG}">
 <head><meta charset="utf-8">
 <title>{e(site['center'][DEFAULT_LANG])}</title>
-<link rel="canonical" href="https://www.datasec.work/{DEFAULT_LANG}/">
+<link rel="canonical" href="{base}/{DEFAULT_LANG}/">
 <meta http-equiv="refresh" content="0; url=/{DEFAULT_LANG}/">
 <script>
 // 브라우저 언어가 한국어가 아니면 영문판으로 보낸다. 스크립트가 없으면 위 refresh 가 받는다.

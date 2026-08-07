@@ -1,4 +1,6 @@
 {
+  "site_url": "https://www.datasec.work",
+
   "center": {"ko": "인공지능데이터보안연구센터", "en": "AI Data and Security Research Center"},
   "location": {"ko": "경기도 성남시", "en": "Seongnam, Republic of Korea"},
   "org_url": "https://www.keti.re.kr",
