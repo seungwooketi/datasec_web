@@ -5,28 +5,26 @@
   "location": {"ko": "경기도 성남시", "en": "Seongnam, Republic of Korea"},
   "org_url": "https://www.keti.re.kr",
   "org_url_label": "www.keti.re.kr",
+  "org_name": {"ko": "한국전자기술연구원", "en": "Korea Electronics Technology Institute"},
+  "org_division": {"ko": "인공지능연구본부", "en": "AI Research Division"},
 
   "hero": {
-    "ko": "데이터가 믿을 만한지 묻는 일부터 합니다.",
-    "en": "We start by asking whether the data can be trusted."
+    "ko": "인공지능을 위한 데이터 사용성의 향상과 안전한 사용 기술을 연구합니다.",
+    "en": "We connect and secure the data, and the judgment built on it."
   },
   "lede": {
     "ko": "인공지능데이터보안연구센터는 현장에 나간 인공지능이 계속 맞게 동작하도록 만드는 기술을 연구합니다. 멀티모달 데이터 분석, 영상보안, 그리고 모델이 시간이 지나며 조용히 나빠지는 문제를 다룹니다.",
     "en": "The AI Data and Security Research Center works on keeping artificial intelligence correct after it is deployed. The work spans multimodal data analysis, video security, and the problem of models quietly degrading over time."
   },
   "about": {
-    "ko": "12명의 연구원이 과학기술정보통신부·해양수산부·산업통상자원부·문화체육관광부의 정부 R&D 과제와 민간 수탁 과제를 수행합니다. 주관기관으로 이끄는 과제와 공동연구기관으로 참여하는 과제가 함께 있습니다.",
-    "en": "Twelve researchers on government R&D programmes funded by MSIT, MOF, MOTIE and MCST, and on private-sector contracts — as lead institute on some, as a joint institute on others."
+    "ko": "임베디드로부터 데이터 분석, 인공지능 모델에 이르기까지 다양한 경험을 보유한 12명의 연구진이 국내외 파트너들과 다양한 연구를 수행 중에 있습니다.",
+    "en": "Twelve researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
   },
 
   "research_title": {"ko": "정부 R&D와 민간 수탁 과제.", "en": "Government R&D and contract research."},
   "research_lede": {
     "ko": "지원기관·수행기간·참여형태와 함께 정리했습니다. 종료된 과제도 목록에 남습니다. 값은 사내 정본 파일에서 그대로 옮겨 온 것입니다.",
     "en": "Listed with funder, period and the center's role. Closed projects stay on the list. Values are carried over verbatim from the center's internal source-of-truth files."
-  },
-  "research_note": {
-    "ko": "대외 공개가 가능한 과제만 싣습니다",
-    "en": "Only projects cleared for public listing appear here"
   },
 
   "people_title": {"ko": "12명의 연구원.", "en": "Twelve researchers."},

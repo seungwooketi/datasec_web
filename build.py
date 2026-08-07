@@ -71,9 +71,6 @@ T = {
         "news_empty": "아직 올린 소식이 없습니다.",
         "lang_switch": "언어", "sample_badge": "예시",
         "sample_note": "이 글은 디자인 확인용 예시입니다. 게시 전에 지우거나 실제 내용으로 바꾸세요.",
-        "updated": "정본 기준일",
-        "org": "한국전자기술연구원",
-        "footer_note": "이 사이트의 과제·구성원 정보는 사내 정본 파일에서 옮겨 옵니다.",
     },
     "en": {
         "nav_home": "Overview", "nav_research": "Research", "nav_people": "People",
@@ -102,9 +99,6 @@ T = {
         "news_empty": "No news posted yet.",
         "lang_switch": "Language", "sample_badge": "Sample",
         "sample_note": "This post is a sample for design review. Remove or replace it before publishing.",
-        "updated": "Source of truth as of",
-        "org": "Korea Electronics Technology Institute",
-        "footer_note": "Project and member information is carried over from the center's internal source-of-truth files.",
     },
 }
 
@@ -399,7 +393,8 @@ def page_home(lg, site, projects, members, news, stats):
         val = f'<a href="mailto:{e(v)}">{e(v)}</a>' if key == "email" else e(v)
         dl.append(f'<div class="dl"><span class="dt">{e(label)}</span><span>{val}</span></div>')
     org_link = (f'<div class="dl"><span class="dt">{"소속" if lg == "ko" else "Institute"}</span>'
-                f'<span><a href="{e(site["org_url"])}" rel="noopener">{e(t["org"])}</a></span></div>')
+                f'<span><a href="{e(site["org_url"])}" rel="noopener">{e(site["org_name"][lg])}</a>'
+                f' {e(site["org_division"][lg])}</span></div>')
     col3 = (f'<p class="lede-s">{e(site["about"][lg])}</p>'
             f'<div class="dlist">{"".join(dl)}{org_link}</div>'
             + blueprint(
@@ -429,7 +424,7 @@ def page_home(lg, site, projects, members, news, stats):
     return shell(lg, "", t["nav_home"], site["lede"][lg], body, site)
 
 
-def page_research(lg, site, projects, stats):
+def page_research(lg, site, projects):
     t = T[lg]
     facets = [("all", t["filter_all"]), ("lead", t[ROLE_KEY["lead"]]),
               ("joint", t[ROLE_KEY["joint"]]), ("contract", t[ROLE_KEY["contract"]]),
@@ -477,8 +472,6 @@ def page_research(lg, site, projects, stats):
 <tbody>{rows}</tbody>
 </table>
 </div>
-<p class="asof">{e(site['research_note'][lg])} · {e(t['updated'])}
-<span class="tnum">{e(stats['asof_full'])}</span></p>
 </div>
 <script src="/assets/filter.js" defer></script>
 """
@@ -636,8 +629,8 @@ def page_collaborate(lg, site, stats):
 {kicker(t['contact'])}
 <p class="lede-m">{e(site['collaborate']['contact_lede'][lg])}</p>
 {contact}
-<p class="asof"><a href="{e(site['org_url'])}" rel="noopener">{e(t['org'])}</a> ·
-{e(site['location'][lg])}</p>
+<p class="asof"><a href="{e(site['org_url'])}" rel="noopener">{e(site['org_name'][lg])}</a>
+{e(site['org_division'][lg])} · {e(site['location'][lg])}</p>
 </section>
 </div>
 """
@@ -666,7 +659,6 @@ def main() -> int:
     site = load_json("content/site.json")
     projects = load_json("data/projects.json")
     members = load_json("data/members.json")
-    meta = load_json("data/meta.json")
     news = load_news()
     if BLOCKERS:
         for b in BLOCKERS:
@@ -720,8 +712,6 @@ def main() -> int:
         "active": sum(1 for p in projects if p["status"] != "closed"),
         "lead": sum(1 for p in projects if p["role"] == "lead"),
         "new": sum(1 for p in projects if p.get("new_2026")),
-        "asof": meta.get("asof_label", ""),
-        "asof_full": meta.get("asof", ""),
     }
 
     if OUT.exists():
@@ -731,7 +721,7 @@ def main() -> int:
     missing_summary: list[str] = []
     for lg in LANGS:
         write(f"{lg}/index.html", page_home(lg, site, projects, members, news, stats))
-        write(f"{lg}/research/index.html", page_research(lg, site, projects, stats))
+        write(f"{lg}/research/index.html", page_research(lg, site, projects))
         write(f"{lg}/people/index.html", page_people(lg, site, members, projects))
         write(f"{lg}/news/index.html", page_news_index(lg, site, news))
         write(f"{lg}/collaborate/index.html", page_collaborate(lg, site, stats))
