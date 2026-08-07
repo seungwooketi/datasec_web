@@ -2,7 +2,6 @@
 title: New projects started in 2026
 date: 2026-04-16
 summary: New government R&D programmes began in April — low-visibility 3D reconstruction, cross-device sensory sharing, a marine-battery data hub and spatial audio for virtual spaces.
-sample: true
 ---
 
 New government R&D programmes began in April 2026. The center is the **lead institute on three** of them.

@@ -2,7 +2,6 @@
 title: 물리보안 연동 절차서 민간 수탁 착수
 date: 2026-05-18
 summary: 물리보안 시스템 간 연동 절차와 연동성 시험 방법을 문서로 정리하는 민간 수탁 과제를 시작했습니다.
-sample: true
 ---
 
 [물리보안 연동 절차서 및 연동성 시험 안내서 개발](/ko/research/physical-security-interworking/) 과제를 5월에 시작했습니다. 2026년 10월까지 수행합니다.
