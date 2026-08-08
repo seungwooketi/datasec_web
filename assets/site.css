@@ -57,6 +57,10 @@ h2.ht, h3.ht { font-size: inherit; line-height: inherit; letter-spacing: inherit
 .langseg .seg-opt.is-on { color: var(--color-bg); }
 .langseg .seg-opt.is-on:hover { color: var(--color-bg); }
 
+/* ⭐ 본문 폭을 1280px 로 묶는다. 핸드오프가 「desktop-first at ~1280px」 로 설계됐고,
+   그보다 넓어지면 표제 옆 그림 오른쪽이 통째로 비어 배치가 무너진다.
+   ⚠️ 머리말도 같이 묶는다 — 안 묶으면 로고가 화면 끝으로 달아나 본문과 안 맞는다. */
+.nav, main, footer { width: 100%; max-width: 1280px; margin-inline: auto; }
 main { flex: 1; padding: 0 44px 56px; }
 .page { padding: 36px 0 0; }
 .page.narrow { max-width: 760px; }
@@ -96,7 +100,9 @@ footer {
    ⚠️ CI 히어로는 바탕이 페이지와 같은 `#f2f2f3` 이고 **등록마크를 스스로 그린다** —
    그래서 `.blueprint` 로 감싸지 않는다(마크가 두 겹이 된다). */
 .herorow {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px);
+  display: grid; grid-template-columns: minmax(0, 540px) minmax(0, 560px);
+  justify-content: start;   /* 남는 폭은 **오른쪽에** 둔다 — 글자 칸을 1fr 로 두면
+                               표제가 그 폭을 다 차지하지 않아 글과 그림 사이가 벌어졌다 */
   gap: 48px; align-items: center; padding-top: 44px;
 }
 .heroart { line-height: 0; margin: 0; }
