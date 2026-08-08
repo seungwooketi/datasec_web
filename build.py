@@ -229,6 +229,8 @@ def load_news() -> dict[str, list[dict]]:
         return news
     seen: dict[str, set[str]] = {}
     for f in sorted(d.glob("*.md")):
+        if f.name == "README.md":            # 쓰는 법 안내. 글이 아니다.
+            continue
         parts = f.name[:-3].rsplit(".", 1)
         if len(parts) != 2 or parts[1] not in LANGS:
             warn(f"뉴스 파일 이름이 `<slug>.<lang>.md` 가 아니다: {f.name}")
