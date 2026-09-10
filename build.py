@@ -718,8 +718,11 @@ def page_people(lg, site, members, projects, detailed):
     t = T[lg]
     by_slug = {p["slug"]: p for p in projects}
     # ⭐ 과제가 붙은 사람과 명단만 있는 사람을 나눈다 — 한 형식에 다 넣으면 빈 행만 길게 남는다.
-    detailed = [m for m in members if m["projects"]]
-    listed = [m for m in members if not m["projects"]]
+    # ⭐ 가르는 기준은 **연구직 여부**이지 「과제가 있는가」가 아니다 —
+    #    갓 합류해 아직 과제가 붙지 않은 연구원이 명단 칸으로 밀려난다.
+    #    ⛔ 고용형태 자체는 화면에 싣지 않는다(§ 대외 공개물). 배치에만 쓴다.
+    detailed = [m for m in members if m.get("research") or m["projects"]]
+    listed = [m for m in members if not (m.get("research") or m["projects"])]
     cards = []
     for m in detailed:
         own = [x for x in m["projects"] if x["role"] == "lead"]
