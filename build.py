@@ -325,6 +325,11 @@ NAVS = [("", "nav_home"), ("research/", "nav_research"), ("people/", "nav_people
         ("news/", "nav_news"), ("collaborate/", "nav_collab"), ("visit/", "nav_visit")]
 
 
+# 도메인 표기 - "datasec work" 같은 도메인 검색어가 이 사이트와 맞물리게 한다.
+# 화면(바닥글)에 보이게 두고, JSON-LD alternateName 도 같은 값을 쓴다(§9).
+DOMAIN_LABEL = "datasec.work"
+
+
 def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, site: dict,
           og_type: str = "website", jsonld: str = "", head_extra: str = "") -> str:
     """⛔ `nav_key` 와 `path` 는 **다른 것**이다.
@@ -358,7 +363,7 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{e(title)} — {e(center)}</title>
+<title>{e(title)} — {e(center)}{" | " + DOMAIN_LABEL if path == "" else ""}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{e(canonical)}">
 <link rel="alternate" hreflang="ko" href="{base}/ko/{path}">
@@ -399,6 +404,7 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 <footer>
 <span>{e(site['center_full'][lg])}</span>
 <span>{foot_mid}</span>
+<span class="foot-domain"><a href="/{lg}/">{DOMAIN_LABEL}</a></span>
 </footer>
 <script src="{stamp('/assets/mail.js')}" defer></script>
 </body>
@@ -463,7 +469,8 @@ def org_jsonld(lg: str, site: dict, stats: dict) -> str:
         "@id": f"{base}/#center",
         "name": site["center_full"][lg],
         "alternateName": [site["center"]["ko"], site["center"]["en"],
-                          site["center_full"]["ko"], site["center_full"]["en"], "ADSRC"],
+                          site["center_full"]["ko"], site["center_full"]["en"], "ADSRC",
+                          DOMAIN_LABEL],
         "url": f"{base}/{lg}/",
         "logo": f"{base}/assets/brand/symbol-1024.png",
         "image": f"{base}/assets/brand/og-image.png",
