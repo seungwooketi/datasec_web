@@ -4,7 +4,7 @@ date: 2026-10-13
 summary: Does running inside a TEE make an AI service trustworthy? A comparison of what cloud confidential computing protects and what Apple's Private Cloud Compute (PCC) adds on top of the TEE, seen as component versus system.
 ---
 
-If you have a TEE (Trusted Execution Environment), do you have an AI service users can trust? Apple's Private Cloud Compute (PCC) is often described as "Apple's confidential computing," but it does not sit at the same layer as a TEE. A TEE is an isolated region the processor provides; PCC is a service design that uses that region as its foundation and builds a good deal on top. Comparing the two is less about which is better than about seeing what is missing between a component and a system, and how PCC fills the gap.
+If you have a TEE (Trusted Execution Environment), do you have an AI service users can trust? Apple's [Private Cloud Compute (PCC)](https://security.apple.com/blog/private-cloud-compute/) is often described as "Apple's confidential computing," but it does not sit at the same layer as a TEE. A TEE is an isolated region the processor provides; PCC is a service design that uses that region as its foundation and builds a good deal on top. Comparing the two is less about which is better than about seeing what is missing between a component and a system, and how PCC fills the gap.
 
 # How confidential computing works
 
