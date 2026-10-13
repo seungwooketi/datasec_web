@@ -50,9 +50,10 @@ T = {
         "nav_home": "센터 소개", "nav_research": "연구", "nav_people": "구성원",
         "nav_news": "소식", "nav_collab": "협력", "nav_visit": "찾아오시는 길",
         "contact": "문의하기", "k_visit": "05 · 찾아오시는 길",
-        "addr": "주소", "phone": "대표전화", "k_roster": "연구원 · 행정",
-        "funders": "지원 부처", "k_lead": "저희가 이끄는 과제",
+        "addr": "주소", "phone": "대표전화", "k_roster": "연구원, 행정",
+        "funders": "지원 부처", "k_lead": "센터 주관 과제",
         "skip": "본문으로 건너뛰기",
+        "range": " ~ ", "sep": ", ",
         "k_latest": "01 · 새소식", "k_research": "02 · 연구 과제", "k_center": "03 · 센터 안내",
         "k_people": "03 · 구성원", "k_news": "01 · 새소식", "k_collab": "04 · 협력",
         "all_projects": "연구 과제 목록 →", "all_news": "지난 소식 →",
@@ -61,7 +62,7 @@ T = {
         "project": "과제명", "period": "수행기간", "funder": "지원기관",
         "role": "참여형태", "status": "상태", "pi": "담당자", "no": "번호",
         "members_n": "참여 구성원",
-        "role_lead": "주관", "role_joint": "참여·공동", "role_contract": "기업수탁",
+        "role_lead": "주관", "role_joint": "참여/공동", "role_contract": "기업수탁",
         "st_active": "수행중", "st_closing": "종료예정", "st_closed": "종료",
         "tag_new": "26년 신규",
         "filter_all": "전체", "count_projects": "과제 {n}개",
@@ -72,7 +73,7 @@ T = {
         "own": "책임", "join": "참여",
         "in_dept": "부서 과제", "ext_n": "부서 외 과제 {n}건 참여",
         "no_projects": "수행 중인 과제가 없습니다.",
-        "news_empty": "아직 올린 소식이 없습니다.",
+        "news_empty": "등록된 소식이 없습니다.",
         "lang_switch": "언어", "sample_badge": "예시",
         "sample_note": "이 글은 디자인 확인용 예시입니다. 게시 전에 지우거나 실제 내용으로 바꾸세요.",
     },
@@ -83,6 +84,7 @@ T = {
         "addr": "Address", "phone": "Phone", "k_roster": "Researchers · Administration",
         "funders": "Funding ministries", "k_lead": "Programmes we lead",
         "skip": "Skip to content",
+        "range": " – ", "sep": " · ",
         "k_latest": "01 · Latest", "k_research": "02 · Research programmes",
         "k_center": "03 · The center", "k_people": "03 · People",
         "k_news": "01 · Latest", "k_collab": "04 · Collaborate",
@@ -490,8 +492,8 @@ def blueprint(inner: str, cls: str = "", style: str = "") -> str:
             '{}</div>').format(cls, attr, inner)
 
 
-def period(p: dict) -> str:
-    return f'<span class="tnum">{e(p["start"])} – {e(p["end"])}</span>'
+def period(p: dict, lg: str) -> str:
+    return f'<span class="tnum">{e(p["start"])}{T[lg]["range"]}{e(p["end"])}</span>'
 
 
 def tags(p: dict, lg: str) -> str:
@@ -530,7 +532,7 @@ def page_home(lg, site, projects, members, news, stats, detailed):
     rows = "".join(
         f'<tr><td class="num">{i:02d}</td><td>'
         f'{project_link(lg, p, detailed, e(p["title"][lg]), "ht rowtitle")}'
-        f'<div class="meta">{period(p)} · {e(p["agency_short"][lg])}</div></td></tr>'
+        f'<div class="meta">{period(p, lg)}{t["sep"]}{e(p["agency_short"][lg])}</div></td></tr>'
         for i, p in enumerate(active[:5], 1))
     col2 = (f'<table class="table fixed"><tbody>{rows}</tbody></table>'
             f'<a class="btn btn-ghost flush" href="/{lg}/research/">'
@@ -641,7 +643,7 @@ def page_research(lg, site, projects, members, detailed):
         f'<td class="num">{i:02d}</td>'
         f'<td>{project_link(lg, p, detailed, e(p["title"][lg]), "ht rowtitle")}</td>'
         f'<td>{e(p["agency_short"][lg])}</td>'
-        f'<td class="tnum">{e(p["start"])} – {e(p["end"])}</td>'
+        f'<td class="tnum">{e(p["start"])}{t["range"]}{e(p["end"])}</td>'
         f'<td>{person_link(lg, p["pi"], members)}</td>'
         f'<td class="tagcell">{tags(p, lg)}</td></tr>'
         for i, p in enumerate(projects, 1))
@@ -678,7 +680,7 @@ def page_project(lg, site, p, members, summary):
     who = [m for m in members if any(x["slug"] == p["slug"] for x in m["projects"])]
     reg = [
         (t["funder"], e(p["agency"][lg])),
-        (t["period"], f'<span class="tnum">{e(p["start"])} – {e(p["end"])}</span>'),
+        (t["period"], period(p, lg)),
         (t["role"], e(t[ROLE_KEY[p["role"]]])),
         (t["pi"], person_link(lg, p["pi"], members)),
         (t["members_n"], f'<span class="tnum">{len(who)}</span>' if who else "—"),
@@ -702,7 +704,7 @@ def page_project(lg, site, p, members, summary):
     f'<span class="tb tb-title">{e(p["title"][lg])}</span>'
     f'<span class="tb">{e(p["agency_short"][lg])}</span>'
     f'<span class="tb">{e(t[ROLE_KEY[p["role"]]])}</span>'
-    f'<span class="tb tnum">{e(p["start"])} – {e(p["end"])}</span>',
+    f'<span class="tb tnum">{e(p["start"])}{t["range"]}{e(p["end"])}</span>',
     cls="titleblock", style="margin-top:22px")}
 <div class="twoup">
 <div>{left}</div>
@@ -749,7 +751,7 @@ def page_people(lg, site, members, projects, detailed):
                 f'<img src="/assets/people/{e(m["photo"])}" alt="" loading="lazy" '
                 f'width="{pw}" height="{ph}">', cls="duotone portrait")
         unit = "건" if lg == "ko" else ""
-        lead_note = " · {} {}".format(t["own"], len(own)) if own else ""
+        lead_note = "{}{} {}".format(t["sep"], t["own"], len(own)) if own else ""
         cards.append(
             f'<article class="person" id="{e(m["slug"])}">'
             f'<div class="pid">'
@@ -1047,7 +1049,7 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
 <link rel="stylesheet" href="/assets/industry.css"><link rel="stylesheet" href="/assets/site.css">
 </head><body data-lang="ko"><main id="main"><div class="page narrow">
 <h1 class="ht h-sec">404</h1>
-<p class="lede-m">요청하신 쪽을 찾을 수 없습니다. / The page you asked for is not here.</p>
+<p class="lede-m">요청하신 페이지를 찾을 수 없습니다. / The page you asked for is not here.</p>
 <p><a href="/ko/">한국어</a> · <a href="/en/">English</a></p>
 </div></main></body></html>
 """)
