@@ -5,7 +5,7 @@
 ```bash
 python3 build.py                # docs/ 를 다시 굽는다. 의존성 0
 python3 build.py --strict       # ⛔ 공개 차단 사유가 있으면 exit 1
-python3 -m http.server 8765 --directory docs
+python3 -m http.server 8770 --directory docs
 ```
 
 ⭐ **`README.md` 는 사람이 읽는 사용설명서, 이 파일은 고칠 때 지켜야 할 규약이다.**

@@ -4,7 +4,7 @@
 
 ```bash
 python3 build.py          # docs/ 를 다시 그린다. 의존성 0
-python3 -m http.server 8765 --directory docs
+python3 -m http.server 8770 --directory docs
 ```
 
 ---
