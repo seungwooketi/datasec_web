@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confidential Computing - TEE and PCC — AI Data and Security Research Center</title>
+<meta name="description" content="Does running inside a TEE make an AI service trustworthy? A comparison of what cloud confidential computing protects and what Apple&#x27;s Private Cloud Compute (PCC) adds on top of the TEE, seen as component versus system.">
+<link rel="canonical" href="https://www.datasec.work/en/news/2026-10-confidential-computing-tee-pcc/">
+<link rel="alternate" hreflang="ko" href="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
+<link rel="alternate" hreflang="en" href="https://www.datasec.work/en/news/2026-10-confidential-computing-tee-pcc/">
+<link rel="alternate" hreflang="x-default" href="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
+<meta property="og:title" content="Confidential Computing - TEE and PCC — AI Data and Security Research Center">
+<meta property="og:description" content="Does running inside a TEE make an AI service trustworthy? A comparison of what cloud confidential computing protects and what Apple&#x27;s Private Cloud Compute (PCC) adds on top of the TEE, seen as component versus system.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.datasec.work/en/news/2026-10-confidential-computing-tee-pcc/">
+<meta property="og:site_name" content="AI Data and Security Research Center">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.datasec.work/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ADSRC — AI Data and Security Research Center">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="article:published_time" content="2026-10-13">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/adsrc-symbol-16.svg?v=beb052aab2">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png?v=c2808c83d6">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png?v=cd0a9c8685">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon-180.png?v=6073ba875d">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
+<link rel="stylesheet" href="/assets/site.css?v=f532f324f8">
+</head>
+<body data-lang="en">
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+<a href="/en/" class="nav-brand" aria-label="ADSRC — AI Data and Security Research Center"><svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true" focusable="false"><g fill="none" stroke="#5980A6" stroke-width="2.5"><rect x="6" y="6" width="24" height="24"/><rect x="18" y="18" width="24" height="24"/></g><rect x="18" y="18" width="12" height="12" fill="#5980A6"/></svg>
+<span class="brand-text"><b>ADSRC</b><em>AI Data and Security Research Center</em></span></a>
+<div class="navlinks"><a href="/en/">Overview</a><a href="/en/research/">Research</a><a href="/en/people/">People</a><a href="/en/news/" aria-current="page">News</a><a href="/en/collaborate/">Collaborate</a><a href="/en/visit/">Visit</a></div>
+<div class="seg langseg" role="group" aria-label="Language"><a class="seg-opt is-on" hreflang="en" href="/en/news/2026-10-confidential-computing-tee-pcc/" aria-current="true">EN</a><a class="seg-opt" hreflang="ko" href="/ko/news/2026-10-confidential-computing-tee-pcc/">한국어</a></div>
+<a class="btn btn-primary" href="/en/collaborate/#contact">Contact</a>
+</nav>
+<main id="main">
+
+<div class="page narrow">
+<a class="back" href="/en/news/">← All news</a>
+<div class="num postdate">2026-10-13</div>
+<h1 class="ht h-proj">Confidential Computing - TEE and PCC</h1>
+
+<div class="prose"><p>If you have a TEE (Trusted Execution Environment), do you have an AI service users can trust? Apple's Private Cloud Compute (PCC) is often described as "Apple's confidential computing," but it does not sit at the same layer as a TEE. A TEE is an isolated region the processor provides; PCC is a service design that uses that region as its foundation and builds a good deal on top. Comparing the two is less about which is better than about seeing what is missing between a component and a system, and how PCC fills the gap.</p>
+<h2>How confidential computing works</h2>
+<p>The Confidential Computing Consortium defines confidential computing as protecting data in use by computing inside a hardware-based, <em>attested</em> TEE. The CPU isolates a region and encrypts its memory, measures the software loaded into it, and signs a report with a key fused into the chip. The data owner verifies the report before releasing any decryption key. Isolation and encryption keep others from <em>seeing</em>; attestation tells you whether you can <em>trust</em>.</p>
+<p>The flow hides an assumption: <strong>who verifies the attestation</strong>, and <strong>what reference they use to decide a measurement is "good."</strong> Most of the difference between PCC and ordinary cloud confidential computing comes down to that.</p>
+<h2>What cloud confidential computing protects</h2>
+<p>All three major clouds offer CPU-TEE confidential VMs, and Azure and Google Cloud also offer GPU TEEs on H100 and Blackwell-class hardware. These services distrust the cloud operator, the hypervisor and other tenants, and trust the CPU and GPU vendors' hardware. Physical attacks are mostly out of scope.</p>
+<p>The key point is that <strong>the party verifying attestation and releasing keys is the tenant, the customer running the workload.</strong> That fits well when the data owner is also the verifier, as when a bank processes its own data in the cloud. In a personal AI service, though, the data owner is the user and the service operator sits in the tenant's seat. Cloud confidential computing protects the operator from the cloud provider; <strong>it does not protect the user's data from the operator.</strong> A TEE guarantees "code with this hash runs on this hardware." Whether that code keeps data, or whether the operator can get in, is left to system design.</p>
+<h2>What PCC adds on top of the TEE</h2>
+<p>Apple announced PCC in June 2024 with five requirements. For each, what a TEE gives alone and what PCC adds:</p>
+<ul><li><strong>Stateless computation</strong>: a TEE gives memory encryption and key destruction at teardown; PCC removes general-purpose logging, lets only audited logs leave the node, and re-randomizes the data-volume key on every reboot</li><li><strong>Enforceable guarantees</strong>: a TEE gives hardware isolation; PCC avoids relying on external components such as TLS-terminating load balancers for core protections</li><li><strong>No privileged runtime access</strong>: a TEE shuts out the hypervisor and host OS; PCC also removes remote shells, debugging and Developer Mode, and runs only signed code</li><li><strong>Non-targetability</strong>: not a TEE concept at all; PCC adds a third-party OHTTP relay, blind-signature credentials and encryption to only a subset of nodes</li><li><strong>Verifiable transparency</strong>: a TEE gives signed measurements; PCC publishes every production image measurement in a transparency log, ships a Virtual Research Environment (VRE) and runs a bounty</li></ul>
+<p>The central move is <strong>making the user's device the verifier.</strong> The device encrypts requests only to nodes whose attested measurements match a release in the public transparency log. If the operator quietly deploys different code, it isn't in the log and the device won't send it data: the operator takes itself out of the trust boundary. By publishing images and offering the VRE and up to $1M in bounties, Apple also lets outsiders check what those measurements actually mean.</p>
+<h2>June 2026: PCC on commodity cloud TEEs</h2>
+<p>This June Apple extended PCC to Google Cloud, combining Intel TDX, NVIDIA Blackwell confidential GPUs and Google Titan chips. The principles it set out show how it views the TEE:</p>
+<ul><li><strong>Multiple roots of trust</strong>: any component that could exfiltrate user data must attest from at least two independent roots of trust from different vendors</li><li><strong>Hardware ledger</strong>: all hardware in PCC is tracked in a verifiable append-only ledger</li><li><strong>Not relying on confidential computing alone</strong>: everything from firmware to applications is treated as TCB, and side-channel and privileged-access defenses are not left to confidential computing alone</li></ul>
+<p>With physical attacks such as TEE.fail, which pulled attestation keys out of server TEEs with a memory-bus interposer, this reads as a decision not to bet everything on one vendor's TEE and to cover the rest with system design. Personal AI services from Meta, Google and OpenAI are converging on the same shape: TEEs, remote attestation, a third-party relay and a public log.</p>
+<h2>What it means for industrial AI</h2>
+<p>On a factory floor, the party with the model (an equipment vendor) and the party with the data (the plant) are often different. If the data owner can't verify for themselves, "it runs in a TEE, so it's safe" collapses into "trust the operator." Principles worth borrowing from PCC:</p>
+<ul><li><strong>Design the flow</strong>: attest the environment, provision keys and data, execute in isolation, release only permitted results</li><li><strong>Place the verifier</strong>: put attestation verification close to the data owner</li><li><strong>Publish what measurements mean</strong>: transparency logs or reproducible builds</li><li><strong>Several roots of trust</strong>: layer defenses rather than staking everything on a single vendor's TEE</li></ul>
+<p>Public sources show no Korean cloud provider yet offering a TEE product on its own infrastructure. For data collaboration that never releases raw data, and for public-sector AI, domestic attestation-verification and transparency infrastructure will need to be built alongside the hardware.</p>
+<p>If a TEE is the technology that keeps others from <em>seeing</em>, PCC is the system that lets users <em>check</em>.</p>
+<hr class="cr">
+<p>The full article, with figures, comparison tables and references, is on the <a href="https://seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc/">blog</a>. The center's related work is listed on the <a href="/en/research/">Research</a> page.</p></div>
+</div>
+
+</main>
+<footer>
+<span>AI Data and Security Research Center, Korea Electronics Technology Institute</span>
+<span><a class="mail " href="#" rel="nofollow"><span class="rev">rk.er.itek ]ta[ crsda</span></a></span>
+<span class="foot-domain"><a href="/en/">datasec.work</a></span>
+</footer>
+<script src="/assets/mail.js?v=bc8d34ab73" defer></script>
+</body>
+</html>
