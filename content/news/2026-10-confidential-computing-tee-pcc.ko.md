@@ -1,6 +1,7 @@
 ---
 title: 기밀컴퓨팅 - TEE와 PCC
 date: 2026-10-13
+source: https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/
 summary: TEE를 쓰면 믿을 수 있는 AI 서비스가 될까요. 클라우드 기밀 컴퓨팅이 지켜 주는 범위와, Apple Private Cloud Compute(PCC)가 TEE 위에 더한 장치를 부품과 시스템의 관점에서 비교했습니다.
 ---
 
@@ -55,4 +56,4 @@ TEE가 하드웨어로 '못 보게' 만드는 기술이라면, PCC는 그 사실
 
 ---
 
-그림과 비교표, 참고 문헌을 포함한 전체 글은 [블로그](https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/)에서 보실 수 있습니다. 센터의 관련 연구는 [연구](/ko/research/) 페이지에 정리되어 있습니다.
+센터의 관련 연구는 [연구](/ko/research/) 페이지에 정리되어 있습니다.

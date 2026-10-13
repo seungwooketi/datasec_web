@@ -232,6 +232,9 @@ body[data-lang="ko"] .tb { text-transform: none; letter-spacing: 0; }
 .prose h2 { font-size: 23px; line-height: 25px; margin: 30px 0 10px; text-transform: uppercase; }
 body[data-lang="ko"] .prose h2 { text-transform: none; }
 .prose li { margin-bottom: 4px; }
+/* 원문 링크 버튼 — 소식 상세의 위와 아래. 색은 .btn-primary 를 그대로 쓴다 */
+.srcbox { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 0; font-size: 13px;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent); }
 .reg-inner .dl:last-child { border-bottom: 0; }
 .dl { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 9px 0; font-size: 14px; line-height: 21px; }
 .dl.reg { border-bottom: 1px solid var(--color-divider); }

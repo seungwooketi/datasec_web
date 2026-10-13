@@ -1,6 +1,7 @@
 ---
 title: Confidential Computing - TEE and PCC
 date: 2026-10-13
+source: https://seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc/
 summary: Does running inside a TEE make an AI service trustworthy? A comparison of what cloud confidential computing protects and what Apple's Private Cloud Compute (PCC) adds on top of the TEE, seen as component versus system.
 ---
 
@@ -55,4 +56,4 @@ If a TEE is the technology that keeps others from *seeing*, PCC is the system th
 
 ---
 
-The full article, with figures, comparison tables and references, is on the [blog](https://seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc/). The center's related work is listed on the [Research](/en/research/) page.
+The center's related work is listed on the [Research](/en/research/) page.

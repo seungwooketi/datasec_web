@@ -69,6 +69,7 @@ T = {
         "count_people": "구성원 {n}명",
         "search_projects": "과제명, 부처, 책임자 검색", "search_people": "이름 또는 직급 검색",
         "back_research": "← 연구 과제 목록", "back_news": "← 지난 소식",
+        "read_source": "전체 글 읽기 ↗", "source_note": "그림, 비교표, 참고 문헌을 포함한 원문",
         "register": "과제 정보", "summary_missing": "과제 소개는 준비 중입니다.",
         "own": "책임", "join": "참여",
         "in_dept": "부서 과제", "ext_n": "부서 외 과제 {n}건 참여",
@@ -101,6 +102,7 @@ T = {
         "count_people": "{n} members",
         "search_projects": "Search projects, funders, PIs", "search_people": "Search by name or grade",
         "back_research": "← Research programmes", "back_news": "← All news",
+        "read_source": "Read the full article ↗", "source_note": "The original, with figures, tables and references",
         "register": "Register", "summary_missing": "A project summary is not published yet.",
         "own": "PI", "join": "Member",
         "in_dept": "Center projects", "ext_n": "Also on {n} projects led by other KETI centers",
@@ -242,10 +244,15 @@ def load_news() -> dict[str, list[dict]]:
         if not meta.get("date") or not meta.get("title"):
             block(f"뉴스에 date 나 title 이 없다: {f.name}")
             continue
+        if meta.get("source") and not meta["source"].startswith("https://"):
+            block(f"뉴스 source 는 https:// 주소여야 한다: {f.name}")
+            continue
         seen.setdefault(slug, set()).add(lg)
         news[lg].append({
             "slug": slug, "date": meta["date"], "title": meta["title"],
             "summary": meta.get("summary", ""),
+            # 원문이 따로 있는 글(블로그 등)의 주소. 있으면 상세 쪽 위와 아래에 버튼으로 건다.
+            "source": meta.get("source", ""),
             "sample": meta.get("sample", "").lower() in ("true", "yes", "1"),
             "body": markdown(body),
         })
@@ -820,13 +827,17 @@ def page_news_index(lg, site, news):
 def page_news_post(lg, site, n):
     t = T[lg]
     note = (f'<p class="samplenote">{e(t["sample_note"])}</p>' if n["sample"] else "")
+    src = (f'<p class="srcbox"><a class="btn btn-primary" href="{e(n["source"])}" rel="noopener">'
+           f'{e(t["read_source"])}</a><span>{e(t["source_note"])}</span></p>' if n["source"] else "")
     body = f"""
 <div class="page narrow">
 <a class="back" href="/{lg}/news/">{e(t['back_news'])}</a>
 <div class="num postdate">{e(n['date'])}</div>
 <h1 class="ht h-proj">{e(n['title'])}</h1>
 {note}
+{src}
 <div class="prose">{n['body']}</div>
+{src}
 </div>
 """
     return shell(lg, "news/", f'news/{n["slug"]}/', n["title"],

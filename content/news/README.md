@@ -44,13 +44,14 @@ The English text. Not a machine translation of the Korean — write it for a rea
 who does not read Korean and does not know the Korean funding landscape.
 ```
 
-## 머리말(frontmatter) 네 줄
+## 머리말(frontmatter)
 
 | 키 | 필수 | 쓰임 |
 |---|---|---|
 | `title` | ⭐ | 목록·상세의 제목, `<title>`, 소셜 카드 |
 | `date` | ⭐ | `YYYY-MM-DD`. **정렬 기준**(최신이 위) · sitemap 의 `lastmod` |
 | `summary` | | 목록의 한 줄 · `<meta name="description">`. 없으면 제목이 대신 들어간다 |
+| `source` | | 원문이 따로 있는 글(블로그 등)의 `https://` 주소. 있으면 상세 쪽 제목 아래와 본문 끝에 「전체 글 읽기」 버튼이 붙는다. https 가 아니면 빌드가 막는다 |
 | `sample` | | `true` 면 「예시」 딱지가 붙고 **`--strict` 가 배포를 막는다** |
 
 ⚠️ `date` 는 두 언어가 같아야 한다. 다르면 목록 순서가 언어마다 달라진다.
