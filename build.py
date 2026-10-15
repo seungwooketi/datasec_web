@@ -908,10 +908,56 @@ def page_visit(lg, site):
 # 조립
 # ════════════════════════════════════════════════════════════════════
 
+# 이번 빌드가 쓴 파일. sitemap lastmod 를 정할 때 쪽 지문을 여기서 다시 읽는다.
+WRITTEN: dict[str, str] = {}
+
+
 def write(path: str, text: str) -> None:
     p = OUT / path
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, encoding="utf-8")
+    WRITTEN[path] = text
+
+
+# ── sitemap lastmod 용 쪽 지문
+#    제목, 설명, JSON-LD, 본문(<main>)만 본다. 머리말 띠, 바닥글, 자산 주소의 내용 해시(?v=),
+#    공백과 줄바꿈의 차이는 뺀다 - CSS 하나만 고치거나 빈 줄 하나가 늘어도 모든 쪽의 날짜가
+#    바뀌면 lastmod 가 신호 구실을 못 한다. (원문 링크 버튼을 넣을 때 source 가 없는 소식에도
+#    빈 줄이 생겨, 공백을 그대로 비교하면 내용이 같은 소식들이 바뀐 것으로 잡혔다.)
+SIG_PARTS = (
+    re.compile(r"<title>.*?</title>", re.S),
+    re.compile(r'<meta name="description" content="[^"]*">'),
+    re.compile(r'<script type="application/ld\+json">.*?</script>', re.S),
+    re.compile(r'<main id="main">.*?</main>', re.S),
+)
+STAMP_QS = re.compile(r"\?v=[0-9a-f]+")
+SPACES = re.compile(r"\s+")
+
+
+def page_sig(text: str) -> str:
+    parts = [m for rx in SIG_PARTS for m in rx.findall(text)]
+    norm = SPACES.sub(" ", STAMP_QS.sub("", " ".join(parts))).strip()
+    return hashlib.sha256(norm.encode("utf-8")).hexdigest()
+
+
+def previous_build() -> tuple[dict[str, str], dict[str, str]]:
+    """직전 산출물(커밋된 docs/)의 쪽 지문과 sitemap lastmod. 키는 사이트 경로(`/ko/news/`).
+
+    ⚠️ `shutil.rmtree(OUT)` **전에** 불러야 한다. 지운 뒤에는 비교할 대상이 없다.
+    """
+    sig: dict[str, str] = {}
+    mod: dict[str, str] = {}
+    if not OUT.exists():
+        return sig, mod
+    for f in OUT.rglob("index.html"):
+        rel = f.relative_to(OUT).as_posix()
+        sig["/" + rel[: -len("index.html")]] = page_sig(f.read_text(encoding="utf-8"))
+    sm = OUT / "sitemap.xml"
+    if sm.exists():
+        for loc, d in re.findall(r"<loc>https?://[^/<]+(/[^<]*)</loc><lastmod>([^<]+)</lastmod>",
+                                 sm.read_text(encoding="utf-8")):
+            mod[loc] = d
+    return sig, mod
 
 
 def main() -> int:
@@ -983,6 +1029,8 @@ def main() -> int:
         "new": sum(1 for p in projects if p.get("new_2026")),
     }
 
+    # 지우기 전에 직전 산출물을 읽어 둔다 - sitemap lastmod 를 이어 쓰는 데 필요하다.
+    prev_sig, prev_mod = previous_build()
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
@@ -1031,17 +1079,25 @@ def main() -> int:
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
     write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
 
-    # ⚠️ `lastmod` 는 **결정적인 값**이어야 한다. `datetime.now()` 나 파일 mtime 을 쓰면
-    #    실행마다 결과가 달라져 CI 의 「docs/ 가 원본과 같은가」 검사가 즉시 깨진다.
-    #    커밋된 값만 쓴다 — 데이터 파생 쪽은 `data/meta.json` 의 asof, 소식은 그 글의 date.
-    asof = json.loads((ROOT / "data" / "meta.json").read_text(encoding="utf-8")).get("asof", "")
+    # ⭐ `lastmod` 는 **그 쪽 내용이 마지막으로 바뀐 날**이다. 쪽마다 지문(page_sig)을 직전
+    #    산출물과 비교해, 같으면 직전 docs/sitemap.xml 의 날짜를 잇고 바뀐 쪽만 빌드한 날로 둔다.
+    #    날짜의 정본은 **커밋된 docs/sitemap.xml** 이다. CI 는 같은 원본을 다시 구우므로 지문이
+    #    같고 날짜도 같다 - 「docs/ 가 원본과 같은가」 검사와 어긋나지 않는다.
+    # ⛔ 예전에는 홈, 목록, 소개 쪽 전부에 `data/meta.json` 의 asof 하나를 썼다. 새 소식이 홈과
+    #    소식 목록에 올라가고 히어로 문구가 바뀌어도 lastmod 가 8월 7일에 머물렀다. 구글은
+    #    lastmod 가 일관되게 정확할 때만 쓰므로, 틀린 날짜가 이어지면 이 신호를 쓰지 않게 된다.
+    # ⚠️ 바뀐 쪽에는 `--today` 가 아니라 **실제 오늘**을 쓴다. `--today` 는 상태 판정 실험용이라
+    #    미래 날짜가 sitemap 에 박힐 수 있다.
+    built_on = dt.date.today().isoformat()
     urls: list[tuple[str, str]] = []
     for lg in LANGS:
-        urls += [(f"/{lg}/{s}", asof) for s in
+        paths = [f"/{lg}/{s}" for s in
                  ("", "research/", "people/", "news/", "collaborate/", "visit/")]
-        urls += [(f"/{lg}/research/{p['slug']}/", asof)
-                 for p in projects if p["slug"] in detailed]
-        urls += [(f"/{lg}/news/{n['slug']}/", n["date"]) for n in news[lg]]
+        paths += [f"/{lg}/research/{p['slug']}/" for p in projects if p["slug"] in detailed]
+        paths += [f"/{lg}/news/{n['slug']}/" for n in news[lg]]
+        for u in paths:
+            same = prev_sig.get(u) == page_sig(WRITTEN[u.lstrip("/") + "index.html"])
+            urls.append((u, prev_mod[u] if same and prev_mod.get(u) else built_on))
     write("sitemap.xml",
           '<?xml version="1.0" encoding="UTF-8"?>\n'
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
