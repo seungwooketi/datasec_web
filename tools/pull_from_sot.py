@@ -28,7 +28,7 @@ KETI_KB = pathlib.Path(os.environ.get("KETI_KB", pathlib.Path.home() / "work" / 
 SOT_DIR = pathlib.Path(os.environ.get(
     "KETI_SOT",
     pathlib.Path.home() / "Library/CloudStorage/GoogleDrive-seungwoo.kum@gmail.com"
-    / "내 드라이브/센터 업무/01. 센터 현황"))
+    / "내 드라이브/인공지능데이터보안연구센터 공유폴더/01. 센터 현황"))
 
 ROLE = {"주관": "lead", "참여(공동)": "joint", "기업수탁": "contract",
         "위탁": "joint", "기업 외 수탁": "contract"}
