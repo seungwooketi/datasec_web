@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>제로 트러스트 - 시스템에서 하드웨어로 — 인공지능데이터·보안연구센터</title>
+<meta name="description" content="장치의 경계에서 멈추는 제로 트러스트를 로봇 제어기에서 관절로 가는 지령 단위까지 내릴 때 접근의 의미, 판단 주기, 부품 신원, 정책 집행, 안전과의 관계가 어떻게 달라지는지 pick-and-place 로봇을 예로 정리했습니다.">
+<link rel="canonical" href="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="ko" href="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="en" href="https://www.datasec.work/en/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="x-default" href="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<meta property="og:title" content="제로 트러스트 - 시스템에서 하드웨어로 — 인공지능데이터·보안연구센터">
+<meta property="og:description" content="장치의 경계에서 멈추는 제로 트러스트를 로봇 제어기에서 관절로 가는 지령 단위까지 내릴 때 접근의 의미, 판단 주기, 부품 신원, 정책 집행, 안전과의 관계가 어떻게 달라지는지 pick-and-place 로봇을 예로 정리했습니다.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<meta property="og:site_name" content="인공지능데이터·보안연구센터">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://www.datasec.work/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ADSRC — 인공지능데이터·보안연구센터">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="article:published_time" content="2026-10-16">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/adsrc-symbol-16.svg?v=beb052aab2">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png?v=c2808c83d6">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png?v=cd0a9c8685">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon-180.png?v=6073ba875d">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
+<link rel="stylesheet" href="/assets/site.css?v=9983791f2d">
+</head>
+<body data-lang="ko">
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<nav class="nav">
+<a href="/ko/" class="nav-brand" aria-label="ADSRC — 인공지능데이터·보안연구센터"><svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true" focusable="false"><g fill="none" stroke="#5980A6" stroke-width="2.5"><rect x="6" y="6" width="24" height="24"/><rect x="18" y="18" width="24" height="24"/></g><rect x="18" y="18" width="12" height="12" fill="#5980A6"/></svg>
+<span class="brand-text"><b>ADSRC</b><em>AI Data and Security Research Center</em></span></a>
+<div class="navlinks"><a href="/ko/">센터 소개</a><a href="/ko/research/">연구</a><a href="/ko/people/">구성원</a><a href="/ko/news/" aria-current="page">소식</a><a href="/ko/collaborate/">협력</a><a href="/ko/visit/">찾아오시는 길</a></div>
+<div class="seg langseg" role="group" aria-label="언어"><a class="seg-opt" hreflang="en" href="/en/news/2026-10-zero-trust-into-hardware/">EN</a><a class="seg-opt is-on" hreflang="ko" href="/ko/news/2026-10-zero-trust-into-hardware/" aria-current="true">한국어</a></div>
+<a class="btn btn-primary" href="/ko/collaborate/#contact">문의하기</a>
+</nav>
+<main id="main">
+
+<div class="page narrow">
+<a class="back" href="/ko/news/">← 지난 소식</a>
+<div class="num postdate">2026-10-16</div>
+<h1 class="ht h-proj">제로 트러스트 - 시스템에서 하드웨어로</h1>
+
+<p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/zero-trust-into-hardware/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
+<div class="prose"><p>"아무것도 믿지 말고 항상 확인하라"는 제로 트러스트는 이제 보안 분야의 상식이 됐지만, 이 원칙을 따라 내려가다 보면 장치의 경계에서 멈춥니다. 로봇 셀 경계에는 방화벽과 인증서가 있고 티치펜던트에는 로그인이 있어도, 제어기에서 관절로 가는 지령 하나하나는 "같은 버스에 있으니 믿는다"는 전제로 움직입니다. <a href="/ko/news/2026-10-confidential-computing-tee-pcc/">TEE와 PCC 소식</a>이 하드웨어 격리 위에 시스템을 쌓는 이야기였다면, 이번에는 반대로 제로 트러스트를 로봇의 관절까지 끌고 내려가면 무엇이 달라지는지 살펴봅니다. 예로 드는 것은 컨베이어로 들어오는 부품을 비전으로 인식해 집어 트레이에 놓는 pick-and-place 로봇 셀입니다.</p>
+<h2>제로 트러스트가 멈추는 곳</h2>
+<p>ZTA의 기준 문서인 NIST SP 800-207은 원칙상 IoT 액추에이터까지 자원으로 봅니다. 하지만 CISA의 성숙도 모델, 미 국방부의 OT 제로 트러스트 지침, KISA의 OT 제로트러스트 안내서는 모두 장치 내부 부품 사이의 신원, 인가, 집행을 구체적으로 다루지 않습니다. 칩 수준 보안 연구 45건 가운데 제로 트러스트 원칙을 모두 충족한 사례가 없었다는 최근 문헌도 있습니다.</p>
+<p>로봇 안으로 들어가면 이 상황이 구체적으로 보입니다. 협동로봇과 서보 시스템에 널리 쓰이는 EtherCAT의 일반 프레임은 CRC로만 보호되는데, CRC는 우발적인 비트 오류를 잡을 뿐 누군가 의도적으로 만든 프레임은 걸러 내지 못합니다.</p>
+<h2>이미 있는 하드웨어 구성 기술</h2>
+<p>한 기계 안에서 부품끼리 서로를 검증하는 기술은 다른 분야에서 이미 쓰이고 있습니다. 이름이 '제로 트러스트'가 아닐 뿐입니다.</p>
+<ul><li><strong>차량 내부망</strong>: AUTOSAR SecOC, MACsec, 게이트웨이 ECU를 통한 메시지 인증과 망 분리</li><li><strong>서버와 칩</strong>: DMTF SPDM, TCG DICE, OCP Caliptra를 통한 부품 신원과 펌웨어 상태 증명</li><li><strong>서보 드라이브</strong>: Siemens, Rockwell, B&amp;R 제품의 드라이브 단위 신원과 채널 보호</li><li><strong>필드버스</strong>: EtherCAT 대칭키 페어링, ETG.1800 보안 프로파일 초안(2026년 9월), CANsec의 표준화 진행</li></ul>
+<p>그래서 로봇 내부 제로 트러스트는 새 보안 기술을 만드는 일이라기보다, ZTA의 정책 결정 지점(PDP), 정책 집행 지점(PEP), 정책 정보 지점(PIP)을 하나의 복합 장치인 로봇 안에 다시 배치하는 일로 볼 수 있습니다. 필드 수준에서는 하드웨어 강제 규칙으로 충분하다는 EtherCAT 진영의 반론도 있어, 핵심 명령부터 선택적으로 적용하는 단계적 접근이 설득력이 있어 보입니다.</p>
+<h2>IT의 제로 트러스트와 다른 점</h2>
+<p>같은 원칙이라도 로봇 안으로 들어오면 단어의 뜻이 바뀝니다.</p>
+<ul><li><strong>접근의 의미</strong>: 읽기, 쓰기, 실행이 아닌 동작 여부, 동작 범위(위치, 속도, 힘), 동작 시점</li><li><strong>판단 주기</strong>: 세션 단위가 아닌 작업 단위(분)와 제어 주기 단위(ms 이하)의 이원화</li><li><strong>거부 시 결과</strong>: 요청 실패가 아닌 감속, 보호정지 같은 안전 상태 전이</li><li><strong>신원</strong>: 계정과 인증서가 아닌 부품 고유 신원, 장착 위치(축), 펌웨어 측정값</li><li><strong>가용성</strong>: 생산 중단과 안전 문제로 직결되어 외부 PDP에 의존하기 어려움</li></ul>
+<p>가장 크게 달라지는 것은 '접근'이 데이터가 아니라 물리 동작이 된다는 점, 그리고 거부가 공짜가 아니라는 점입니다. IT에서는 요청을 거부하면 에러 화면으로 끝나지만, 로봇이 지령을 거부해 급정지하면 들고 있던 공작물이 날아가거나 중력축이 떨어질 수 있습니다.</p>
+<h2>지령 하나마다 확인할 것</h2>
+<p>관절이 지령을 받을 때 확인할 항목은 다음 여섯 가지 정도로 나눠 볼 수 있습니다.</p>
+<ul><li><strong>출처 진정성</strong>: 세션 키 기반 MAC으로 등록된 제어기의 지령인지 확인</li><li><strong>신선도</strong>: 카운터나 타임스탬프로 재전송, 지연 지령 차단</li><li><strong>송신자 상태</strong>: 측정 부팅과 DICE, SPDM 증명으로 제어기 펌웨어와 설정 확인</li><li><strong>권한</strong>: PDP가 발급한 권한 증표로 이 주체가 이 축에 이 동작을 요청할 수 있는지 확인</li><li><strong>물리적 범위</strong>: 축별 위치, 속도, 토크 범위와 지령값 비교</li><li><strong>안전 맥락</strong>: 운전 모드, 인에이블 장치, 안전 제어기 상태 확인</li></ul>
+<p>물리적 범위를 따로 두는 이유는 인증만으로 막기 어려운 공격이 이미 보고되어 있기 때문입니다. SROS2 키스토어를 탈취하면 정상 참여자로 인증된 채 제어 명령을 주입할 수 있고, 산업용 로봇 제어기에서 1축 PID 이득만 바꿔 2mm 미만의 궤적 오차를 만든 연구도 있습니다. 인증은 "누가 보냈는가"에 답할 뿐 "보낸 내용이 말이 되는가"에는 답하지 않으므로, 관절이 권한 증표의 범위와 지령값을 직접 비교하고, 지령과 상태 응답 양쪽을 모두 인증하는 것이 바람직해 보입니다.</p>
+<h2>같은 모양의 관절 여섯 개</h2>
+<p>6축 로봇에는 같은 기종의 드라이브가 여러 개 들어가는 경우가 많은데, 지금의 버스 수준 식별자는 평문이라 복제가 쉽고 같은 기종끼리 케이블이 바뀌어도 알아채기 어렵습니다. 그래서 "진품인가", "펌웨어가 정상인가", "정말 J3 자리에 있는가"라는 세 질문을 따로 다룰 필요가 있습니다.</p>
+<ul><li><strong>개체 신원</strong>: 제조 시 부품 제조사가 발급하는 IDevID, DICE DeviceID로 진품 여부 확인</li><li><strong>상태 신원</strong>: 부팅마다 부품이 스스로 유도하는 DICE Alias 인증서와 SPDM 측정값으로 펌웨어 확인</li><li><strong>역할 신원</strong>: 설치나 교체 때 통합업체나 소유자가 발급하는 LDevID로 정책의 대상 이름(R01/J3) 부여</li></ul>
+<p>정책은 "J3에 MOVE를 허용한다"처럼 역할로 쓰므로, 관절을 교체해도 새 부품에 역할 신원만 다시 발급하면 정책을 고칠 필요가 없습니다. 로봇 전체의 증명은 IETF RATS의 복합 장치 모델처럼 제어기가 관절, 그리퍼, 카메라의 증거를 모아 기준값과 대조하는 구조로 묶어 볼 수 있습니다.</p>
+<h2>판단은 위에서, 집행은 아래에서</h2>
+<p>관절 MCU가 1 kHz 제어 주기마다 정책 전체를 평가하기는 어렵기 때문에, 판단과 집행을 두 단계로 나누는 구조를 생각해 볼 수 있습니다.</p>
+<ul><li><strong>느린 경로(작업, 이벤트 단위)</strong>: 작업 시작, 모드 전환, 정비 진입 때 제어기 보안 영역의 PDP가 정책을 평가하고 관절마다 서명된 권한 증표 발급</li><li><strong>빠른 경로(제어 주기 단위)</strong>: 관절의 PEP가 지령마다 MAC, 신선도, 증표 범위만 비교</li></ul>
+<p>공개된 명령 단위 MAC 연구 가운데에는 처리에 평균 7.9 ms가 걸려 1 kHz 제어 주기에 맞지 않는 결과도 있어, 하드웨어 암호 가속기를 전제로 한 실측이 필요해 보입니다. 정책도 제조사, 통합업체, 소유자, 작업(MES)의 네 층위로 나누고 실제 허용 권한은 네 층위의 교집합으로 정하는 방안을 고려해 볼 수 있습니다.</p>
+<h2>보안은 좁히기만 한다</h2>
+<p>로봇에서 가장 조심해야 할 부분은 안전 기능과의 관계입니다. 원칙은 보안 계층은 동작 범위를 좁힐 수만 있고 넓힐 수는 없다는 것으로 정리해 볼 수 있습니다.</p>
+<ul><li><strong>안전 기능의 독립 유지</strong>: STO, SS1, SLS와 안전 설정은 보안 정책과 분리하고 기능안전 인증 범위 유지</li><li><strong>정지 방식의 단계화</strong>: 위반 프레임 하나에 곧바로 STO를 걸지 않고 이전 유효 지령 유지, 감속, SS1 순으로 단계 정의</li><li><strong>통신 두절의 설계 조건 반영</strong>: 연결이 끊기면 새 권한 없이 이미 발급된 증표의 범위와 유효 시간 안에서만 움직이고, 만료되면 사이클 종료 위치에서 정지</li></ul>
+<p>PDP가 있는 제어기 자체가 장악되는 경우에 대비해서는 PDP를 TEE나 별도 보안 MCU에 두고, 통합업체가 서명한 상한을 관절에 직접 저장해 두는 방안이 있습니다. 그러면 한 지점이 뚫려도 상위 층위의 한계와 안전 한계는 유지됩니다.</p>
+<h2>아직 비어 있는 곳</h2>
+<p>현재 보호 단위는 제어기와 드라이브 장치에 머물러 있고, 그 사이를 오가는 지령 하나하나가 허용된 것인지 따지는 계층, 축 단위와 동작 단위 인가, 실행 중 재증명은 공개 구현을 찾기 어렵습니다. 표준과 규제는 움직이고 있습니다. EtherCAT 보안 프로파일(ETG.1800) 초안이 2026년 9월에 나왔고, EU 기계규정이 2027년 1월, 사이버 복원력법(CRA)이 2027년 12월부터 적용되며, ISO 10218-1:2025에도 로봇 안전에 영향을 주는 범위의 사이버보안 요구가 들어갔습니다.</p>
+<p>제로 트러스트의 원칙은 그대로이고, 적용 단위가 사용자에서 장치로, 장치에서 부품으로, 요청에서 지령 하나로 내려갑니다. 시스템에서 시작한 제로 트러스트가 하드웨어 안쪽까지 내려가려면 보안과 안전, 실시간 제어를 함께 설계하는 작업이 필요해 보입니다.</p>
+<hr class="cr">
+<p>센터의 관련 연구는 <a href="/ko/research/">연구</a> 페이지에 정리되어 있습니다.</p></div>
+<p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/zero-trust-into-hardware/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
+</div>
+
+</main>
+<footer>
+<span>한국전자기술연구원 인공지능데이터·보안연구센터</span>
+<span><a class="mail " href="#" rel="nofollow"><span class="rev">rk.er.itek ]ta[ crsda</span></a></span>
+<span class="foot-domain"><a href="/ko/">datasec.work</a></span>
+</footer>
+<script src="/assets/mail.js?v=bc8d34ab73" defer></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zero Trust - From the System Down into the Hardware — AI Data and Security Research Center</title>
+<meta name="description" content="Zero trust stops at the boundary of the device. Using a pick-and-place robot as the example, this looks at what changes in access, decision cycles, component identity, enforcement and safety when it is pushed down to the commands a controller sends to each joint.">
+<link rel="canonical" href="https://www.datasec.work/en/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="ko" href="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="en" href="https://www.datasec.work/en/news/2026-10-zero-trust-into-hardware/">
+<link rel="alternate" hreflang="x-default" href="https://www.datasec.work/ko/news/2026-10-zero-trust-into-hardware/">
+<meta property="og:title" content="Zero Trust - From the System Down into the Hardware — AI Data and Security Research Center">
+<meta property="og:description" content="Zero trust stops at the boundary of the device. Using a pick-and-place robot as the example, this looks at what changes in access, decision cycles, component identity, enforcement and safety when it is pushed down to the commands a controller sends to each joint.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.datasec.work/en/news/2026-10-zero-trust-into-hardware/">
+<meta property="og:site_name" content="AI Data and Security Research Center">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.datasec.work/assets/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ADSRC — AI Data and Security Research Center">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="article:published_time" content="2026-10-16">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/adsrc-symbol-16.svg?v=beb052aab2">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32.png?v=c2808c83d6">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64.png?v=cd0a9c8685">
+<link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon-180.png?v=6073ba875d">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
+<link rel="stylesheet" href="/assets/site.css?v=9983791f2d">
+</head>
+<body data-lang="en">
+<a class="skip" href="#main">Skip to content</a>
+<nav class="nav">
+<a href="/en/" class="nav-brand" aria-label="ADSRC — AI Data and Security Research Center"><svg viewBox="0 0 48 48" width="32" height="32" aria-hidden="true" focusable="false"><g fill="none" stroke="#5980A6" stroke-width="2.5"><rect x="6" y="6" width="24" height="24"/><rect x="18" y="18" width="24" height="24"/></g><rect x="18" y="18" width="12" height="12" fill="#5980A6"/></svg>
+<span class="brand-text"><b>ADSRC</b><em>AI Data and Security Research Center</em></span></a>
+<div class="navlinks"><a href="/en/">Overview</a><a href="/en/research/">Research</a><a href="/en/people/">People</a><a href="/en/news/" aria-current="page">News</a><a href="/en/collaborate/">Collaborate</a><a href="/en/visit/">Visit</a></div>
+<div class="seg langseg" role="group" aria-label="Language"><a class="seg-opt is-on" hreflang="en" href="/en/news/2026-10-zero-trust-into-hardware/" aria-current="true">EN</a><a class="seg-opt" hreflang="ko" href="/ko/news/2026-10-zero-trust-into-hardware/">한국어</a></div>
+<a class="btn btn-primary" href="/en/collaborate/#contact">Contact</a>
+</nav>
+<main id="main">
+
+<div class="page narrow">
+<a class="back" href="/en/news/">← All news</a>
+<div class="num postdate">2026-10-16</div>
+<h1 class="ht h-proj">Zero Trust - From the System Down into the Hardware</h1>
+
+<p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/2026/zero-trust-into-hardware/" rel="noopener">Read the full article ↗</a><span>The original, with figures, tables and references</span></p>
+<div class="prose"><p>"Never trust, always verify" has become close to common sense in security, but follow the principle downward and it stops at the boundary of the device. A robot cell has firewalls and certificates at its edge and a login on the teach pendant, yet every command from the controller to a joint still runs on the assumption that "it's on the same bus, so it's fine." The <a href="/en/news/2026-10-confidential-computing-tee-pcc/">TEE and PCC post</a> was about building systems on top of hardware isolation; this one goes the other way and asks what happens when zero trust is pushed all the way down to a robot's joints. The example is the most ordinary cell there is: parts arrive on a conveyor, a camera finds them, and a robot picks them and places them on a tray.</p>
+<h2>Where zero trust stops</h2>
+<p>NIST SP 800-207, the reference document for zero trust architecture (ZTA), counts even IoT actuators as resources in principle. But the CISA maturity model, the US DoD guidance on zero trust for operational technology and KISA's OT zero trust guide do not spell out identity, authorization or enforcement between components inside a device. A recent survey of chip-level security found that none of 45 SoC and NoC security studies met all zero-trust principles.</p>
+<p>Inside a robot this gets concrete. In EtherCAT, widely used in cobots and servo systems, ordinary frames are protected only by a CRC, which catches accidental bit errors but does nothing against a frame someone crafted on purpose.</p>
+<h2>Building blocks that already exist</h2>
+<p>Components inside one machine already verify each other in other domains; it just isn't called zero trust.</p>
+<ul><li><strong>In-vehicle networks</strong>: message authentication and segmentation with AUTOSAR SecOC, MACsec and gateway ECUs</li><li><strong>Servers and chips</strong>: component identity and firmware attestation with DMTF SPDM, TCG DICE and OCP Caliptra</li><li><strong>Servo drives</strong>: per-drive identity and channel protection in products from Siemens, Rockwell and B&amp;R</li><li><strong>Fieldbuses</strong>: EtherCAT symmetric-key pairing, the ETG.1800 security profile draft (September 2026) and CANsec</li></ul>
+<p>Seen this way, zero trust inside a robot is less about inventing new security technology than about re-placing ZTA's policy decision point (PDP), policy enforcement point (PEP) and policy information point (PIP) inside a single composite device. The EtherCAT community argues that hardware-enforced rules are enough at field level, so a phased approach that starts with the most critical commands looks more persuasive than changing everything at once.</p>
+<h2>How it differs from IT zero trust</h2>
+<p>The principle is the same, but inside the robot the words change meaning.</p>
+<ul><li><strong>Access</strong>: not read, write and execute, but whether to move, how far (position, speed, force) and when</li><li><strong>Decision cycle</strong>: not per session, but split into a per-job loop (minutes) and a per-control-cycle loop (sub-millisecond)</li><li><strong>Denial</strong>: not a failed request, but a transition to a safe state such as slowing down or a protective stop</li><li><strong>Identity</strong>: not accounts and certificates, but unique component identity, mounting position (axis) and firmware measurements</li><li><strong>Availability</strong>: tied directly to production and safety, which makes dependence on an external PDP hard</li></ul>
+<p>Two changes stand out: access now means physical motion rather than data, and denial is not free. In IT a denied request shows an error. When a robot rejects a command and stops hard, the part it was holding can fly off or an unbraked gravity axis can drop.</p>
+<h2>What to check on every command</h2>
+<p>There are roughly six things a joint should check when it receives a command.</p>
+<ul><li><strong>Origin</strong>: a session-key MAC shows that the command came from the registered controller</li><li><strong>Freshness</strong>: a counter or timestamp blocks replayed or delayed commands</li><li><strong>Sender state</strong>: measured boot and DICE or SPDM attestation confirm the controller's firmware and configuration</li><li><strong>Authorization</strong>: a capability token issued by the PDP says whether this subject may request this motion on this axis</li><li><strong>Physical envelope</strong>: the command value is compared against per-axis position, speed and torque bounds</li><li><strong>Safety context</strong>: operating mode, enabling device and safety controller state</li></ul>
+<p>The envelope check is there because several published attacks get past authentication. Steal an SROS2 keystore and you can inject control commands as a legitimate participant; in an analysis of an industrial robot controller, changing the PID gain on a single axis produced trajectory errors under 2 mm. Authentication answers "who sent this," not "does what they sent make sense," so the joint should compare each command against the envelope in its token, and both commands and status replies should be authenticated.</p>
+<h2>Six joints that look alike</h2>
+<p>A six-axis arm often uses the same drive model on several joints, and today's bus-level identifiers are plaintext, easy to clone, and blind to two identical drives having their cables swapped. Three questions need separate answers: is the part genuine, is its firmware intact, and is it really mounted at J3?</p>
+<ul><li><strong>Device identity</strong>: issued by the component maker at manufacturing (IDevID, DICE DeviceID) to prove genuineness</li><li><strong>State identity</strong>: derived by the component itself at every boot (DICE Alias certificate, SPDM measurements) to show firmware integrity</li><li><strong>Role identity</strong>: issued by the integrator or owner at commissioning or replacement (LDevID) to give policies a name such as R01/J3</li></ul>
+<p>Because policies refer to roles ("allow MOVE on J3"), replacing a joint only means issuing a new role identity, not editing the policy. Attestation for the whole robot fits the composite-device model in the IETF RATS architecture, with the controller collecting evidence from joints, gripper and camera and checking it against reference values.</p>
+<h2>Decide up high, enforce down low</h2>
+<p>A joint MCU cannot evaluate a full policy every 1 kHz control cycle, so a two-speed structure makes more sense.</p>
+<ul><li><strong>Slow path (per job or event)</strong>: on job start, mode change or entering maintenance, the PDP in the controller's secure area evaluates policy and issues a signed capability token to each joint</li><li><strong>Fast path (per control cycle)</strong>: the joint PEP checks the MAC, the freshness and the token's envelope, nothing more</li></ul>
+<p>One published per-command MAC study averaged 7.9 ms per command, too slow for a 1 kHz loop, so hardware crypto acceleration and measurements on a prototype are needed. Policy itself can be split into four layers (component maker, integrator, owner and the current job from the MES), with only the intersection granted.</p>
+<h2>Security only narrows</h2>
+<p>The most delicate part is the relationship with functional safety. The principle can be put simply: the security layer may narrow the motion envelope, never widen it.</p>
+<ul><li><strong>Independent safety</strong>: STO, SS1, SLS and the safety configuration stay separate from security policy, and the functional-safety certification scope does not change</li><li><strong>Staged stopping</strong>: instead of triggering STO on a single bad frame, hold the last valid command, decelerate, then SS1</li><li><strong>Disconnection as a design condition</strong>: while the link is down, no new grants are issued, the robot moves only within the envelope and validity window of tokens it already has, and it stops at the end of the cycle when they expire</li></ul>
+<p>If the controller hosting the PDP is itself compromised, putting the PDP in a TEE or a separate secure MCU and storing integrator-signed upper bounds directly in each joint keeps the upper-layer limits and the safety limits in place even when one point falls.</p>
+<h2>What is still missing</h2>
+<p>Current implementations protect the controller and the drive, but the layer that checks whether each command between them is permitted, per-axis and per-motion authorization, and runtime re-attestation are hard to find in any public implementation. Standards and regulation are moving: the EtherCAT security profile (ETG.1800) reached a member-review draft in September 2026, the EU Machinery Regulation applies from January 2027 and the Cyber Resilience Act from December 2027, and ISO 10218-1:2025 now includes cybersecurity requirements insofar as they affect robot safety.</p>
+<p>The principles of zero trust stay the same; what changes is the unit they apply to, from user to device, from device to component, from request to a single command. For zero trust to reach from the system into the hardware, security, safety and real-time control need to be designed together.</p>
+<hr class="cr">
+<p>The center's related work is listed on the <a href="/en/research/">Research</a> page.</p></div>
+<p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/2026/zero-trust-into-hardware/" rel="noopener">Read the full article ↗</a><span>The original, with figures, tables and references</span></p>
+</div>
+
+</main>
+<footer>
+<span>AI Data and Security Research Center, Korea Electronics Technology Institute</span>
+<span><a class="mail " href="#" rel="nofollow"><span class="rev">rk.er.itek ]ta[ crsda</span></a></span>
+<span class="foot-domain"><a href="/en/">datasec.work</a></span>
+</footer>
+<script src="/assets/mail.js?v=bc8d34ab73" defer></script>
+</body>
+</html>
