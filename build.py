@@ -225,13 +225,18 @@ def status_of(project: dict, today: dt.date) -> str:
     return "active"
 
 
-def load_news() -> dict[str, list[dict]]:
-    """`<slug>.<lang>.md`. 같은 slug 의 두 언어가 한 글이다."""
+def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
+    """`<slug>.<lang>.md`. 같은 slug 의 두 언어가 한 글이다.
+
+    ⭐ `date` 가 `publish_on`(한국 시각 오늘)보다 늦은 글은 **아직 싣지 않는다.** 블로그 원문이
+    그날 열리는 글을 미리 올려 두면, 그날 예약 빌드(check.yml 의 schedule)가 싣는다.
+    """
     news: dict[str, list[dict]] = {lg: [] for lg in LANGS}
     d = ROOT / "content" / "news"
     if not d.exists():
         return news
     seen: dict[str, set[str]] = {}
+    held: set[str] = set()
     for f in sorted(d.glob("*.md")):
         if f.name == "README.md":            # 쓰는 법 안내. 글이 아니다.
             continue
@@ -247,6 +252,9 @@ def load_news() -> dict[str, list[dict]]:
         if meta.get("source") and not meta["source"].startswith("https://"):
             block(f"뉴스 source 는 https:// 주소여야 한다: {f.name}")
             continue
+        if meta["date"] > publish_on.isoformat():
+            held.add(f"{slug} ({meta['date']})")
+            continue
         seen.setdefault(slug, set()).add(lg)
         news[lg].append({
             "slug": slug, "date": meta["date"], "title": meta["title"],
@@ -258,6 +266,8 @@ def load_news() -> dict[str, list[dict]]:
         })
     # ⛔ 한 언어만 있는 글은 **아예 싣지 않는다.** 싣으면 그 쪽의 hreflang 과 언어 전환기가
     #    없는 쪽을 가리켜 404 가 된다 — 과제 상세와 같은 규칙이다.
+    for h in sorted(held):
+        print(f"⏳ 예약 소식 {h} — 그날 예약 빌드에서 실린다")
     only_one = {s for s, langs in seen.items() if set(LANGS) - langs}
     for slug in sorted(only_one):
         warn(f"소식 `{slug}` 이 한 언어에만 있다 — 두 언어가 다 있어야 실린다")
@@ -971,7 +981,10 @@ def main() -> int:
     site = load_json("content/site.json")
     projects = load_json("data/projects.json")
     members = load_json("data/members.json")
-    news = load_news()
+    # 소식 공개일은 한국 시각으로 판단한다(CI 는 UTC). --today 를 주면 그 날짜로 본다.
+    publish_on = (dt.date.fromisoformat(args.today) if args.today
+                  else dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date())
+    news = load_news(publish_on)
     if BLOCKERS:
         for b in BLOCKERS:
             print(f"⛔ {b}", file=sys.stderr)

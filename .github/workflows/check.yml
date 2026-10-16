@@ -9,6 +9,11 @@ on:
   push:
     branches: [main]
   pull_request:
+  # ⭐ 날짜가 된 예약 소식을 싣는 매일 빌드. 10:13 KST(01:13 UTC) — 블로그 원문(09:05 KST 재빌드)이
+  #    먼저 열리도록 늦게 둔다. 손으로 돌릴 때는 Actions 의 Run workflow.
+  schedule:
+    - cron: "13 1 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -28,7 +33,10 @@ jobs:
       - name: 다시 굽는다
         run: python3 build.py
 
+      # ⚠️ 예약/수동 빌드는 날짜가 된 소식이 새로 실리므로 docs/ 가 커밋과 달라지는 것이 정상이다.
+      #    이 검사는 push/PR 에서만 한다. 예약 빌드는 다시 구운 docs/ 를 그대로 배포한다.
       - name: docs/ 가 원본과 맞나
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           if ! git diff --quiet -- docs; then
             echo '::error::docs/ 가 원본과 다르다 — python3 build.py 를 돌리고 결과를 함께 커밋하라.'
@@ -58,14 +66,14 @@ jobs:
         run: python3 build.py --strict
 
       - name: 산출물을 올린다
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs
 
   deploy:
     needs: check
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

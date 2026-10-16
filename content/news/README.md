@@ -49,7 +49,7 @@ who does not read Korean and does not know the Korean funding landscape.
 | 키 | 필수 | 쓰임 |
 |---|---|---|
 | `title` | ⭐ | 목록·상세의 제목, `<title>`, 소셜 카드 |
-| `date` | ⭐ | `YYYY-MM-DD`. **정렬 기준**(최신이 위). sitemap 의 `lastmod` 는 이 값이 아니라 빌드가 정한다(쪽 내용이 바뀐 날) |
+| `date` | ⭐ | `YYYY-MM-DD`. **정렬 기준**(최신이 위)이자 **공개일**. 한국 시각 오늘보다 늦으면 빌드가 싣지 않고, 그날 10:13 KST 예약 빌드가 싣는다. sitemap 의 `lastmod` 는 이 값이 아니라 빌드가 정한다(쪽 내용이 바뀐 날) |
 | `summary` | | 목록의 한 줄 · `<meta name="description">`. 없으면 제목이 대신 들어간다 |
 | `source` | | 원문이 따로 있는 글(블로그 등)의 `https://` 주소. 있으면 상세 쪽 제목 아래와 본문 끝에 「전체 글 읽기」 버튼이 붙는다. https 가 아니면 빌드가 막는다 |
 | `sample` | | `true` 면 「예시」 딱지가 붙고 **`--strict` 가 배포를 막는다** |
@@ -68,6 +68,10 @@ who does not read Korean and does not know the Korean funding landscape.
 과제 목록 `/ko/research/` 는 언제나 있다.
 
 ## 올리기
+
+⭐ **예약 게시:** 블로그처럼 공개일이 미래인 글은 `date` 를 그날로 두고 미리 push 해 두면 된다.
+그 전까지는 목록, 상세, sitemap 어디에도 나오지 않고(빌드가 `⏳ 예약 소식` 으로 알린다), 그날
+10:13 KST 예약 빌드(`check.yml` 의 schedule)가 싣는다. 바로 보이게 하려면 Actions 에서 Run workflow.
 
 ```bash
 python3 build.py            # docs/ 를 다시 굽는다
