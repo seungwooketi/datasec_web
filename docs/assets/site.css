@@ -238,6 +238,10 @@ body[data-lang="ko"] .prose h2 { text-transform: none; }
 /* 원문 링크 버튼 — 소식 상세의 위와 아래. 색은 .btn-primary 를 그대로 쓴다 */
 .srcbox { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 0; font-size: 13px;
   color: color-mix(in srgb, var(--color-text) 62%, transparent); }
+/* 블로그 발췌 안내 — 본문 맨 위. 면을 채우지 않고 강조색 왼쪽 선과 굵은 글자로 띄운다(디자인 시스템) */
+.excerpt { margin: 26px 0 0; padding: 12px 0 12px 18px; border-left: 3px solid var(--color-accent);
+  font-size: 15px; line-height: 24px; font-weight: 500; color: var(--color-text); }
+.excerpt a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
 .reg-inner .dl:last-child { border-bottom: 0; }
 .dl { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 9px 0; font-size: 14px; line-height: 21px; }
 .dl.reg { border-bottom: 1px solid var(--color-divider); }

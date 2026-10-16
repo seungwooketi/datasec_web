@@ -70,6 +70,8 @@ T = {
         "search_projects": "과제명, 부처, 책임자 검색", "search_people": "이름 또는 직급 검색",
         "back_research": "← 연구 과제 목록", "back_news": "← 지난 소식",
         "read_source": "전체 글 읽기 ↗", "source_note": "그림, 비교표, 참고 문헌을 포함한 원문",
+        "excerpt_pre": "이 글은 금승우 센터장의 개인 블로그에 올린 문서를 발췌한 것입니다. 원문은 ",
+        "excerpt_post": "에서 보실 수 있습니다.",
         "register": "과제 정보", "summary_missing": "과제 소개는 준비 중입니다.",
         "own": "책임", "join": "참여",
         "in_dept": "부서 과제", "ext_n": "부서 외 과제 {n}건 참여",
@@ -103,6 +105,8 @@ T = {
         "search_projects": "Search projects, funders, PIs", "search_people": "Search by name or grade",
         "back_research": "← Research programmes", "back_news": "← All news",
         "read_source": "Read the full article ↗", "source_note": "The original, with figures, tables and references",
+        "excerpt_pre": "This article is excerpted from a post on Center Director Seungwoo Kum's personal blog. The original is available at ",
+        "excerpt_post": ".",
         "register": "Register", "summary_missing": "A project summary is not published yet.",
         "own": "PI", "join": "Member",
         "in_dept": "Center projects", "ext_n": "Also on {n} projects led by other KETI centers",
@@ -839,6 +843,13 @@ def page_news_post(lg, site, n):
     note = (f'<p class="samplenote">{e(t["sample_note"])}</p>' if n["sample"] else "")
     src = (f'<p class="srcbox"><a class="btn btn-primary" href="{e(n["source"])}" rel="noopener">'
            f'{e(t["read_source"])}</a><span>{e(t["source_note"])}</span></p>' if n["source"] else "")
+    # ⭐ 개인 블로그 글을 줄여 실은 소식은 본문 맨 위에 발췌 안내를 눈에 띄게 둔다(원문 주소 포함).
+    #    출처가 블로그(seungwoo.datasec.work)일 때만 붙는다 — 다른 출처의 글에 센터장 이름이 붙지 않게.
+    excerpt = ""
+    if n["source"].startswith("https://seungwoo.datasec.work/"):
+        shown = n["source"].removeprefix("https://").rstrip("/")
+        excerpt = (f'<p class="excerpt">{e(t["excerpt_pre"])}<a href="{e(n["source"])}" rel="noopener">'
+                   f'{e(shown)}</a>{e(t["excerpt_post"])}</p>')
     body = f"""
 <div class="page narrow">
 <a class="back" href="/{lg}/news/">{e(t['back_news'])}</a>
@@ -846,6 +857,7 @@ def page_news_post(lg, site, n):
 <h1 class="ht h-proj">{e(n['title'])}</h1>
 {note}
 {src}
+{excerpt}
 <div class="prose">{n['body']}</div>
 {src}
 </div>

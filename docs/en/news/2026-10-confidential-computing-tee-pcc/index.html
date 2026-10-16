@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
-<link rel="stylesheet" href="/assets/site.css?v=ca35ec2eb5">
+<link rel="stylesheet" href="/assets/site.css?v=7fb0f10c10">
 </head>
 <body data-lang="en">
 <a class="skip" href="#main">Skip to content</a>
@@ -47,6 +47,7 @@
 <h1 class="ht h-proj">Confidential Computing - TEE and PCC</h1>
 
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc/" rel="noopener">Read the full article ↗</a><span>The original, with figures, tables and references</span></p>
+<p class="excerpt">This article is excerpted from a post on Center Director Seungwoo Kum&#x27;s personal blog. The original is available at <a href="https://seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc/" rel="noopener">seungwoo.datasec.work/blog/2026/confidential-computing-tee-vs-pcc</a>.</p>
 <div class="prose"><p>If you have a TEE (Trusted Execution Environment), do you have an AI service users can trust? Apple's <a href="https://security.apple.com/blog/private-cloud-compute/">Private Cloud Compute (PCC)</a> is often described as "Apple's confidential computing," but it does not sit at the same layer as a TEE. A TEE is an isolated region the processor provides; PCC is a service design that uses that region as its foundation and builds a good deal on top. Comparing the two is less about which is better than about seeing what is missing between a component and a system, and how PCC fills the gap.</p>
 <h2>How confidential computing works</h2>
 <p>The Confidential Computing Consortium defines confidential computing as protecting data in use by computing inside a hardware-based, <em>attested</em> TEE. The CPU isolates a region and encrypts its memory, measures the software loaded into it, and signs a report with a key fused into the chip. The data owner verifies the report before releasing any decryption key. Isolation and encryption keep others from <em>seeing</em>; attestation tells you whether you can <em>trust</em>.</p>

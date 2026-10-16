@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
-<link rel="stylesheet" href="/assets/site.css?v=ca35ec2eb5">
+<link rel="stylesheet" href="/assets/site.css?v=7fb0f10c10">
 </head>
 <body data-lang="ko">
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -47,6 +47,7 @@
 <h1 class="ht h-proj">제로 트러스트 - 시스템에서 하드웨어로</h1>
 
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/zero-trust-into-hardware/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
+<p class="excerpt">이 글은 금승우 센터장의 개인 블로그에 올린 문서를 발췌한 것입니다. 원문은 <a href="https://seungwoo.datasec.work/blog/ko/zero-trust-into-hardware/" rel="noopener">seungwoo.datasec.work/blog/ko/zero-trust-into-hardware</a>에서 보실 수 있습니다.</p>
 <div class="prose"><p>"아무것도 믿지 말고 항상 확인하라"는 제로 트러스트는 이제 보안 분야의 상식이 됐지만, 이 원칙을 따라 내려가다 보면 장치의 경계에서 멈춥니다. 로봇 셀 경계에는 방화벽과 인증서가 있고 티치펜던트에는 로그인이 있어도, 제어기에서 관절로 가는 지령 하나하나는 "같은 버스에 있으니 믿는다"는 전제로 움직입니다. <a href="/ko/news/2026-10-confidential-computing-tee-pcc/">TEE와 PCC 소식</a>이 하드웨어 격리 위에 시스템을 쌓는 이야기였다면, 이번에는 반대로 제로 트러스트를 로봇의 관절까지 끌고 내려가면 무엇이 달라지는지 살펴봅니다. 예로 드는 것은 컨베이어로 들어오는 부품을 비전으로 인식해 집어 트레이에 놓는 pick-and-place 로봇 셀입니다.</p>
 <h2>제로 트러스트가 멈추는 곳</h2>
 <p>ZTA의 기준 문서인 NIST SP 800-207은 원칙상 IoT 액추에이터까지 자원으로 봅니다. 하지만 CISA의 성숙도 모델, 미 국방부의 OT 제로 트러스트 지침, KISA의 OT 제로트러스트 안내서는 모두 장치 내부 부품 사이의 신원, 인가, 집행을 구체적으로 다루지 않습니다. 칩 수준 보안 연구 45건 가운데 제로 트러스트 원칙을 모두 충족한 사례가 없었다는 최근 문헌도 있습니다.</p>

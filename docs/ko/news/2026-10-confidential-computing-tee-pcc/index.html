@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
-<link rel="stylesheet" href="/assets/site.css?v=ca35ec2eb5">
+<link rel="stylesheet" href="/assets/site.css?v=7fb0f10c10">
 </head>
 <body data-lang="ko">
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -47,6 +47,7 @@
 <h1 class="ht h-proj">기밀컴퓨팅 - TEE와 PCC</h1>
 
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
+<p class="excerpt">이 글은 금승우 센터장의 개인 블로그에 올린 문서를 발췌한 것입니다. 원문은 <a href="https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/" rel="noopener">seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc</a>에서 보실 수 있습니다.</p>
 <div class="prose"><p>TEE(신뢰 실행 환경)라는 부품이 있다고 해서 사용자가 믿을 수 있는 AI 서비스가 만들어지는 걸까요? <a href="https://security.apple.com/blog/private-cloud-compute/">Apple Private Cloud Compute(PCC)</a>는 흔히 "Apple이 만든 기밀 컴퓨팅"으로 소개되지만, TEE와 같은 층위의 기술이 아닙니다. TEE는 프로세서가 제공하는 격리 공간이고, PCC는 그 격리 공간을 바닥에 깔고 여러 장치를 쌓아 올린 서비스 설계입니다. 그래서 둘의 비교는 우열을 가리기보다, 부품과 시스템 사이에 무엇이 비어 있고 PCC가 그 사이를 어떻게 메웠는지를 보는 일에 가깝습니다.</p>
 <h2>기밀 컴퓨팅의 동작</h2>
 <p>기밀 컴퓨팅 컨소시엄(CCC)은 기밀 컴퓨팅을 '하드웨어 기반의, 증명된 TEE 안에서 계산을 수행해 사용 중인 데이터를 보호하는 것'으로 정의합니다. CPU가 격리 공간을 만들고 그 메모리를 암호화하며, 올라간 소프트웨어를 측정해 칩 고유 키로 서명한 증명 보고서를 만듭니다. 데이터 주인은 이 보고서를 검증한 뒤에야 복호화 키를 넘깁니다. 격리와 암호화는 '못 보게' 막는 장치이고, 원격 증명은 '믿어도 되는지' 확인하는 장치입니다.</p>

@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
-<link rel="stylesheet" href="/assets/site.css?v=ca35ec2eb5">
+<link rel="stylesheet" href="/assets/site.css?v=7fb0f10c10">
 </head>
 <body data-lang="en">
 <a class="skip" href="#main">Skip to content</a>
@@ -47,6 +47,7 @@
 <h1 class="ht h-proj">Zero Trust - From the System Down into the Hardware</h1>
 
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/2026/zero-trust-into-hardware/" rel="noopener">Read the full article ↗</a><span>The original, with figures, tables and references</span></p>
+<p class="excerpt">This article is excerpted from a post on Center Director Seungwoo Kum&#x27;s personal blog. The original is available at <a href="https://seungwoo.datasec.work/blog/2026/zero-trust-into-hardware/" rel="noopener">seungwoo.datasec.work/blog/2026/zero-trust-into-hardware</a>.</p>
 <div class="prose"><p>"Never trust, always verify" has become close to common sense in security, but follow the principle downward and it stops at the boundary of the device. A robot cell has firewalls and certificates at its edge and a login on the teach pendant, yet every command from the controller to a joint still runs on the assumption that "it's on the same bus, so it's fine." The <a href="/en/news/2026-10-confidential-computing-tee-pcc/">TEE and PCC post</a> was about building systems on top of hardware isolation; this one goes the other way and asks what happens when zero trust is pushed all the way down to a robot's joints. The example is the most ordinary cell there is: parts arrive on a conveyor, a camera finds them, and a robot picks them and places them on a tray.</p>
 <h2>Where zero trust stops</h2>
 <p>NIST SP 800-207, the reference document for zero trust architecture (ZTA), counts even IoT actuators as resources in principle. But the CISA maturity model, the US DoD guidance on zero trust for operational technology and KISA's OT zero trust guide do not spell out identity, authorization or enforcement between components inside a device. A recent survey of chip-level security found that none of 45 SoC and NoC security studies met all zero-trust principles.</p>
