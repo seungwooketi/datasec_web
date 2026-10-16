@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>기밀컴퓨팅 - TEE와 PCC — 인공지능데이터·보안연구센터</title>
-<meta name="description" content="TEE를 쓰면 믿을 수 있는 AI 서비스가 될까요. 클라우드 기밀 컴퓨팅이 지켜 주는 범위와, Apple Private Cloud Compute(PCC)가 TEE 위에 더한 장치를 부품과 시스템의 관점에서 비교했습니다.">
+<meta name="description" content="TEE를 쓰면 믿을 수 있는 AI 서비스가 될까요. 클라우드 기밀 컴퓨팅이 지켜 주는 범위와, Apple Private Cloud Compute(PCC)가 TEE 위에 더한 장치를 부품과 시스템의 관점에서 비교해 보았습니다.">
 <link rel="canonical" href="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
 <link rel="alternate" hreflang="ko" href="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
 <link rel="alternate" hreflang="en" href="https://www.datasec.work/en/news/2026-10-confidential-computing-tee-pcc/">
 <link rel="alternate" hreflang="x-default" href="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
 <meta property="og:title" content="기밀컴퓨팅 - TEE와 PCC — 인공지능데이터·보안연구센터">
-<meta property="og:description" content="TEE를 쓰면 믿을 수 있는 AI 서비스가 될까요. 클라우드 기밀 컴퓨팅이 지켜 주는 범위와, Apple Private Cloud Compute(PCC)가 TEE 위에 더한 장치를 부품과 시스템의 관점에서 비교했습니다.">
+<meta property="og:description" content="TEE를 쓰면 믿을 수 있는 AI 서비스가 될까요. 클라우드 기밀 컴퓨팅이 지켜 주는 범위와, Apple Private Cloud Compute(PCC)가 TEE 위에 더한 장치를 부품과 시스템의 관점에서 비교해 보았습니다.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://www.datasec.work/ko/news/2026-10-confidential-computing-tee-pcc/">
 <meta property="og:site_name" content="인공지능데이터·보안연구센터">
@@ -48,26 +48,26 @@
 
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
 <p class="excerpt">이 글은 금승우 센터장의 개인 블로그에 올린 문서를 발췌한 것입니다. 원문은 <a href="https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/" rel="noopener">seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc</a>에서 보실 수 있습니다.</p>
-<div class="prose"><p>TEE(신뢰 실행 환경)라는 부품이 있다고 해서 사용자가 믿을 수 있는 AI 서비스가 만들어지는 걸까요? <a href="https://security.apple.com/blog/private-cloud-compute/">Apple Private Cloud Compute(PCC)</a>는 흔히 "Apple이 만든 기밀 컴퓨팅"으로 소개되지만, TEE와 같은 층위의 기술이 아닙니다. TEE는 프로세서가 제공하는 격리 공간이고, PCC는 그 격리 공간을 바닥에 깔고 여러 장치를 쌓아 올린 서비스 설계입니다. 그래서 둘의 비교는 우열을 가리기보다, 부품과 시스템 사이에 무엇이 비어 있고 PCC가 그 사이를 어떻게 메웠는지를 보는 일에 가깝습니다.</p>
+<div class="prose"><p>요즘 AI 서비스마다 데이터를 안전하게 처리한다는 설명이 붙는데요, 그 근거로 자주 등장하는 게 TEE(신뢰 실행 환경)입니다. 다만 TEE라는 부품이 있다고 해서 사용자가 믿을 수 있는 AI 서비스가 바로 만들어지는 걸까요? <a href="https://security.apple.com/blog/private-cloud-compute/">Apple Private Cloud Compute(PCC)</a>는 흔히 "Apple이 만든 기밀 컴퓨팅"으로 소개되지만, TEE와 같은 층위의 기술은 아닌 것 같아요. TEE는 프로세서가 제공하는 격리 공간이고, PCC는 그 격리 공간을 바닥에 깔고 여러 장치를 쌓아 올린 서비스 설계에 가깝습니다. 그래서 둘을 비교하는 건 우열을 가리기보다, 부품과 시스템 사이에 무엇이 비어 있고 PCC가 그 사이를 어떻게 메웠는지를 보는 일이 되겠죠.</p>
 <h2>기밀 컴퓨팅의 동작</h2>
-<p>기밀 컴퓨팅 컨소시엄(CCC)은 기밀 컴퓨팅을 '하드웨어 기반의, 증명된 TEE 안에서 계산을 수행해 사용 중인 데이터를 보호하는 것'으로 정의합니다. CPU가 격리 공간을 만들고 그 메모리를 암호화하며, 올라간 소프트웨어를 측정해 칩 고유 키로 서명한 증명 보고서를 만듭니다. 데이터 주인은 이 보고서를 검증한 뒤에야 복호화 키를 넘깁니다. 격리와 암호화는 '못 보게' 막는 장치이고, 원격 증명은 '믿어도 되는지' 확인하는 장치입니다.</p>
-<p>이 흐름에는 잘 드러나지 않는 전제가 있습니다. <strong>누가 증명을 검증하는가</strong>, 그리고 <strong>무엇을 기준으로 '정상'을 판단하는가</strong>입니다. PCC와 일반 클라우드 기밀 컴퓨팅의 차이는 대부분 여기서 갈립니다.</p>
+<p>기밀 컴퓨팅 컨소시엄(CCC)은 기밀 컴퓨팅을 '하드웨어 기반의, 증명된 TEE 안에서 계산을 수행해 사용 중인 데이터를 보호하는 것'으로 정의합니다. CPU가 격리 공간을 만들고 그 메모리를 암호화하며, 올라간 소프트웨어를 측정해 칩 고유 키로 서명한 증명 보고서를 만들구요. 데이터 주인은 이 보고서를 검증한 뒤에야 복호화 키를 넘깁니다. 격리와 암호화는 '못 보게' 막는 장치이고, 원격 증명은 '믿어도 되는지' 확인하는 장치라고 보면 될 것 같아요.</p>
+<p>그런데 이 흐름에는 잘 드러나지 않는 전제가 두 가지 있는데요, <strong>누가 증명을 검증하는가</strong>, 그리고 <strong>무엇을 기준으로 '정상'을 판단하는가</strong>입니다. PCC와 일반 클라우드 기밀 컴퓨팅의 차이는 대부분 여기서 갈리는 것 같습니다.</p>
 <h2>클라우드 기밀 컴퓨팅이 지키는 범위</h2>
-<p>주요 클라우드 3사는 모두 CPU TEE 기반 기밀 VM을 정식 서비스로 제공하고, Azure와 Google Cloud는 H100과 Blackwell 계열 GPU까지 TEE로 묶은 상품을 내놓았습니다. 이 서비스들은 클라우드 운영자, 하이퍼바이저, 다른 테넌트를 믿지 않고 CPU와 GPU 벤더의 하드웨어를 믿습니다. 물리 공격은 대체로 위협 모델 밖입니다.</p>
-<p>중요한 점은 <strong>증명을 검증하고 키를 넘기는 쪽이 테넌트, 즉 서비스를 운영하는 고객 자신</strong>이라는 것입니다. 은행이 자기 데이터를 클라우드에서 처리하는 경우처럼 데이터 주인이 곧 검증자일 때는 잘 들어맞습니다. 그러나 개인 AI 서비스에서는 데이터 주인이 사용자이고, 서비스 운영자가 테넌트 자리에 있습니다. 클라우드 기밀 컴퓨팅은 운영자를 클라우드 사업자로부터 지켜 주지만, <strong>사용자의 데이터를 운영자로부터 지켜 주지는 않습니다.</strong> TEE는 "이 하드웨어에서 이 해시의 코드가 돈다"까지를 보장할 뿐, 그 코드가 데이터를 남기지 않는지, 운영자가 들어갈 수 없는지는 시스템 설계가 채워야 합니다.</p>
+<p>주요 클라우드 3사는 모두 CPU TEE 기반 기밀 VM을 정식 서비스로 제공하고, Azure와 Google Cloud는 H100과 Blackwell 계열 GPU까지 TEE로 묶은 상품을 내놓았습니다. 이 서비스들은 클라우드 운영자, 하이퍼바이저, 다른 테넌트를 믿지 않고 CPU와 GPU 벤더의 하드웨어를 믿는 구조이고, 물리 공격은 대체로 위협 모델 밖에 둡니다.</p>
+<p>그럼 이 구조에서 증명은 누가 검증할까요? <strong>테넌트, 즉 서비스를 운영하는 고객 자신</strong>입니다. 은행이 자기 데이터를 클라우드에서 처리하는 경우처럼 데이터 주인이 곧 검증자일 때는 잘 들어맞죠. 그러나 개인 AI 서비스에서는 데이터 주인이 사용자이고, 서비스 운영자가 테넌트 자리에 있습니다. 클라우드 기밀 컴퓨팅은 운영자를 클라우드 사업자로부터 지켜 주지만, <strong>사용자의 데이터를 운영자로부터 지켜 주지는 않는</strong> 셈이에요. TEE가 보장하는 건 "이 하드웨어에서 이 해시의 코드가 돈다"까지이고, 그 코드가 데이터를 남기지 않는지, 운영자가 들어갈 수 없는지는 결국 시스템 설계가 채워야 할 몫으로 보입니다.</p>
 <h2>PCC가 TEE 위에 더한 것</h2>
-<p>Apple은 2024년 6월 PCC를 공개하며 다섯 가지 요구사항을 내걸었습니다. 각 요구사항에서 TEE만으로 얻는 것과 PCC가 덧붙인 장치는 다음과 같습니다.</p>
+<p>Apple은 2024년 6월 PCC를 공개하며 다섯 가지 요구사항을 내걸었습니다. 각 요구사항에서 TEE만으로 얻는 것과 PCC가 덧붙인 장치를 나란히 놓아 보면 다음과 같습니다.</p>
 <ul><li><strong>상태 없는 처리</strong>: TEE는 메모리 암호화와 종료 시 키 폐기까지, PCC는 범용 로깅 제거, 감사된 로그만 반출, 재부팅마다 데이터 볼륨 키 교체를 더함</li><li><strong>강제 가능한 보장</strong>: TEE는 하드웨어 격리까지, PCC는 TLS 종단 로드밸런서 같은 외부 구성 요소에 핵심 보호를 맡기지 않는 구조를 더함</li><li><strong>특권 런타임 접근 차단</strong>: TEE는 하이퍼바이저와 호스트 OS 차단까지, PCC는 원격 셸, 디버깅, 개발자 모드 제거와 서명 코드만 실행을 더함</li><li><strong>표적 불가능성</strong>: TEE에는 없는 개념, PCC는 제3자 OHTTP 중계, 블라인드 서명 자격증명, 노드 일부에만 암호화 전송을 더함</li><li><strong>검증 가능한 투명성</strong>: TEE는 측정값 서명까지, PCC는 모든 프로덕션 이미지 측정값의 투명성 로그 공개, 연구자용 가상 환경(VRE), 바운티를 더함</li></ul>
-<p>이 가운데 핵심은 <strong>검증자를 사용자 기기로 옮긴 것</strong>입니다. 기기는 증명된 측정값이 공개 투명성 로그의 릴리스와 일치하는 노드에만 요청을 암호화해 보냅니다. 운영자가 몰래 다른 코드를 올리면 그 코드는 로그에 없으므로 기기가 데이터를 보내지 않습니다. 운영자가 스스로를 신뢰 범위에서 빼는 구조입니다. 또 Apple은 이미지를 공개하고 VRE와 최대 100만 달러의 바운티를 내걸어, 측정값이 무엇을 뜻하는지 외부에서 확인할 수 있게 했습니다.</p>
+<p>이 가운데 가장 눈에 띄는 건 <strong>검증자를 사용자 기기로 옮긴 것</strong>인데요. 기기는 증명된 측정값이 공개 투명성 로그의 릴리스와 일치하는 노드에만 요청을 암호화해 보냅니다. 운영자가 몰래 다른 코드를 올리면 그 코드는 로그에 없으니 기기가 데이터를 보내지 않겠죠. 운영자가 스스로를 신뢰 범위에서 빼는 구조라고 할 수 있습니다. 여기에 Apple은 이미지를 공개하고 VRE와 최대 100만 달러의 바운티를 내걸어, 측정값이 무엇을 뜻하는지 외부에서 확인할 수 있게 했구요.</p>
 <h2>2026년 6월: 범용 클라우드 TEE 위의 PCC</h2>
-<p>올해 6월 Apple은 PCC를 Google Cloud로 넓히면서 Intel TDX, NVIDIA Blackwell 기밀 GPU, Google Titan 칩을 조합했습니다. 이때 내건 원칙은 TEE를 바라보는 관점을 잘 보여 줍니다.</p>
+<p>올해 6월 Apple은 PCC를 Google Cloud로 넓히면서 Intel TDX, NVIDIA Blackwell 기밀 GPU, Google Titan 칩을 조합했는데요, 이때 내건 원칙들이 TEE를 어떻게 바라보는지 잘 보여 주는 것 같습니다.</p>
 <ul><li><strong>복수 신뢰 루트</strong>: 사용자 데이터 유출에 쓰일 수 있는 구성 요소는 서로 다른 벤더의 독립된 신뢰 루트 2개 이상에 뿌리를 둔 증명을 요구함</li><li><strong>하드웨어 원장 관리</strong>: PCC에 속한 하드웨어 전체를 검증 가능한 추가 전용 원장으로 관리함</li><li><strong>기밀 컴퓨팅에만 기대지 않음</strong>: 펌웨어부터 애플리케이션까지 모두 TCB로 보고, 부채널과 특권 접근 방어를 기밀 컴퓨팅 하나에 맡기지 않음</li></ul>
-<p>메모리 버스 인터포저로 서버 TEE의 증명 키를 빼낸 TEE.fail 같은 물리 공격이 이어지는 상황에서, 벤더 하나의 TEE에 모든 것을 걸지 않고 나머지를 시스템 설계로 메우겠다는 선택으로 읽힙니다. Meta, Google, OpenAI의 개인 AI 서비스도 TEE, 원격 증명, 제3자 중계, 공개 로그를 조합하는 같은 구조로 수렴하고 있습니다.</p>
+<p>메모리 버스 인터포저로 서버 TEE의 증명 키를 빼낸 TEE.fail 같은 물리 공격이 이어지는 상황에서, 벤더 하나의 TEE에 모든 것을 걸지 않고 나머지를 시스템 설계로 메우겠다는 선택으로 읽힙니다. Meta, Google, OpenAI의 개인 AI 서비스도 TEE, 원격 증명, 제3자 중계, 공개 로그를 조합하는 같은 구조로 수렴하고 있는 것으로 보이구요.</p>
 <h2>산업 AI에 주는 시사점</h2>
-<p>제조 현장에서는 모델을 가진 장비 공급사와 데이터를 가진 공장처럼 운영 주체와 데이터 주체가 다른 경우가 흔합니다. 데이터 주인이 직접 검증할 수 없다면 "TEE를 쓰니 안전하다"는 설명은 결국 운영자를 믿어 달라는 이야기로 돌아갑니다. PCC에서 빌려 올 만한 설계 원칙은 다음 정도로 정리해 볼 수 있습니다.</p>
+<p>산업 AI에서는 어떨까요? 제조 현장에서는 모델을 가진 장비 공급사와 데이터를 가진 공장처럼 운영 주체와 데이터 주체가 다른 경우가 흔한데요, 데이터 주인이 직접 검증할 수 없다면 "TEE를 쓰니 안전하다"는 설명은 결국 운영자를 믿어 달라는 이야기로 돌아가게 됩니다. PCC에서 빌려 올 만한 설계 원칙은 다음 정도로 정리해 볼 수 있을 것 같아요.</p>
 <ul><li><strong>흐름 단위의 설계</strong>: 증명으로 환경을 확인하고, 키와 데이터를 넣고, 격리된 곳에서 실행하고, 허용된 결과만 내보내는 흐름 전체를 설계 단위로 봄</li><li><strong>검증 주체의 위치</strong>: 증명을 검증하는 쪽을 데이터 주인 가까이에 둠</li><li><strong>측정값의 의미 공개</strong>: 투명성 로그나 재현 가능 빌드로 측정값을 해석할 수 있게 함</li><li><strong>복수 신뢰 루트</strong>: 단일 벤더 TEE에 모든 것을 걸지 않고 물리 보안, 시스템 하드닝과 함께 다층으로 방어함</li></ul>
-<p>국내에서는 자체 인프라로 TEE 기반 상품을 내놓은 클라우드 사업자를 공개 자료에서 찾기 어렵습니다. 데이터 비반출형 협업이나 공공 AI 서비스를 위해서는 하드웨어 도입과 함께 국내에서 운영하는 증명 검증 체계와 투명성 인프라를 준비해 나갈 필요가 있어 보입니다.</p>
-<p>TEE가 하드웨어로 '못 보게' 만드는 기술이라면, PCC는 그 사실을 사용자가 '확인할 수 있게' 만드는 시스템입니다.</p>
+<p>국내에서는 자체 인프라로 TEE 기반 상품을 내놓은 클라우드 사업자를 공개 자료에서 찾기 어려운데요, 데이터 비반출형 협업이나 공공 AI 서비스를 생각하면 하드웨어 도입과 함께 국내에서 운영하는 증명 검증 체계와 투명성 인프라를 준비해 나가는 것도 의미가 있을 듯 합니다.</p>
+<p>TEE가 하드웨어로 '못 보게' 만드는 기술이라면, PCC는 그 사실을 사용자가 '확인할 수 있게' 만드는 시스템이라고 정리해 볼 수 있겠네요.</p>
 <hr class="cr">
 <p>센터의 관련 연구는 <a href="/ko/research/">연구</a> 페이지에 정리되어 있습니다.</p></div>
 <p class="srcbox"><a class="btn btn-primary" href="https://seungwoo.datasec.work/blog/ko/confidential-computing-tee-vs-pcc/" rel="noopener">전체 글 읽기 ↗</a><span>그림, 비교표, 참고 문헌을 포함한 원문</span></p>
