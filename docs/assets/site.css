@@ -63,7 +63,10 @@ h2.ht, h3.ht { font-size: inherit; line-height: inherit; letter-spacing: inherit
 .nav, main, footer { width: 100%; max-width: 1280px; margin-inline: auto; }
 main { flex: 1; padding: 0 44px 56px; }
 .page { padding: 36px 0 0; }
-.page.narrow { max-width: 760px; }
+/* 글 쪽(소식 상세, 과제 상세, 협력). 760px 로 두었더니 1280px 머리말 아래에서 왼쪽에만 붙어
+   오른쪽 40% 가 비었다. 본문 한 줄이 한글 60자 안팎이 되도록 넓히고 글자를 한 단계 키운다. */
+.page.narrow { max-width: 1000px; }
+.page.narrow .prose { font-size: 17px; line-height: 29px; }
 
 footer {
   border-top: 1px solid var(--color-divider); padding: 22px 44px;
