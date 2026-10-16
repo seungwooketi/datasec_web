@@ -494,10 +494,10 @@
   "research": true
  },
  {
-  "slug": "yujeong-choi",
+  "slug": "hyeongeun-noh",
   "name": {
-   "ko": "최유정",
-   "en": "Yujeong Choi"
+   "ko": "노형은",
+   "en": "Hyeongeun Noh"
   },
   "name_en_confirmed": true,
   "grade": {
@@ -803,6 +803,25 @@
   "name": {
    "ko": "류영일",
    "en": "Youngil Ryu"
+  },
+  "name_en_confirmed": true,
+  "grade": {
+   "ko": "연구원",
+   "en": "Researcher"
+  },
+  "org_role": {
+   "ko": "",
+   "en": ""
+  },
+  "links": {},
+  "external_count": 0,
+  "projects": []
+ },
+ {
+  "slug": "suji-sung",
+  "name": {
+   "ko": "성수지",
+   "en": "Suji Sung"
   },
   "name_en_confirmed": true,
   "grade": {
