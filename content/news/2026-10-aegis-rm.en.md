@@ -14,7 +14,7 @@ A robot on a factory floor learns the craft of its operators: trajectories, gras
 
 That is why neither conventional IT security (DLP, prompt filters) nor functional safety (ISO 10218, ISO 13849) transfers cleanly. Work such as RoboPAIR, which steered deployed robots into dangerous actions with crafted prompts alone, suggests that defence has to operate at execution time.
 
-![Diagram moving from the current shop floor (manual sorting, tacit know-how at risk) through the AEGIS-RM security architecture stack to a protected smart factory. The stack has five layers: policy observability and agentic AI, industrial knowledge and model protection, intelligence-control separation, trusted execution environment, and edge hardware. Labels are in Korean and English](/assets/news/2026-10-aegis-rm/architecture-stack.jpg "The AEGIS-RM security architecture stack, from today's manual, know-how-dependent line (AS-IS) to a smart factory whose process knowledge is protected (TO-BE). Labels partly in Korean")
+![Diagram moving from the current shop floor (manual sorting, tacit know-how at risk) through the AEGIS-RM security architecture stack to a protected smart factory. The stack has five layers: policy observability and agentic AI, industrial knowledge and model protection, intelligence-control separation, trusted execution environment, and edge hardware.](/assets/news/2026-10-aegis-rm/architecture-stack-en.jpg "The AEGIS-RM security architecture stack, from today's manual, know-how-dependent line (AS-IS) to a smart factory whose process knowledge is protected (TO-BE)")
 
 # A four-layer defence
 
@@ -25,7 +25,7 @@ The robot's on-edge intelligence sits at the centre, wrapped in four rings. The 
 3. **Separating intelligence from control, with anomaly detection**: catching direct, indirect and visual prompt injection, tampered control parameters and abnormal behaviour
 4. **Zero-trust policy and unified monitoring**: ZTA monitoring, emergency stop, and preventing leaks of in-house knowledge (KB/ERP)
 
-![Concentric rings around the edge AI RFM: TEE trusted execution, model and training-data protection, prompt-injection and behaviour-anomaly detection, and ZTA monitoring with in-house knowledge protection, each tagged with the logo of the partner responsible. Labels are in Korean](/assets/news/2026-10-aegis-rm/four-layer-defense.png "The four-layer defence: 1 trusted execution, 2 model and data protection, 3 intelligence-control separation and anomaly detection, 4 zero-trust monitoring. Labels in Korean")
+![Concentric rings around the edge AI RFM: TEE trusted execution, model and training-data protection, prompt-injection and behaviour-anomaly detection, and ZTA monitoring with in-house knowledge protection, each tagged with the logo of the partner responsible.](/assets/news/2026-10-aegis-rm/four-layer-defense-en.png "The four-layer defence: 1 trusted execution, 2 model and data protection, 3 intelligence-control separation and anomaly detection, 4 zero-trust monitoring")
 
 # Core technologies
 
@@ -50,7 +50,7 @@ The consortium stands on two pillars, security and robotics.
 - **Roboworks**: robot platform, testbed and connector security
 - **Kyoungwoo Precision**: the end user, providing a brake-drum press line, its data, and on-site validation
 
-![Programme structure under a 'Secure Physical AI' roof: KETI as lead, Seoul National University and ENKI WhiteHat on the AI security pillar, Roboworks and Kyoungwoo Precision on the AI robotics pillar, and a brake-drum pick-and-place testbed as the validation base. Labels are in Korean](/assets/news/2026-10-aegis-rm/consortium.png "Two pillars, security and robotics. Validation runs on a brake-drum pick-and-place testbed (Franka FR3, NVIDIA Jetson Thor, ROS2, K3s). Labels in Korean")
+![Programme structure under a 'Secure Physical AI' roof: KETI as lead, Seoul National University and ENKI WhiteHat on the AI security pillar, Roboworks and Kyoungwoo Precision on the AI robotics pillar, and a brake-drum pick-and-place testbed as the validation base.](/assets/news/2026-10-aegis-rm/consortium-en.png "Two pillars, security and robotics. Validation runs on a brake-drum pick-and-place testbed (Franka FR3, NVIDIA Jetson Thor, ROS2, K3s)")
 
 Validation starts on a real press line, picking and aligning ring-shaped parts and starting the press through a two-hand control, and then extends to inspection, stacking and mobile platforms.
 
