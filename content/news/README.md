@@ -69,6 +69,7 @@ who does not read Korean and does not know the Korean funding landscape.
 
 - 경로는 `/assets/news/` 아래만 받는다. 파일이 없으면 빌드가 막는다
 - 크기(`width`/`height`)는 빌드가 파일에서 읽는다. 가로 1400px 정도면 충분하다
+- 세로로 긴 그림은 줄 끝에 `{width=60%}` 를 붙여 본문 폭보다 좁게 둔다(20~100%, 좁은 화면에서는 전체 폭)
 - 본문 **첫 그림이 그 쪽의 소셜 카드(og:image)** 가 된다. 1.91:1 에 가까운 그림을 맨 앞에 둔다
 - ⚠️ 그림 속 글자는 언어 전환, 검색, 화면낭독이 안 된다. alt 와 캡션에 내용을 글로 남긴다
 

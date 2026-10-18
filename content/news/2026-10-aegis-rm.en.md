@@ -25,7 +25,7 @@ The robot's on-edge intelligence sits at the centre, wrapped in four rings. The 
 3. **Separating intelligence from control, with anomaly detection**: catching direct, indirect and visual prompt injection, tampered control parameters and abnormal behaviour
 4. **Zero-trust policy and unified monitoring**: ZTA monitoring, emergency stop, and preventing leaks of in-house knowledge (KB/ERP)
 
-![Concentric rings around the edge AI RFM: TEE trusted execution, model and training-data protection, prompt-injection and behaviour-anomaly detection, and ZTA monitoring with in-house knowledge protection, each tagged with the logo of the partner responsible.](/assets/news/2026-10-aegis-rm/four-layer-defense-en.png "The four-layer defence: 1 trusted execution, 2 model and data protection, 3 intelligence-control separation and anomaly detection, 4 zero-trust monitoring")
+![Concentric rings around the edge AI RFM: TEE trusted execution, model and training-data protection, prompt-injection and behaviour-anomaly detection, and ZTA monitoring with in-house knowledge protection, each tagged with the logo of the partner responsible.](/assets/news/2026-10-aegis-rm/four-layer-defense-en.png "The four-layer defence: 1 trusted execution, 2 model and data protection, 3 intelligence-control separation and anomaly detection, 4 zero-trust monitoring"){width=60%}
 
 # Core technologies
 

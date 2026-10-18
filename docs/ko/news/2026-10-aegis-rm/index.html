@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/assets/industry.css?v=62b0997c88">
-<link rel="stylesheet" href="/assets/site.css?v=743b04e499">
+<link rel="stylesheet" href="/assets/site.css?v=1c8788627c">
 </head>
 <body data-lang="ko">
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -57,7 +57,7 @@
 <h2>4단계 방어 체계</h2>
 <p>엣지에서 동작하는 로봇 지능(RFM)을 가운데 두고 네 겹으로 감싸는 구조입니다. 안쪽 두 겹은 보호, 바깥 두 겹은 방어를 맡습니다.</p>
 <ol><li><strong>TEE 기반 신뢰 실행 환경</strong>: 모델을 하드웨어 격리 영역에서 기밀 추론하고, 컨테이너 인증으로 종적 이동을 막습니다</li><li><strong>내재화 지식 보호</strong>: 학습데이터 오염과 백도어를 막고, 비가역 학습과 워터마킹으로 모델 속 노하우를 지킵니다</li><li><strong>지능-제어 분리와 이상 탐지</strong>: 직접, 간접, 시각 프롬프트 인젝션과 제어 파라미터 위변조, 행동 기반 이상동작을 탐지합니다</li><li><strong>제로트러스트 정책과 통합관제</strong>: ZTA 관제와 비상정지, 사내 지식(KB/ERP) 유출 방지를 맡습니다</li></ol>
-<figure class="newsfig"><div class="blueprint "><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><img src="/assets/news/2026-10-aegis-rm/four-layer-defense.png?v=f7eb738f54" alt="엣지 AI RFM을 중심으로 TEE 신뢰 실행, 모델과 학습데이터 보호, 프롬프트 인젝션과 이상동작 탐지, ZTA 관제와 사내지식 보호의 네 겹 원이 둘러싼 그림과 각 항목의 담당 기관 로고" width="1392" height="1135" loading="lazy" decoding="async"></div><figcaption>4단계 방어 체계: 1 TEE 신뢰 실행, 2 모델과 학습데이터 보호, 3 지능-제어 분리와 이상 탐지, 4 제로트러스트 관제</figcaption></figure>
+<figure class="newsfig" style="--fig-w:60%"><div class="blueprint "><i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i><img src="/assets/news/2026-10-aegis-rm/four-layer-defense.png?v=f7eb738f54" alt="엣지 AI RFM을 중심으로 TEE 신뢰 실행, 모델과 학습데이터 보호, 프롬프트 인젝션과 이상동작 탐지, ZTA 관제와 사내지식 보호의 네 겹 원이 둘러싼 그림과 각 항목의 담당 기관 로고" width="1392" height="1135" loading="lazy" decoding="async"></div><figcaption>4단계 방어 체계: 1 TEE 신뢰 실행, 2 모델과 학습데이터 보호, 3 지능-제어 분리와 이상 탐지, 4 제로트러스트 관제</figcaption></figure>
 <h2>주요 대상 기술</h2>
 <p>여섯 개 보안 모듈(M1~M6)로 나누어 개발합니다.</p>
 <ul><li><strong>HW 신뢰 실행 환경(M1)</strong>: ARM TrustZone/OP-TEE 기반 TEE 런타임, Secure Boot와 원격 증명, Confidential Containers</li><li><strong>지능-제어 분리 프레임워크(M2)</strong>: 판단과 제어 영역을 나누고 실시간 의미, 물리 안전 게이트로 명령을 검증, 다층 프롬프트 주입 방어</li><li><strong>행위 기반 이상탐지(M3)</strong>: 통계와 역동역학 모델, 딥러닝을 결합한 물리잔차 하이브리드 탐지, 사이버 유발 이상과 기계 결함의 구분, XAI 탐지 근거</li><li><strong>AI 모델 보호(M4)</strong>: 모델 추출 탐지, 행동공간 워터마킹, TEE 기반 안전 추론</li><li><strong>보안 학습 파이프라인(M5)</strong>: 특징 수준 추상화로 작업 성능을 지키는 비가역 학습, RFM 학습 파이프라인과 KB/ERP 커넥터 보안</li><li><strong>통합 보안 관제와 자율 대응(M6)</strong>: SIEM 상관분석, ZTA(OPA) 정책 엔진, XAI 대시보드, 사람 승인(HITL)을 결합한 자율 보안 대응(SOA)</li></ul>

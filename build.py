@@ -136,10 +136,11 @@ def _inline(s: str) -> str:
 
 # 그림 한 줄: `![대체 글](/assets/news/<slug>/<파일>.png "캡션")`. 한 줄에 그림 하나만.
 # ⛔ 경로는 `/assets/news/` 아래만 받는다 — 밖의 그림(브랜드 등)을 본문에 끌어오지 않게.
-FIG_RE = re.compile(r'^!\[([^\]]*)\]\((/assets/news/[^)\s"]+)(?:\s+"([^"]*)")?\)$')
+# 뒤에 `{width=60%}` 를 붙이면 그 그림만 본문 폭보다 좁게 둔다(세로로 긴 그림용). 좁은 화면에서는 무시한다.
+FIG_RE = re.compile(r'^!\[([^\]]*)\]\((/assets/news/[^)\s"]+)(?:\s+"([^"]*)")?\)(?:\{width=(\d{2,3})%\})?$')
 
 
-def figure(alt: str, src: str, caption: str) -> str:
+def figure(alt: str, src: str, caption: str, width: str = "") -> str:
     """소식 본문 그림. 크기는 파일에서 읽고(img_size), 없는 파일이면 막는다.
 
     ⭐ 액자는 디자인 시스템의 `.blueprint`(네 귀 등록마크)다. 면을 채우지 않는다.
@@ -153,7 +154,11 @@ def figure(alt: str, src: str, caption: str) -> str:
         block(f"소식 그림에 대체 글(alt)이 없다: {src}")
     w, h = img_size(src)
     cap = f"<figcaption>{_inline(caption)}</figcaption>" if caption else ""
-    return ('<figure class="newsfig">' + blueprint(
+    if width and not 20 <= int(width) <= 100:
+        block(f"소식 그림 width 는 20~100% 사이여야 한다: {src}")
+        width = ""
+    style = f' style="--fig-w:{int(width)}%"' if width else ""
+    return (f'<figure class="newsfig"{style}>' + blueprint(
         f'<img src="{stamp(src)}" alt="{e(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async">')
         + cap + "</figure>")
 
@@ -187,7 +192,7 @@ def markdown(text: str) -> str:
         fig = FIG_RE.match(line.strip())
         if fig:
             flush()
-            out.append(figure(fig.group(1), fig.group(2), fig.group(3) or ""))
+            out.append(figure(fig.group(1), fig.group(2), fig.group(3) or "", fig.group(4) or ""))
             continue
         if line.startswith("#"):
             flush()
