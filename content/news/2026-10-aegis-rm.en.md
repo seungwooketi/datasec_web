@@ -4,7 +4,7 @@ date: 2026-10-18
 summary: A four-year project to protect the models of manufacturing robots, and the process know-how they learn, with a four-layer defence from the TEE up to zero-trust monitoring.
 ---
 
-Generative AI is moving into robots, and the output is no longer text but motion. Security for this kind of physical AI is still thin. We have now signed the agreement for AEGIS-RM, a project in Korea's 2026 Robot Industry Technology Development Programme, managed by the Korea Evaluation Institute of Industrial Technology (KEIT). It runs for four years, from August 2026 to December 2029, with KETI as the lead institute.
+Generative AI is moving into robots, and the output is no longer text but motion. Security for this kind of physical AI is still thin. We have now signed the agreement for AEGIS-RM, a project in the 2026 Robot Industry Technology Development Programme of Korea's Ministry of Trade, Industry and Resources (MoTIR), managed by the Korea Evaluation Institute of Industrial Technology (KEIT). It runs for four years, from August 2026 to December 2029, with KETI as the lead institute.
 
 AEGIS-RM stands for Action-aware Edge-Guarded Intelligence and Secure-execution for Robots and Manufacturing. The aim is to protect robot intelligence, and the manufacturing knowledge it carries, across training, inference and control.
 
