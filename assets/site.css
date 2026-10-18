@@ -242,6 +242,12 @@ body[data-lang="ko"] .prose h2 { text-transform: none; }
 .excerpt { margin: 26px 0 0; padding: 12px 0 12px 18px; border-left: 3px solid var(--color-accent);
   font-size: 15px; line-height: 24px; font-weight: 500; color: var(--color-text); }
 .excerpt a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }
+/* 소식 본문 그림 — 액자는 .blueprint(등록마크), 면을 채우지 않는다. 캡션은 본문보다 작게 */
+.newsfig { margin: 30px 0; }
+.newsfig .blueprint { padding: 10px; }
+.newsfig img { display: block; width: auto; max-width: 100%; height: auto; max-height: 720px; margin: 0 auto; }
+.newsfig figcaption { margin-top: 10px; font-size: 13px; line-height: 20px;
+  color: color-mix(in srgb, var(--color-text) 62%, transparent); }
 .reg-inner .dl:last-child { border-bottom: 0; }
 .dl { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 9px 0; font-size: 14px; line-height: 21px; }
 .dl.reg { border-bottom: 1px solid var(--color-divider); }

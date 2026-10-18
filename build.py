@@ -134,8 +134,32 @@ def _inline(s: str) -> str:
     return s
 
 
+# 그림 한 줄: `![대체 글](/assets/news/<slug>/<파일>.png "캡션")`. 한 줄에 그림 하나만.
+# ⛔ 경로는 `/assets/news/` 아래만 받는다 — 밖의 그림(브랜드 등)을 본문에 끌어오지 않게.
+FIG_RE = re.compile(r'^!\[([^\]]*)\]\((/assets/news/[^)\s"]+)(?:\s+"([^"]*)")?\)$')
+
+
+def figure(alt: str, src: str, caption: str) -> str:
+    """소식 본문 그림. 크기는 파일에서 읽고(img_size), 없는 파일이면 막는다.
+
+    ⭐ 액자는 디자인 시스템의 `.blueprint`(네 귀 등록마크)다. 면을 채우지 않는다.
+    ⚠️ alt 를 비워 두면 막는다 — 그림 속 글자는 검색, 번역, 화면낭독이 안 되므로
+       무엇을 그린 그림인지 alt 와 캡션에 글로 남겨야 한다.
+    """
+    if not (ROOT / src.lstrip("/")).exists():
+        block(f"소식 그림 파일이 없다: {src}")
+        return ""
+    if not alt.strip():
+        block(f"소식 그림에 대체 글(alt)이 없다: {src}")
+    w, h = img_size(src)
+    cap = f"<figcaption>{_inline(caption)}</figcaption>" if caption else ""
+    return ('<figure class="newsfig">' + blueprint(
+        f'<img src="{stamp(src)}" alt="{e(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async">')
+        + cap + "</figure>")
+
+
 def markdown(text: str) -> str:
-    """문단 · 제목 · 목록 · 인용 · 구분선만. 그 이상은 이 사이트에 필요 없다."""
+    """문단 · 제목 · 목록 · 인용 · 구분선 · 그림만. 그 이상은 이 사이트에 필요 없다."""
     out: list[str] = []
     buf: list[str] = []
     mode: str | None = None
@@ -159,6 +183,11 @@ def markdown(text: str) -> str:
         line = raw.rstrip()
         if not line.strip():
             flush()
+            continue
+        fig = FIG_RE.match(line.strip())
+        if fig:
+            flush()
+            out.append(figure(fig.group(1), fig.group(2), fig.group(3) or ""))
             continue
         if line.startswith("#"):
             flush()
@@ -267,6 +296,8 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
             "source": meta.get("source", ""),
             "sample": meta.get("sample", "").lower() in ("true", "yes", "1"),
             "body": markdown(body),
+            # 본문 첫 그림을 그 쪽의 소셜 카드(og:image)로 쓴다. 없으면 사이트 기본 카드.
+            "image": next((m.group(2) for m in map(FIG_RE.match, (x.strip() for x in body.splitlines())) if m), ""),
         })
     # ⛔ 한 언어만 있는 글은 **아예 싣지 않는다.** 싣으면 그 쪽의 hreflang 과 언어 전환기가
     #    없는 쪽을 가리켜 404 가 된다 — 과제 상세와 같은 규칙이다.
@@ -352,7 +383,8 @@ DOMAIN_LABEL = "datasec.work"
 
 
 def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, site: dict,
-          og_type: str = "website", jsonld: str = "", head_extra: str = "") -> str:
+          og_type: str = "website", jsonld: str = "", head_extra: str = "",
+          og_image: str = "", og_alt: str = "") -> str:
     """⛔ `nav_key` 와 `path` 는 **다른 것**이다.
 
     `nav_key` = 내비게이션에서 어느 항목을 현재로 표시할지 (상세 쪽도 목록 항목을 밝힌다).
@@ -396,10 +428,10 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 <meta property="og:url" content="{e(canonical)}">
 <meta property="og:site_name" content="{e(center)}">
 <meta property="og:locale" content="{'ko_KR' if lg == 'ko' else 'en_US'}">
-<meta property="og:image" content="{base}/assets/brand/og-image.png">
-<meta property="og:image:width" content="{OG_W}">
-<meta property="og:image:height" content="{OG_H}">
-<meta property="og:image:alt" content="ADSRC — {e(center)}">
+<meta property="og:image" content="{base}{og_image or '/assets/brand/og-image.png'}">
+<meta property="og:image:width" content="{img_size(og_image)[0] if og_image else OG_W}">
+<meta property="og:image:height" content="{img_size(og_image)[1] if og_image else OG_H}">
+<meta property="og:image:alt" content="{e(og_alt) if og_image else 'ADSRC — ' + e(center)}">
 <meta name="twitter:card" content="summary_large_image">{head_extra}{jsonld}
 <link rel="icon" type="image/svg+xml" href="{stamp('/assets/brand/adsrc-symbol-16.svg')}">
 <link rel="icon" type="image/png" sizes="32x32" href="{stamp('/assets/brand/favicon-32.png')}">
@@ -864,7 +896,8 @@ def page_news_post(lg, site, n):
 """
     return shell(lg, "news/", f'news/{n["slug"]}/', n["title"],
                  n["summary"] or n["title"], body, site, og_type="article",
-                 head_extra=f'\n<meta property="article:published_time" content="{e(n["date"])}">')
+                 head_extra=f'\n<meta property="article:published_time" content="{e(n["date"])}">',
+                 og_image=n["image"], og_alt=n["title"])
 
 
 def page_collaborate(lg, site):
