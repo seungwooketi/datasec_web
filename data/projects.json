@@ -29,12 +29,12 @@
    "en": "Real-Time Responsive AI Noise-Cleaning System and Service Based on Hybrid Sound Masking for Variable Noise Environments"
   },
   "agency": {
-   "ko": "산업통상자원부",
-   "en": "Ministry of Trade, Industry and Energy"
+   "ko": "산업통상부",
+   "en": "Ministry of Trade, Industry and Resources"
   },
   "agency_short": {
    "ko": "산업부",
-   "en": "MOTIE"
+   "en": "MoTIR"
   },
   "role": "joint",
   "start": "2025-07",
@@ -410,6 +410,75 @@
   "pi": {
    "ko": "김동칠",
    "en": "Dongchil Kim"
+  },
+  "new_2026": true
+ },
+ {
+  "slug": "aegis-rm",
+  "title": {
+   "ko": "제조 핵심기술 보호를 위한 AI 로봇/휴머노이드의 지능보호 및 보안 실행 기술 개발",
+   "en": "Intelligence Protection and Secure Execution for AI Robots and Humanoids Safeguarding Core Manufacturing Technology (AEGIS-RM)"
+  },
+  "agency": {
+   "ko": "산업통상부",
+   "en": "Ministry of Trade, Industry and Resources"
+  },
+  "agency_short": {
+   "ko": "산업부",
+   "en": "MoTIR"
+  },
+  "role": "lead",
+  "start": "2026-08",
+  "end": "2029-12",
+  "pi": {
+   "ko": "금승우",
+   "en": "Seungwoo Kum"
+  },
+  "new_2026": true
+ },
+ {
+  "slug": "on-device-ai-chip-software",
+  "title": {
+   "ko": "(3세부) 온디바이스 AI 칩 기반 AI 알고리즘, 지능 연동 프레임워크 및 AI 운용을 위한 소프트웨어 플랫폼 개발",
+   "en": "AI Algorithms, Intelligence Interworking Framework and Operations Software Platform for On-Device AI Chips (Subproject 3)"
+  },
+  "agency": {
+   "ko": "산업통상부",
+   "en": "Ministry of Trade, Industry and Resources"
+  },
+  "agency_short": {
+   "ko": "산업부",
+   "en": "MoTIR"
+  },
+  "role": "joint",
+  "start": "2026-07",
+  "end": "2030-12",
+  "pi": {
+   "ko": "송재종",
+   "en": "Jaejong Song"
+  },
+  "new_2026": true
+ },
+ {
+  "slug": "ai-bom-powertrain-reliability",
+  "title": {
+   "ko": "AI-BOM 기반 차세대 동력시스템 신뢰성 시험 기술 개발",
+   "en": "AI-BOM-Based Reliability Testing for Next-Generation Power Systems"
+  },
+  "agency": {
+   "ko": "산업통상부",
+   "en": "Ministry of Trade, Industry and Resources"
+  },
+  "agency_short": {
+   "ko": "산업부",
+   "en": "MoTIR"
+  },
+  "role": "joint",
+  "start": "2026-07",
+  "end": "2028-12",
+  "pi": {
+   "ko": "이종설",
+   "en": "Jongseol Lee"
   },
   "new_2026": true
  }
