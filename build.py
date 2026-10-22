@@ -65,7 +65,7 @@ T = {
         "role_lead": "주관", "role_joint": "참여/공동", "role_contract": "기업수탁",
         "st_active": "수행중", "st_closing": "종료예정", "st_closed": "종료",
         "tag_new": "26년 신규",
-        "filter_all": "전체", "count_projects": "과제 {n}개",
+        "filter_all": "전체", "count_projects": "과제 {n}개", "more_detail": "연구 내용 소개",
         "count_people": "구성원 {n}명",
         "search_projects": "과제명, 부처, 책임자 검색", "search_people": "이름 또는 직급 검색",
         "back_research": "← 연구 과제 목록", "back_news": "← 지난 소식",
@@ -100,7 +100,7 @@ T = {
         "role_lead": "Lead", "role_joint": "Partner", "role_contract": "Contract",
         "st_active": "Active", "st_closing": "Closing", "st_closed": "Closed",
         "tag_new": "New in 2026",
-        "filter_all": "All", "count_projects": "{n} projects",
+        "filter_all": "All", "count_projects": "{n} projects", "more_detail": "About this project",
         "count_people": "{n} members",
         "search_projects": "Search projects, funders, PIs", "search_people": "Search by name or grade",
         "back_research": "← Research programmes", "back_news": "← All news",
@@ -706,7 +706,12 @@ def page_research(lg, site, projects, members, detailed):
         f'<tr data-role="{p["role"]}" data-new="{"1" if p.get("new_2026") else "0"}" '
         f'data-q="{e(haystack(p))}">'
         f'<td class="num">{i:02d}</td>'
-        f'<td>{project_link(lg, p, detailed, e(p["title"][lg]), "ht rowtitle")}</td>'
+        # ⭐ 소개가 있는 과제는 적다. 제목 전체를 링크로 두면 링크인지 알아보기 어려워서,
+        #    제목은 글로 두고 아랫줄에 「연구 내용 소개 →」 링크를 따로 단다.
+        f'<td><span class="ht rowtitle">{e(p["title"][lg])}</span>'
+        + (f'<a class="moreline" href="/{lg}/research/{p["slug"]}/">{e(t["more_detail"])}'
+           f'<span aria-hidden="true"> →</span></a>' if p["slug"] in detailed else "")
+        + '</td>'
         f'<td>{e(p["agency_short"][lg])}</td>'
         f'<td class="tnum">{e(p["start"])}{t["range"]}{e(p["end"])}</td>'
         f'<td>{person_link(lg, p["pi"], members)}</td>'

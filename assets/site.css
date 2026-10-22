@@ -196,6 +196,10 @@ body[data-lang="ko"] .h-proj { font-size: 38px; line-height: 50px; }
 .table.fixed td { padding: 11px 0; vertical-align: top; }
 .rowtitle { display: block; font-size: 21px; line-height: 23px; color: inherit; }
 .rowtitle:hover { color: var(--color-accent); }
+/* 연구 목록: 과제 소개가 있는 과제의 제목 아랫줄 링크 */
+.moreline { display: inline-block; margin-top: 6px; font-size: 13px; line-height: 18px; font-weight: 600;
+  color: var(--color-accent); }
+.moreline:hover { text-decoration: underline; text-underline-offset: 3px; }
 .tablewrap { overflow-x: auto; }
 .listing { min-width: 880px; }
 .listing td { padding: 11px var(--space-2) 11px 0; vertical-align: top; }
