@@ -702,8 +702,10 @@ def page_research(lg, site, projects, members, detailed):
         return " ".join((p["title"][lg], p["agency"][lg], p["agency_short"][lg],
                          p["pi"][lg], T[lg][ROLE_KEY[p["role"]]])).lower()
 
+    has_detail = ' class="has-detail"'
     rows = "".join(
-        f'<tr data-role="{p["role"]}" data-new="{"1" if p.get("new_2026") else "0"}" '
+        f'<tr{has_detail if p["slug"] in detailed else ""} '
+        f'data-role="{p["role"]}" data-new="{"1" if p.get("new_2026") else "0"}" '
         f'data-q="{e(haystack(p))}">'
         f'<td class="num">{i:02d}</td>'
         # ⭐ 소개가 있는 과제는 적다. 제목 전체를 링크로 두면 링크인지 알아보기 어려워서,
