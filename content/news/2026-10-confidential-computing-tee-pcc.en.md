@@ -56,4 +56,4 @@ If a TEE is the technology that keeps others from *seeing*, PCC is the system th
 
 ---
 
-The center's related work is listed on the [Research](/en/research/) page.
+The center's related work is listed on the [Projects](/en/research/) page.

@@ -1,5 +1,9 @@
 ---
-title: AEGIS-RM
+short: AEGIS-RM
+consortium_lead: 한국전자기술연구원 (인공지능데이터·보안연구센터, 지능로보틱스연구센터)
+consortium_joint: 서울대학교, (주)엔키화이트햇, 로보웍스(주)
+consortium_demand: (주)경우정밀
+consortium_note: 개발한 기술은 경우정밀의 실제 프레스 공정에서 실증합니다.
 ---
 
 AEGIS-RM(Action-aware Edge-Guarded Intelligence and Secure-execution for Robots and Manufacturing)은 제조 현장에서 일하는 AI 로봇과 휴머노이드의 지능, 그리고 그 안에 학습된 제조 노하우를 지키는 기술을 개발하는 과제입니다. 산업통상부와 한국산업기술기획평가원(KEIT)의 로봇산업기술개발사업으로 2026년 8월부터 2029년 12월까지 수행하며, 한국전자기술연구원이 주관합니다.
@@ -14,9 +18,3 @@ AEGIS-RM(Action-aware Edge-Guarded Intelligence and Secure-execution for Robots 
 - **내재화 지식 보호**: 비가역 학습과 워터마킹으로 모델 속 제조 노하우 보호
 - **지능-제어 분리와 이상 탐지**: 프롬프트 인젝션, 제어 파라미터 위변조, 로봇 이상동작 탐지
 - **제로트러스트 정책과 통합관제**: 접근 통제, 비상정지, 사내 지식(KB/ERP) 유출 방지
-
-# 추진 체계
-
-한국전자기술연구원(인공지능데이터·보안연구센터, 지능로보틱스연구센터)이 주관하고 서울대학교, (주)엔키화이트햇, 로보웍스(주)가 공동으로, (주)경우정밀이 수요기업으로 참여합니다. 개발한 기술은 경우정밀의 실제 프레스 공정에서 실증합니다.
-
-과제 착수 소식은 [AEGIS-RM 과제 수주](/ko/news/2026-10-aegis-rm/)에서 보실 수 있습니다.

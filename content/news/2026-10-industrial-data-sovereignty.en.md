@@ -40,4 +40,4 @@ If a data dam gathers data in one place, data sovereignty aims to keep data wher
 
 ---
 
-The center's related work is listed on the [Research](/en/research/) page.
+The center's related work is listed on the [Projects](/en/research/) page.

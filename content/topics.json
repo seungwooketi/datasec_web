@@ -1,0 +1,37 @@
+{
+  "_": "핵심 연구 주제. ⭐ 정본에 없는 **편집 분류**다 — 사람이 정하고 PR 리뷰가 공개 결정이다. 배열 순서가 홈의 연구 지도와 주제 카드 순서다. id 허용 목록은 이 파일 하나다(build.py 에 다시 적지 않는다). line, desc 가 두 언어 모두 비면 그 칸을 렌더하지 않고, 한쪽만 비면 빌드가 막는다. featured 는 그 주제의 projects 안에 있어야 한다. 모든 주제에 과제가 붙기 전에는 과제 목록의 주제 필터를 렌더하지 않는다.",
+  "topics": [
+    {
+      "id": "multimodal", "axis": "data",
+      "name": {"ko": "멀티모달 데이터", "en": "Multimodal Data"},
+      "line": {"ko": "", "en": ""},
+      "desc": {"ko": "", "en": ""},
+      "featured": "",
+      "projects": []
+    },
+    {
+      "id": "content", "axis": "data",
+      "name": {"ko": "콘텐츠", "en": "Content"},
+      "line": {"ko": "", "en": ""},
+      "desc": {"ko": "", "en": ""},
+      "featured": "",
+      "projects": []
+    },
+    {
+      "id": "tee", "axis": "security",
+      "name": {"ko": "신뢰 실행 환경", "en": "Trusted Execution Environment"},
+      "line": {"ko": "", "en": ""},
+      "desc": {"ko": "", "en": ""},
+      "featured": "aegis-rm",
+      "projects": ["aegis-rm"]
+    },
+    {
+      "id": "physical", "axis": "security",
+      "name": {"ko": "물리보안", "en": "Physical Security"},
+      "line": {"ko": "", "en": ""},
+      "desc": {"ko": "", "en": ""},
+      "featured": "",
+      "projects": []
+    }
+  ]
+}

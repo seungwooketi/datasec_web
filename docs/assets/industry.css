@@ -80,6 +80,12 @@ figure { margin: 0; }
 .blueprint > .corner.tr { top: -6px; right: -6px; }
 .blueprint > .corner.bl { bottom: -6px; left: -6px; }
 .blueprint > .corner.br { bottom: -6px; right: -6px; }
+/* 핸드오프 styles.css:78-82, 97-99 를 그대로 옮긴다(값을 새로 정하지 않았다). 빠져 있어서
+   구성원 사진이 강철색으로 물들지 않고 원색으로 나갔다. */
+.blueprint.halftone, .blueprint.plate, .blueprint.duotone { overflow: visible; }
+.duotone{position:relative;overflow:hidden}
+.duotone::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:var(--color-accent);mix-blend-mode:color}
 
 /* — rules — */
 .hr { height: 1px; border: 0; margin: var(--space-4) 0; background: var(--color-divider); }

@@ -1,5 +1,9 @@
 ---
-title: AEGIS-RM
+short: AEGIS-RM
+consortium_lead: KETI (AI Data and Security Research Center, Intelligent Robotics Research Center)
+consortium_joint: Seoul National University, ENKI WhiteHat, Roboworks
+consortium_demand: Kyoungwoo Precision
+consortium_note: The results will be validated on Kyoungwoo Precision's production press line.
 ---
 
 AEGIS-RM (Action-aware Edge-Guarded Intelligence and Secure-execution for Robots and Manufacturing) develops technology that protects the intelligence of AI robots and humanoids on the factory floor, together with the manufacturing know-how they learn. It is funded by Korea's Ministry of Trade, Industry and Resources (MoTIR) through the Korea Evaluation Institute of Industrial Technology (KEIT) under the Robot Industry Technology Development Programme, runs from August 2026 to December 2029, and is led by KETI.
@@ -14,9 +18,3 @@ Factory robots absorb the craft of their operators: trajectories, grasp poses, a
 - **Protecting learned knowledge**: irreversible learning and watermarking to keep manufacturing know-how inside the model
 - **Intelligence-control separation and anomaly detection**: catching prompt injection, tampered control parameters and abnormal robot behaviour
 - **Zero-trust policy and unified monitoring**: access control, emergency stop, and preventing leaks of in-house knowledge (KB/ERP)
-
-# Consortium
-
-KETI (the AI Data and Security Research Center and the Intelligent Robotics Research Center) leads the project with Seoul National University, ENKI WhiteHat and Roboworks as partners and Kyoungwoo Precision as the end user. The results will be validated on Kyoungwoo Precision's production press line.
-
-The project launch is described in [AEGIS-RM awarded](/en/news/2026-10-aegis-rm/).

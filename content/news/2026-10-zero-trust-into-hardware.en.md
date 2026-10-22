@@ -86,4 +86,4 @@ The principles of zero trust stay the same; what changes is the unit they apply 
 
 ---
 
-The center's related work is listed on the [Research](/en/research/) page.
+The center's related work is listed on the [Projects](/en/research/) page.

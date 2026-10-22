@@ -7,14 +7,35 @@
    ⚠️ 스크립트가 없으면 뒤집힌 글자가 CSS 로 바로 보인다 — 읽고 옮겨 적을 수 있다. */
 (function () {
   "use strict";
+  function decode(rev) { return rev.split("").reverse().join("").replace(" [at] ", "@"); }
   var list = document.querySelectorAll("a.mail");
   for (var i = 0; i < list.length; i++) {
     var a = list[i];
     var span = a.querySelector(".rev");
     if (!span) continue;
-    var m = span.textContent.split("").reverse().join("").replace(" [at] ", "@");
+    var m = decode(span.textContent);
     if (m.indexOf("@") < 0) continue;
     a.setAttribute("href", "mailto:" + m);
     a.textContent = m;                 // .rev 가 사라지므로 복사도 정상으로 된다
   }
+
+  /* 「주소 복사」 버튼 (협력 쪽). hidden 으로 구워져 있다가 여기서 열린다 — JS 가 없으면 죽은
+     버튼이 보이지 않게. 담긴 값은 mail() 과 같은 뒤집힌 글자다. */
+  var btns = document.querySelectorAll("button[data-copy-mail]");
+  Array.prototype.forEach.call(btns, function (b) {
+    var addr = decode(b.getAttribute("data-copy-mail"));
+    if (addr.indexOf("@") < 0) return;
+    var msg = b.parentNode.querySelector(".copy-msg");
+    function say(s) { if (msg) msg.textContent = s; }
+    b.hidden = false;
+    b.addEventListener("click", function () {
+      var ok = function () { say(b.getAttribute("data-ok") || ""); };
+      var fail = function () { say(b.getAttribute("data-fail") || ""); };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(addr).then(ok, fail);
+        } else { fail(); }
+      } catch (e) { fail(); }
+    });
+  });
 })();

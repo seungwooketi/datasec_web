@@ -2,6 +2,7 @@
 title: 산업부 신규 과제 2건 수주
 date: 2026-08-08
 category: project
+projects: ai-bom-powertrain-reliability, on-device-ai-chip-software
 summary: 지식서비스산업기술개발사업과 K-온디바이스 AI반도체 기술개발사업의 신규 과제에 선정되었습니다. 센터는 AI-BOM 기반 AI 서비스 안전성 검증 기술과 온디바이스 SoC 추론 플랫폼 기술을 담당합니다.
 ---
 
@@ -12,4 +13,4 @@ summary: 지식서비스산업기술개발사업과 K-온디바이스 AI반도�
 
 센터는 두 과제에서 각각 **AI-BOM 기반 AI 서비스 안전성 검증 기술**과 **다양한 온디바이스 SoC를 위한 추론 환경 제공 플랫폼 기술**을 담당할 예정입니다.
 
-센터가 수행 중인 전체 과제는 [연구](/ko/research/) 페이지에서 보실 수 있습니다.
+센터가 수행 중인 전체 과제는 [과제](/ko/research/) 페이지에서 보실 수 있습니다.

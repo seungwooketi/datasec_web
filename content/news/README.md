@@ -29,7 +29,7 @@ summary: 목록과 검색 결과에 실리는 한 문장. 제목을 되풀이하
 
 첫 문단이 본문이다. 무슨 일이 있었고 왜 중요한지 두세 문장.
 
-두 번째 문단. 필요하면 [연구](/ko/research/) 나 [협력](/ko/collaborate/) 로 링크한다.
+두 번째 문단. 필요하면 [과제](/ko/research/) 나 [협력](/ko/collaborate/) 로 링크한다.
 ```
 
 `content/news/2026-09-iso-contribution.en.md` — **같은 slug, 같은 date, 같은 category**, 내용만 영어로.
@@ -53,12 +53,13 @@ who does not read Korean and does not know the Korean funding landscape.
 | `title` | ⭐ | 목록·상세의 제목, `<title>`, 소셜 카드 |
 | `date` | ⭐ | `YYYY-MM-DD`. **정렬 기준**(최신이 위)이자 **공개일**. 한국 시각 오늘보다 늦으면 빌드가 싣지 않고, 그날 예약 빌드가 싣는다. sitemap 의 `lastmod` 는 이 값이 아니라 빌드가 정한다(쪽 내용이 바뀐 날) |
 | `category` | ⭐ | `project` / `hiring` / `people` / `center` 중 하나(과제 / 채용 / 구성원 / 센터). **두 언어 파일에 같은 영문 키**를 쓴다 — 국문 파일에 「채용」을 쓰면 빌드가 막는다. 블로그 발췌 글(`source` 가 `https://seungwoo.datasec.work/…`)만 생략한다 |
-| `deadline` | | 채용처럼 마감이 있는 글. `2026-11-05T13:00+09:00` 형식(**+09:00 필수**). `category: hiring` 이고 마감이 남았으면 쪽마다 오른쪽 아래에 채용 안내 카드가 뜨고(좁은 화면에서는 바닥 띠, 공고 글 자체에는 없음, 열린 공고가 여럿이면 마감이 가장 가까운 한 건), 마감 시각이 지나면 스스로 닫힌다. 값은 공고의 접수 마감을 그대로 옮긴다. 예: `category: hiring` + `deadline: 2026-11-05T13:00+09:00` |
+| `deadline` | | 채용처럼 마감이 있는 글. `2026-11-05T13:00+09:00` 형식(**+09:00 필수**). `category: hiring` 이고 마감이 남았으면 쪽마다 왼쪽 위(메뉴 바로 아래)에 채용 안내 카드가 뜨고(좁은 화면에서는 바닥 띠, 공고 글 자체에는 없음, 열린 공고가 여럿이면 마감이 가장 가까운 한 건), 마감 시각이 지나면 스스로 닫힌다. 값은 공고의 접수 마감을 그대로 옮긴다. 예: `category: hiring` + `deadline: 2026-11-05T13:00+09:00` |
+| `projects` | | 관련 과제 slug, 쉼표로(`aegis-rm, on-device-ai-chip-software`). 소식 목록에 「관련 과제」로 붙고 과제 상세 쪽의 「관련 소식과 글」에 이 글이 실린다. 없는·미공개 과제면 빌드가 막는다 |
 | `summary` | | 목록의 한 줄 · `<meta name="description">`. 없으면 제목이 대신 들어간다 |
-| `source` | | 원문이 따로 있는 글(블로그 등)의 `https://` 주소. 있으면 상세 쪽 제목 아래와 본문 끝에 「전체 글 읽기」 버튼이 붙는다. https 가 아니면 빌드가 막는다 |
+| `source` | | 원문이 따로 있는 글(블로그 등)의 `https://` 주소. 있으면 상세 쪽 제목 아래와 본문 끝에 「전체 글 읽기」 버튼이 붙는다. https 가 아니면 빌드가 막는다. ⭐ 센터장 블로그(`https://seungwoo.datasec.work/…`)를 가리키면 그 글은 **소식이 아니라 인사이트**다 — 인사이트 쪽에 실리고 고지문이 붙는다 |
 | `sample` | | `true` 면 「예시」 딱지가 붙고 **`--strict` 가 배포를 막는다** |
 
-⛔ `date`, `category`, `deadline`, `source` 유무는 **두 언어가 같아야 한다.** 다르면 빌드가 막는다 —
+⛔ `date`, `category`, `deadline`, `source` 유무, `projects` 는 **두 언어가 같아야 한다.** 다르면 빌드가 막는다 —
 날짜가 다르면 목록 순서가, 분류나 마감이 다르면 한쪽 언어에서만 채용 카드가 갈린다.
 
 ## 본문에 쓸 수 있는 것
@@ -109,5 +110,6 @@ python3 tools/indexnow.py https://www.datasec.work/ko/news/2026-09-iso-contribut
 ## ⛔ 쓰지 말아야 할 것
 
 - **지어낸 사실.** 대외 공개물이라 틀린 한 문장이 곧 허위다. 성과·수치·수상은 근거가 있을 때만
-- **예산·계정번호·공동연구기관 목록** — `data/meta.json` 의 `excluded` 가 정한 비공개 항목이다
+- **예산·계정번호, 정본의 공동연구기관 칸** — `data/meta.json` 의 `excluded` 가 정한 비공개 항목이다.
+  정본 칸을 옮겨 적지 않는다는 뜻이다. 기관명은 협약이나 공식 발표로 확인된 것만 쓴다
 - **개인 연락처·사진** — 본인이 동의한 것만

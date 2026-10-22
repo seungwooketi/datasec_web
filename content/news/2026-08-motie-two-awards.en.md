@@ -2,6 +2,7 @@
 title: Two new MOTIE programmes awarded
 date: 2026-08-08
 category: project
+projects: ai-bom-powertrain-reliability, on-device-ai-chip-software
 summary: The center joins two programmes funded by MOTIE and KEIT, taking on AI-BOM based safety verification of AI services and an inference platform for on-device SoCs.
 ---
 
@@ -12,4 +13,4 @@ Two further research programmes funded by the Ministry of Trade, Industry and En
 
 Across both programmes the center takes on **AI-BOM based verification that an AI service behaves safely**, and **a platform that provides an inference environment across a range of on-device SoCs**.
 
-The full list of current programmes is on the [Research](/en/research/) page.
+The full list of current programmes is on the [Projects](/en/research/) page.

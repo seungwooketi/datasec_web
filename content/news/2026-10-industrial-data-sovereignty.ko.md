@@ -44,4 +44,4 @@ AI Alliance의 Project Tapestry는 한 걸음 더 나아가 데이터를 아예 
 
 ---
 
-센터의 관련 연구는 [연구](/ko/research/) 페이지에 정리되어 있습니다.
+센터의 관련 연구는 [과제](/ko/research/) 페이지에 정리되어 있습니다.
