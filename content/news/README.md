@@ -23,6 +23,7 @@ content/news/2026-09-iso-contribution.en.md      ← 영어
 ---
 title: ISO/IEC SC 27 회의에 기고 3건 제출
 date: 2026-09-14
+category: project
 summary: 목록과 검색 결과에 실리는 한 문장. 제목을 되풀이하지 말고 무슨 일인지 적는다.
 ---
 
@@ -31,12 +32,13 @@ summary: 목록과 검색 결과에 실리는 한 문장. 제목을 되풀이하
 두 번째 문단. 필요하면 [연구](/ko/research/) 나 [협력](/ko/collaborate/) 로 링크한다.
 ```
 
-`content/news/2026-09-iso-contribution.en.md` — **같은 slug, 같은 date**, 내용만 영어로.
+`content/news/2026-09-iso-contribution.en.md` — **같은 slug, 같은 date, 같은 category**, 내용만 영어로.
 
 ```markdown
 ---
 title: Three contributions submitted to ISO/IEC SC 27
 date: 2026-09-14
+category: project
 summary: One sentence for the list and for search results.
 ---
 
@@ -51,7 +53,7 @@ who does not read Korean and does not know the Korean funding landscape.
 | `title` | ⭐ | 목록·상세의 제목, `<title>`, 소셜 카드 |
 | `date` | ⭐ | `YYYY-MM-DD`. **정렬 기준**(최신이 위)이자 **공개일**. 한국 시각 오늘보다 늦으면 빌드가 싣지 않고, 그날 예약 빌드가 싣는다. sitemap 의 `lastmod` 는 이 값이 아니라 빌드가 정한다(쪽 내용이 바뀐 날) |
 | `category` | ⭐ | `project` / `hiring` / `people` / `center` 중 하나(과제 / 채용 / 구성원 / 센터). **두 언어 파일에 같은 영문 키**를 쓴다 — 국문 파일에 「채용」을 쓰면 빌드가 막는다. 블로그 발췌 글(`source` 가 `https://seungwoo.datasec.work/…`)만 생략한다 |
-| `deadline` | | 채용처럼 마감이 있는 글. `2026-11-05T13:00+09:00` 형식(**+09:00 필수**). `category: hiring` 이고 마감이 남았으면 모든 쪽 오른쪽 아래에 채용 안내 카드가 뜨고, 마감 시각이 지나면 스스로 닫힌다. 값은 공고의 접수 마감을 그대로 옮긴다 |
+| `deadline` | | 채용처럼 마감이 있는 글. `2026-11-05T13:00+09:00` 형식(**+09:00 필수**). `category: hiring` 이고 마감이 남았으면 쪽마다 오른쪽 아래에 채용 안내 카드가 뜨고(좁은 화면에서는 바닥 띠, 공고 글 자체에는 없음, 열린 공고가 여럿이면 마감이 가장 가까운 한 건), 마감 시각이 지나면 스스로 닫힌다. 값은 공고의 접수 마감을 그대로 옮긴다. 예: `category: hiring` + `deadline: 2026-11-05T13:00+09:00` |
 | `summary` | | 목록의 한 줄 · `<meta name="description">`. 없으면 제목이 대신 들어간다 |
 | `source` | | 원문이 따로 있는 글(블로그 등)의 `https://` 주소. 있으면 상세 쪽 제목 아래와 본문 끝에 「전체 글 읽기」 버튼이 붙는다. https 가 아니면 빌드가 막는다 |
 | `sample` | | `true` 면 「예시」 딱지가 붙고 **`--strict` 가 배포를 막는다** |

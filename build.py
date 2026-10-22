@@ -327,7 +327,10 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
                 block(f"뉴스 deadline 형식이 틀렸다: {f.name} 「{meta['deadline']}」 — "
                       f"YYYY-MM-DDTHH:MM+09:00 (오프셋 필수)")
             else:
-                deadline = dt.datetime.fromisoformat(meta["deadline"])
+                try:
+                    deadline = dt.datetime.fromisoformat(meta["deadline"])
+                except ValueError:                   # 2026-11-31 같은 없는 날짜·시각
+                    block(f"뉴스 deadline 이 없는 날짜나 시각이다: {f.name} 「{meta['deadline']}」")
         if cat == "hiring" and not deadline:
             warn(f"채용 소식에 deadline 이 없다: {f.name} — 채용 안내 카드가 뜨지 않는다")
         twins.setdefault(slug, {})[lg] = (meta["date"], bool(meta.get("source")), cat,
@@ -704,9 +707,7 @@ def page_home(lg, site, projects, members, news, stats, detailed):
     org_link = (f'<div class="dl"><span class="dt">{"소속" if lg == "ko" else "Institute"}</span>'
                 f'<span><a href="{e(site["org_url"])}" rel="noopener">{e(site["org_name"][lg])}</a>'
                 f' {e(site["org_division"][lg])}</span></div>')
-    # ⭐ 소개문의 인원은 **세어서** 넣는다 — 문장에 「12명」을 적어 두었더니 13명이 된 뒤에도 남았다.
-    about = site["about"][lg].replace("{researchers}", str(stats["researchers"]))
-    col3 = (f'<p class="lede-s">{e(about)}</p>'
+    col3 = (f'<p class="lede-s">{e(site["about"][lg])}</p>'
             f'<div class="dlist">{"".join(dl)}{org_link}</div>'
             + blueprint(
                 f'<div class="ht cardtitle">{e(site["cta"]["title"][lg])}</div>'
@@ -1125,7 +1126,9 @@ def previous_build() -> tuple[dict[str, str], dict[str, str]]:
 FIXED_NUM_KEYS = ("hero", "lede", "about", "cta", "collaborate")
 FIXED_NUM_KO = re.compile(r"\d+\s*(명|건|개)")
 FIXED_NUM_EN = re.compile(
-    r"\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b"
+    r"\b(\d+|one(?!\s+of\b)|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+    r"thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|"
+    r"twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|a\s+dozen|dozens\s+of)\b"
     r"(?:\s+[\w-]+){0,2}?\s+(researchers?|contracts?|projects?|programmes?|members?|people|staff)\b",
     re.I)
 PLACEHOLDERS = {"{researchers}"}
@@ -1158,7 +1161,27 @@ def check_fixed_numbers(site: dict) -> None:
 #    ⚠️ 「인공지능데이터보안」만 찾으면 띄어 쓴 「인공지능데이터 보안연구센터」를 놓친다 —
 #    실제로 소식 그림의 alt 에 실려 공개됐다.
 CENTER_NAME = "인공지능데이터·보안연구센터"
-CENTER_RX = re.compile(r"인공지능\s*데이터\s*\S?\s*보안\s*연구\s*센터")
+CENTER_RX = re.compile(r"인공지능\s*\S?\s*데이터\s*\S?\s*보안\s*(?:연구\s*)?센터")
+TAG_RX = re.compile(r"<[^>]+>")
+# 자리표가 치환되지 않은 채 산출물에 남았는가. ⚠️ HTML 만 본다 — assets/filter.js 의 `{n}` 은 코드다.
+LEFT_PLACEHOLDER_RX = re.compile(r"\{[a-z_]+\}")
+
+
+def fill_placeholders(site: dict, stats: dict) -> dict:
+    """⭐ 자리표(`{researchers}`)는 **여기 한 곳에서** 바꾼다. 쪽 함수마다 바꾸면, 게이트가
+    받아 주는 다른 키(lede, 협력 문구)에 쓴 자리표가 글자 그대로 공개된다.
+    ⚠️ `check_fixed_numbers` 는 바꾸기 **전** 원본에 돌린다 — 바꾼 뒤에는 「13명」이 걸린다."""
+    values = {"{researchers}": str(stats["researchers"])}
+    def walk(node):
+        if isinstance(node, dict):
+            return {k: (v if k.startswith("_") else walk(v)) for k, v in node.items()}
+        if isinstance(node, list):
+            return [walk(v) for v in node]
+        if isinstance(node, str):
+            for ph, v in values.items():
+                node = node.replace(ph, v)
+        return node
+    return walk(site)
 
 
 def main() -> int:
@@ -1167,14 +1190,17 @@ def main() -> int:
                     help="공개 차단 사유가 하나라도 있으면 실패한다 (배포 전 필수)")
     ap.add_argument("--today", default=None, help="YYYY-MM-DD — 상태 판정 기준일")
     args = ap.parse_args()
-    today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
+    # ⭐ 날짜 판정은 **한국 날짜 하나**로 한다. 시스템 날짜를 쓰면 CI(UTC)와 로컬(KST)이
+    #    00~09시 KST 에 하루 갈라져, 상태가 바뀌는 날(과제 종료 다음 달 1일) 새벽 push 가
+    #    「docs/ 가 원본과 다르다」로 막힌다.
+    kst_today = dt.datetime.now(KST).date()
+    today = dt.date.fromisoformat(args.today) if args.today else kst_today
 
     site = load_json("content/site.json")
     projects = load_json("data/projects.json")
     members = load_json("data/members.json")
     # 소식 공개일은 한국 시각으로 판단한다(CI 는 UTC). --today 를 주면 그 날짜로 본다.
-    publish_on = (dt.date.fromisoformat(args.today) if args.today
-                  else dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).date())
+    publish_on = today
     news = load_news(publish_on)
     if BLOCKERS:
         for b in BLOCKERS:
@@ -1182,6 +1208,8 @@ def main() -> int:
         return 1
     # ⭐ 채용 카드는 **날짜**로 판정한다(마감 날짜 ≥ 한국 시각 오늘). 시각까지 보면 마감 전에 커밋한
     #    docs/ 와 마감 뒤 CI 재빌드가 갈라져 push 검사가 실패한다. 13:00 이후 숨김은 JS 가 맡는다.
+    # ⚠️ 한 건만 굽는다. 공고가 여럿 열려 있으면, 가까운 공고가 마감 시각에 닫힌 뒤 다음 예약
+    #    빌드까지(약 하루) 다른 공고의 카드가 없다. 지금은 공고가 하나라 그대로 둔다.
     for lg in LANGS:
         open_ = [n for n in news[lg] if n["category"] == "hiring" and n["deadline"]
                  and n["deadline"].astimezone(KST).date() >= publish_on]
@@ -1242,7 +1270,8 @@ def main() -> int:
         # 「연구진」= 정규직 연구원(직원명부 구분 연구직). 소개문 {researchers} 에 들어간다.
         "researchers": sum(1 for m in members if m.get("research")),
     }
-    check_fixed_numbers(site)
+    check_fixed_numbers(site)          # 바꾸기 전 원본에
+    site = fill_placeholders(site, stats)
 
     # 지우기 전에 직전 산출물을 읽어 둔다 - sitemap lastmod 를 이어 쓰는 데 필요하다.
     prev_sig, prev_mod = previous_build()
@@ -1303,7 +1332,7 @@ def main() -> int:
     #    lastmod 가 일관되게 정확할 때만 쓰므로, 틀린 날짜가 이어지면 이 신호를 쓰지 않게 된다.
     # ⚠️ 바뀐 쪽에는 `--today` 가 아니라 **실제 오늘**을 쓴다. `--today` 는 상태 판정 실험용이라
     #    미래 날짜가 sitemap 에 박힐 수 있다.
-    built_on = dt.date.today().isoformat()
+    built_on = kst_today.isoformat()
     urls: list[tuple[str, str]] = []
     for lg in LANGS:
         paths = [f"/{lg}/{s}" for s in
@@ -1353,7 +1382,11 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
         if "인공지능데이터보안" in text:
             block(f"센터명에 가운뎃점이 빠졌다: {f.relative_to(OUT)} — "
                   f"「{CENTER_NAME}」가 정식 표기다")
-        for bad in sorted({m.group(0) for m in CENTER_RX.finditer(text)} - {CENTER_NAME}):
+        plain = TAG_RX.sub("", text)        # <b>인공지능데이터</b>·보안… 처럼 태그로 끊긴 경우
+        found = {m.group(0) for rx_text in (text, plain) for m in CENTER_RX.finditer(rx_text)}
+        for ph in sorted(set(LEFT_PLACEHOLDER_RX.findall(text))):
+            block(f"자리표가 바뀌지 않은 채 실렸다: {f.relative_to(OUT)} {ph} — fill_placeholders 에 값을 더한다")
+        for bad in sorted(found - {CENTER_NAME}):
             block(f"센터명이 정식 표기와 다르다: {f.relative_to(OUT)} 「{bad}」 — "
                   f"「{CENTER_NAME}」가 정식 표기다")
 
