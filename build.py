@@ -79,6 +79,9 @@ T = {
         "news_empty": "등록된 소식이 없습니다.",
         "lang_switch": "언어", "sample_badge": "예시",
         "sample_note": "이 글은 디자인 확인용 예시입니다. 게시 전에 지우거나 실제 내용으로 바꾸세요.",
+        "hire_label": "채용 중", "hire_aria": "채용 안내", "hire_see": "공고 보기",
+        "hire_close": "채용 안내 닫기", "hire_hide_today": "오늘 하루 보지 않기",
+        "hire_closes": "마감 {m}월 {d}일({wd}) {hm}",
     },
     "en": {
         "nav_home": "Overview", "nav_research": "Research", "nav_people": "People",
@@ -114,11 +117,31 @@ T = {
         "news_empty": "No news posted yet.",
         "lang_switch": "Language", "sample_badge": "Sample",
         "sample_note": "This post is a sample for design review. Remove or replace it before publishing.",
+        "hire_label": "Hiring", "hire_aria": "Hiring notice", "hire_see": "See the posting",
+        "hire_close": "Close hiring notice", "hire_hide_today": "Hide for today",
+        "hire_closes": "Applications close {d} {mon}, {hm} KST",
     },
 }
 
 ROLE_KEY = {"lead": "role_lead", "joint": "role_joint", "contract": "role_contract"}
 STATUS_KEY = {"active": "st_active", "closing": "st_closing", "closed": "st_closed"}
+
+KST = dt.timezone(dt.timedelta(hours=9))
+KO_WD = "월화수목금토일"
+EN_MON = ("January", "February", "March", "April", "May", "June", "July",
+          "August", "September", "October", "November", "December")
+
+# ── 소식 분류. ⭐ 값은 언어 중립 키다 — 두 언어 파일에 **같은 값**을 쓴다.
+#    국문 파일에 「채용」, 영문 파일에 「Hiring」을 쓰면 한쪽 언어에서만 채용 카드가 빠진다(에러 없이).
+NEWS_CATEGORIES = ("project", "hiring", "people", "center")
+# 마감 시각. ⛔ 오프셋을 반드시 적는다 — 없으면 보는 사람의 시간대로 해석된다.
+DEADLINE_RX = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}\+09:00$")
+# 인사이트 = 센터장 블로그 글의 발췌. 발췌 안내와 (개편 뒤) 인사이트 목록이 같은 판정을 쓴다.
+INSIGHT_SOURCE = "https://seungwoo.datasec.work/"
+
+
+def is_insight(n: dict) -> bool:
+    return n.get("source", "").startswith(INSIGHT_SOURCE)
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -275,6 +298,7 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
         return news
     seen: dict[str, set[str]] = {}
     held: set[str] = set()
+    twins: dict[str, dict[str, tuple]] = {}
     for f in sorted(d.glob("*.md")):
         if f.name == "README.md":            # 쓰는 법 안내. 글이 아니다.
             continue
@@ -290,6 +314,24 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
         if meta.get("source") and not meta["source"].startswith("https://"):
             block(f"뉴스 source 는 https:// 주소여야 한다: {f.name}")
             continue
+        # ⭐ 분류와 마감은 예약 글에도 지금 검사한다 — 그날 예약 빌드에서 처음 터지면 배포가 멈춘다.
+        cat = meta.get("category", "")
+        if cat and cat not in NEWS_CATEGORIES:
+            block(f"뉴스 category 가 허용 값이 아니다: {f.name} 「{cat}」 — {' / '.join(NEWS_CATEGORIES)}")
+        elif not cat and not is_insight(meta):
+            block(f"소식에 category 가 없다: {f.name} — {' / '.join(NEWS_CATEGORIES)} 중 하나 "
+                  f"(블로그 발췌 글만 생략한다)")
+        deadline = None
+        if meta.get("deadline"):
+            if not DEADLINE_RX.match(meta["deadline"]):
+                block(f"뉴스 deadline 형식이 틀렸다: {f.name} 「{meta['deadline']}」 — "
+                      f"YYYY-MM-DDTHH:MM+09:00 (오프셋 필수)")
+            else:
+                deadline = dt.datetime.fromisoformat(meta["deadline"])
+        if cat == "hiring" and not deadline:
+            warn(f"채용 소식에 deadline 이 없다: {f.name} — 채용 안내 카드가 뜨지 않는다")
+        twins.setdefault(slug, {})[lg] = (meta["date"], bool(meta.get("source")), cat,
+                                          meta.get("deadline", ""))
         if meta["date"] > publish_on.isoformat():
             held.add(f"{slug} ({meta['date']})")
             continue
@@ -299,6 +341,7 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
             "summary": meta.get("summary", ""),
             # 원문이 따로 있는 글(블로그 등)의 주소. 있으면 상세 쪽 위와 아래에 버튼으로 건다.
             "source": meta.get("source", ""),
+            "category": cat, "deadline": deadline,
             "sample": meta.get("sample", "").lower() in ("true", "yes", "1"),
             "body": markdown(body),
             # 본문 첫 그림을 그 쪽의 소셜 카드(og:image)로 쓴다. 없으면 사이트 기본 카드.
@@ -308,6 +351,12 @@ def load_news(publish_on: dt.date) -> dict[str, list[dict]]:
     #    없는 쪽을 가리켜 404 가 된다 — 과제 상세와 같은 규칙이다.
     for h in sorted(held):
         print(f"⏳ 예약 소식 {h} — 그날 예약 빌드에서 실린다")
+    # ⛔ 두 언어 파일의 머리말이 어긋나면 언어마다 다른 글이 된다 — 날짜가 다르면 목록 순서가,
+    #    분류나 마감이 다르면 한쪽 언어에서만 채용 카드가 갈린다. 에러는 나지 않는다.
+    for slug, by_lang in sorted(twins.items()):
+        if len(set(by_lang.values())) > 1:
+            block(f"소식 `{slug}` 의 두 언어 머리말(date, source 유무, category, deadline)이 다르다: "
+                  + " / ".join(f"{lg}={v}" for lg, v in sorted(by_lang.items())))
     only_one = {s for s, langs in seen.items() if set(LANGS) - langs}
     for slug in sorted(only_one):
         warn(f"소식 `{slug}` 이 한 언어에만 있다 — 두 언어가 다 있어야 실린다")
@@ -380,6 +429,44 @@ def other(lg: str) -> str:
 
 NAVS = [("", "nav_home"), ("research/", "nav_research"), ("people/", "nav_people"),
         ("news/", "nav_news"), ("collaborate/", "nav_collab"), ("visit/", "nav_visit")]
+
+
+# ── 채용 안내 카드 (셸 공통). main() 이 언어별로 고른다 — 마감이 남은 hiring 소식 중 가장 가까운 것.
+HIRE: dict[str, dict | None] = {lg: None for lg in LANGS}
+X_ICON = ('<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
+          'stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false">'
+          '<path d="M6 6l12 12M18 6L6 18"/></svg>')
+
+
+def hire_note(lg: str, path: str) -> str:
+    """⭐ `<main>` **밖**에 둔다. 쪽 지문(page_sig)은 `<main>` 을 보므로, 안에 두면 카드를 붙이고
+    떼는 날마다 모든 쪽의 sitemap lastmod 가 함께 움직인다.
+
+    ⭐ `hidden` 으로 굽고 `site.js` 가 연다 — JS 가 없으면 닫을 수 없는 카드가 남기 때문이다.
+    마감 시각이 지나면 JS 가 닫고, 다음 날 예약 빌드가 HTML 에서도 뺀다(빌드는 **날짜** 단위로만 본다).
+    ⛔ class 이름에 ad/banner/popup/modal/promo 같은 토큰을 쓰지 않는다 — 광고 차단 목록에 걸린다.
+    """
+    n = HIRE.get(lg)
+    if not n or path == f"news/{n['slug']}/":       # 공고 글 자체에는 띄우지 않는다
+        return ""
+    t = T[lg]
+    dl = n["deadline"].astimezone(KST)
+    when = t["hire_closes"].format(m=dl.month, d=dl.day, wd=KO_WD[dl.weekday()],
+                                   mon=EN_MON[dl.month - 1], hm=dl.strftime("%H:%M"))
+    href = f"/{lg}/news/{n['slug']}/"
+    inner = (f'<div class="hire-top"><span class="k">{e(t["hire_label"])}</span>'
+             f'<b class="ht hire-dday tnum" data-dday></b>'
+             f'<button type="button" class="hire-x" data-hire-close aria-label="{e(t["hire_close"])}">'
+             f'{X_ICON}</button></div>'
+             f'<a class="ht hire-title" href="{href}">{e(n["title"])}</a>'
+             f'<p class="hire-when">{e(when)}</p>'
+             f'<div class="hire-acts"><a class="btn btn-primary" href="{href}">{e(t["hire_see"])}</a>'
+             f'<button type="button" class="hire-today" data-hire-today>{e(t["hire_hide_today"])}</button>'
+             f'</div>')
+    return (f'\n<aside class="hire-note" aria-label="{e(t["hire_aria"])}" hidden '
+            f'data-deadline="{dl.isoformat()}" data-key="hire-note:{e(n["slug"])}">'
+            f'{blueprint(inner, cls="hire-card")}</aside>'
+            f'\n<script src="{stamp("/assets/site.js")}" defer></script>')
 
 
 # 도메인 표기 - "datasec work" 같은 도메인 검색어가 이 사이트와 맞물리게 한다.
@@ -458,7 +545,7 @@ def shell(lg: str, nav_key: str, path: str, title: str, desc: str, body: str, si
 </nav>
 <main id="main">
 {body}
-</main>
+</main>{hire_note(lg, path)}
 <footer>
 <span>{e(site['center_full'][lg])}</span>
 <span>{foot_mid}</span>
@@ -1093,6 +1180,14 @@ def main() -> int:
         for b in BLOCKERS:
             print(f"⛔ {b}", file=sys.stderr)
         return 1
+    # ⭐ 채용 카드는 **날짜**로 판정한다(마감 날짜 ≥ 한국 시각 오늘). 시각까지 보면 마감 전에 커밋한
+    #    docs/ 와 마감 뒤 CI 재빌드가 갈라져 push 검사가 실패한다. 13:00 이후 숨김은 JS 가 맡는다.
+    for lg in LANGS:
+        open_ = [n for n in news[lg] if n["category"] == "hiring" and n["deadline"]
+                 and n["deadline"].astimezone(KST).date() >= publish_on]
+        HIRE[lg] = min(open_, key=lambda n: n["deadline"]) if open_ else None
+        if HIRE[lg]:
+            print(f"📌 채용 안내 카드({lg}): {HIRE[lg]['slug']} — 마감 {HIRE[lg]['deadline'].isoformat()}")
 
     # ⚠️ 오타 검사는 **거르기 전에** 한다 — 거른 뒤에 하면 미공개 과제를 가리키는 참조가
     #    "없는 과제"로 잘못 잡힌다.
@@ -1270,6 +1365,18 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
             block(f"평문 mailto: 가 남았다: {f.relative_to(OUT)} — mail() 을 거쳐라")
         if addr and addr in text:
             block(f"평문 메일 주소가 남았다: {f.relative_to(OUT)} — mail() 을 거쳐라")
+
+    # ⛔ **광고 차단 목록에 걸리는 이름.** 차단 필터는 class/id 의 토큰(「-」, 「_」로 나눈 낱말)을
+    #    본다. 채용 카드 같은 셸 요소가 `banner`, `popup` 같은 이름을 달면 방문자 화면에서 조용히 사라진다.
+    #    부분 문자열은 상관없다(`masthead` 의 「ad」는 토큰이 아니다).
+    BANNED = {"ad", "ads", "banner", "popup", "pop", "modal", "overlay", "interstitial",
+              "newsletter", "subscribe"}
+    BANNED_PREFIX = ("advert", "promo", "sponsor")
+    for f in OUT.rglob("*.html"):
+        for attr in re.findall(r'\s(?:class|id)="([^"]*)"', f.read_text(encoding="utf-8")):
+            for tok in re.split(r"[\s_-]+", attr.lower()):
+                if tok in BANNED or tok.startswith(BANNED_PREFIX):
+                    block(f"광고 차단에 걸리는 이름: {f.relative_to(OUT)} 「{attr}」 — 토큰 「{tok}」")
 
     # ⛔ **미공개 과제가 새어 나갔는지 산출물에서 직접 확인한다.** 걸러 냈다고 믿지 않는다 —
     #    뉴스 글이나 과제 소개문이 제목·slug 를 그대로 적어 두면 거르기를 통과한다.

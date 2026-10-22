@@ -1,6 +1,7 @@
 ---
 title: Two new MOTIE programmes awarded
 date: 2026-08-08
+category: project
 summary: The center joins two programmes funded by MOTIE and KEIT, taking on AI-BOM based safety verification of AI services and an inference platform for on-device SoCs.
 ---
 

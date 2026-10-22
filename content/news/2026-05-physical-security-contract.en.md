@@ -1,6 +1,7 @@
 ---
 title: Physical security interworking contract started
 date: 2026-05-18
+category: project
 summary: A private-sector contract to document interworking procedures and interoperability test methods for physical security systems.
 ---
 

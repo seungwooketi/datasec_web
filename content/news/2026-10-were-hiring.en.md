@@ -1,6 +1,8 @@
 ---
 title: We're Hiring!
 date: 2026-10-22
+category: hiring
+deadline: 2026-11-05T13:00+09:00
 summary: The AI Data and Security Research Center is hiring two permanent researchers in AI and AI security. New graduates and experienced researchers are welcome; applications close on 5 November at 13:00 KST.
 ---
 

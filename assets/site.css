@@ -351,6 +351,47 @@ body[data-lang="ko"] .cardtitle { text-transform: none; }
 /* 뒤집힌 글자를 **시각적으로만** 되돌린다. DOM 의 문자열은 뒤집힌 채로 남는다. */
 .rev { unicode-bidi: bidi-override; direction: rtl; }
 
+/* ── 채용 안내 카드 (셸 공통, <main> 밖) ─────────────────────────
+   ⛔ `[hidden]` 규칙을 지우지 않는다. `.hire-note` 계열에 display 를 주면 hidden 속성이 무시되어
+      JS 가 없을 때 닫을 수 없는 카드가 보이고, 닫기와 마감 숨김이 조용히 동작하지 않는다.
+   ⭐ 면은 바탕색 그대로다(겹친 글 위에서 읽혀야 한다). 색과 간격은 토큰만 쓴다. */
+.hire-note[hidden] { display: none; }
+.hire-note {
+  position: fixed; right: 24px; bottom: 24px; z-index: 10;
+  width: 340px; max-width: calc(100vw - 32px);
+}
+.hire-card {
+  background: var(--color-bg); padding: 14px 18px 18px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.hire-top { display: flex; align-items: center; gap: 10px; }
+.hire-top .k { margin: 0; }
+.hire-dday { font-size: 20px; line-height: 1; color: var(--color-accent-700); }
+.hire-x {
+  margin: -10px -12px -10px auto; width: 44px; height: 44px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 0; background: transparent; color: var(--color-text); cursor: pointer;
+}
+.hire-title { font-size: 26px; line-height: 1.1; color: var(--color-text); }
+.hire-when { margin: 0; font-size: 14px; color: var(--color-neutral-700); }
+.hire-acts { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; }
+.hire-today {
+  border: 0; background: none; padding: 6px 0; cursor: pointer;
+  font: inherit; font-size: 13px; color: var(--color-neutral-700); text-decoration: underline;
+}
+/* 좁은 화면: 화면 아래 한 줄 띠. 공고 보기는 제목 링크가 맡는다. */
+@media (max-width: 620px) {
+  .hire-note { left: 0; right: 0; bottom: 0; width: auto; max-width: none; }
+  .hire-card {
+    border-width: 2px 0 0; border-top-color: var(--color-accent-700);
+    padding: 10px 8px 12px 16px; gap: 4px;
+  }
+  .hire-card > .corner, .hire-acts { display: none; }
+  .hire-title { font-size: 20px; }
+  .hire-when { font-size: 13px; }
+  html.has-hire-note body { padding-bottom: 104px; }
+}
+
 /* ── 좁은 화면 ────────────────────────────────────────────────── */
 @media (max-width: 1080px) {
   .threeup { grid-template-columns: 1fr 1fr; }

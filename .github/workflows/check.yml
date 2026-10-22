@@ -9,8 +9,10 @@ on:
   push:
     branches: [main]
   pull_request:
-  # ⭐ 날짜가 된 예약 소식을 싣는 매일 빌드. 10:13 KST(01:13 UTC) — 블로그 원문(09:05 KST 재빌드)이
-  #    먼저 열리도록 늦게 둔다. 손으로 돌릴 때는 Actions 의 Run workflow.
+  # ⭐ 날짜가 된 예약 소식을 싣고, 마감이 지난 채용 카드를 빼는 매일 빌드. 10:13 KST(01:13 UTC) —
+  #    블로그 원문(09:05 KST 재빌드)이 먼저 열리도록 늦게 둔다. 손으로 돌릴 때는 Actions 의 Run workflow.
+  #    ⚠️ 정시에 돌지 않는다. 실측 시작은 14:30~15:10 KST 다 — 시각에 기대는 일(채용 마감 숨김)은
+  #    JS 가 맡고, 이 빌드는 날짜 단위 정리만 한다.
   schedule:
     - cron: "13 1 * * *"
   workflow_dispatch:

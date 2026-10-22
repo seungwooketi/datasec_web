@@ -1,6 +1,7 @@
 ---
 title: AEGIS-RM awarded: securing the intelligence inside factory robots
 date: 2026-10-18
+category: project
 summary: A joint proposal with Seoul National University, ENKI WhiteHat, Roboworks and Kyoungwoo Precision has been selected for MoTIR funding. Over four years we will build technology that protects the models of manufacturing robots and the process know-how they learn.
 ---
 

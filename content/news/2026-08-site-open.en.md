@@ -1,6 +1,7 @@
 ---
 title: The center's website is now open
 date: 2026-08-07
+category: center
 summary: The center's website is now open.
 ---
 
