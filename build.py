@@ -617,7 +617,9 @@ def page_home(lg, site, projects, members, news, stats, detailed):
     org_link = (f'<div class="dl"><span class="dt">{"소속" if lg == "ko" else "Institute"}</span>'
                 f'<span><a href="{e(site["org_url"])}" rel="noopener">{e(site["org_name"][lg])}</a>'
                 f' {e(site["org_division"][lg])}</span></div>')
-    col3 = (f'<p class="lede-s">{e(site["about"][lg])}</p>'
+    # ⭐ 소개문의 인원은 **세어서** 넣는다 — 문장에 「12명」을 적어 두었더니 13명이 된 뒤에도 남았다.
+    about = site["about"][lg].replace("{researchers}", str(stats["researchers"]))
+    col3 = (f'<p class="lede-s">{e(about)}</p>'
             f'<div class="dlist">{"".join(dl)}{org_link}</div>'
             + blueprint(
                 f'<div class="ht cardtitle">{e(site["cta"]["title"][lg])}</div>'
@@ -795,10 +797,12 @@ def page_people(lg, site, members, projects, detailed):
     # ⭐ 가르는 기준은 **연구직 여부**이지 「과제가 있는가」가 아니다 —
     #    갓 합류해 아직 과제가 붙지 않은 연구원이 명단 칸으로 밀려난다.
     #    ⛔ 고용형태 자체는 화면에 싣지 않는다(§ 대외 공개물). 배치에만 쓴다.
-    detailed = [m for m in members if m.get("research") or m["projects"]]
+    # ⛔ 이름을 `detailed` 로 두면 안 된다 — 인자 `detailed`(상세 쪽이 있는 과제 slug)를 가려
+    #    `project_link()` 가 늘 링크를 끈다. 에러 없이 구성원 쪽의 과제 상세 링크가 사라졌었다.
+    profiled = [m for m in members if m.get("research") or m["projects"]]
     listed = [m for m in members if not (m.get("research") or m["projects"])]
     cards = []
-    for m in detailed:
+    for m in profiled:
         own = [x for x in m["projects"] if x["role"] == "lead"]
         rows = "".join(
             f'<div class="pl"><span class="rl {"own" if x["role"] == "lead" else "join"}">'
@@ -1027,6 +1031,49 @@ def previous_build() -> tuple[dict[str, str], dict[str, str]]:
     return sig, mod
 
 
+# ── 문장에 박힌 수치
+#    상시 문구(소개, 협력 안내)에 「연구진 12명」, 「수탁 과제 1건을 수행」처럼 숫자를 적어 두면
+#    인원이 바뀌거나 과제가 끝나도 문장은 그대로 남는다. 에러는 나지 않는다 — 실제로 둘 다 그랬다.
+#    ⭐ 수치는 data/ 에서 세어 자리표(`{researchers}`)로 넣는다.
+FIXED_NUM_KEYS = ("hero", "lede", "about", "cta", "collaborate")
+FIXED_NUM_KO = re.compile(r"\d+\s*(명|건|개)")
+FIXED_NUM_EN = re.compile(
+    r"\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b"
+    r"(?:\s+[\w-]+){0,2}?\s+(researchers?|contracts?|projects?|programmes?|members?|people|staff)\b",
+    re.I)
+PLACEHOLDERS = {"{researchers}"}
+
+
+def check_fixed_numbers(site: dict) -> None:
+    def leaves(node, path):
+        if isinstance(node, dict):
+            if set(node) >= {"ko", "en"} and all(isinstance(node[x], str) for x in LANGS):
+                yield path, node
+                return
+            for k, v in node.items():
+                yield from leaves(v, f"{path}.{k}")
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                yield from leaves(v, f"{path}[{i}]")
+    for key in FIXED_NUM_KEYS:
+        for path, node in leaves(site.get(key, {}), key):
+            for lg, rx in (("ko", FIXED_NUM_KO), ("en", FIXED_NUM_EN)):
+                m = rx.search(node[lg])
+                if m:
+                    block(f"content/site.json {path}.{lg} 에 수치가 박혀 있다: 「{m.group(0)}」 — "
+                          f"인원·건수는 data/ 에서 세어 자리표로 넣는다")
+                for ph in re.findall(r"\{[^}]*\}", node[lg]):
+                    if ph not in PLACEHOLDERS:
+                        block(f"content/site.json {path}.{lg} 에 모르는 자리표가 있다: {ph}")
+
+
+# ── 센터명 변형. 정식 표기 하나만 통과시킨다.
+#    ⚠️ 「인공지능데이터보안」만 찾으면 띄어 쓴 「인공지능데이터 보안연구센터」를 놓친다 —
+#    실제로 소식 그림의 alt 에 실려 공개됐다.
+CENTER_NAME = "인공지능데이터·보안연구센터"
+CENTER_RX = re.compile(r"인공지능\s*데이터\s*\S?\s*보안\s*연구\s*센터")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--strict", action="store_true",
@@ -1097,7 +1144,10 @@ def main() -> int:
         "active": sum(1 for p in projects if p["status"] != "closed"),
         "lead": sum(1 for p in projects if p["role"] == "lead"),
         "new": sum(1 for p in projects if p.get("new_2026")),
+        # 「연구진」= 정규직 연구원(직원명부 구분 연구직). 소개문 {researchers} 에 들어간다.
+        "researchers": sum(1 for m in members if m.get("research")),
     }
+    check_fixed_numbers(site)
 
     # 지우기 전에 직전 산출물을 읽어 둔다 - sitemap lastmod 를 이어 쓰는 데 필요하다.
     prev_sig, prev_mod = previous_build()
@@ -1204,9 +1254,13 @@ location.replace((navigator.language||"ko").toLowerCase().startsWith("ko") ? "/k
     #    점 없는 표기가 섞이면 같은 조직이 두 이름으로 검색엔진에 잡히고, 문서마다 달라진다.
     #    ⚠️ 사람이 지킬 규약으로 두면 반드시 다시 섞인다 — 산출물에서 직접 막는다.
     for f in OUT.rglob("*.html"):
-        if "인공지능데이터보안" in f.read_text(encoding="utf-8"):
+        text = f.read_text(encoding="utf-8")
+        if "인공지능데이터보안" in text:
             block(f"센터명에 가운뎃점이 빠졌다: {f.relative_to(OUT)} — "
-                  f"「인공지능데이터·보안연구센터」가 정식 표기다")
+                  f"「{CENTER_NAME}」가 정식 표기다")
+        for bad in sorted({m.group(0) for m in CENTER_RX.finditer(text)} - {CENTER_NAME}):
+            block(f"센터명이 정식 표기와 다르다: {f.relative_to(OUT)} 「{bad}」 — "
+                  f"「{CENTER_NAME}」가 정식 표기다")
 
     # ⚠️ 일반 정규식으로 훑으면 `logo@2x.png` 같은 srcset 이 걸린다 — **지키려는 주소**만 본다.
     addr = site.get("contact", {}).get("email", "")

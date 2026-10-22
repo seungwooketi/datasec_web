@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .DS_Store
 .venv/
+# 개편 계획서 사본 — 정본 내부 구조와 수치를 담는다. 공개 리포에 올리지 않는다
+/REDESIGN_PLAN.md

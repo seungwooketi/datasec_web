@@ -48,7 +48,7 @@ AEGIS-RM은 학습, 추론, 제어 전 주기에 걸쳐 로봇 지능과 그 안
 - **로보웍스(주)**: 로봇 플랫폼과 테스트베드, 커넥터 보안
 - **(주)경우정밀**: 수요기업으로서 브레이크 드럼 프레스 공정과 데이터 제공, 현장 실증
 
-![Secure Physical AI 지붕 아래 KETI 주관(인공지능데이터 보안연구센터, 지능로보틱스연구센터)과 AI 보안 축의 서울대학교, 엔키화이트햇, AI 로봇 축의 로보웍스, 경우정밀이 놓인 추진 체계도. 아래에 실증 기반으로 브레이크 드럼 pick-and-place 테스트베드가 있다](/assets/news/2026-10-aegis-rm/consortium.png "추진 체계: 보안과 로봇 두 기둥. 실증은 브레이크 드럼 pick-and-place 테스트베드(Franka FR3, NVIDIA Jetson Thor, ROS2, K3s)에서")
+![Secure Physical AI 지붕 아래 KETI 주관(인공지능데이터·보안연구센터, 지능로보틱스연구센터)과 AI 보안 축의 서울대학교, 엔키화이트햇, AI 로봇 축의 로보웍스, 경우정밀이 놓인 추진 체계도. 아래에 실증 기반으로 브레이크 드럼 pick-and-place 테스트베드가 있다](/assets/news/2026-10-aegis-rm/consortium.png "추진 체계: 보안과 로봇 두 기둥. 실증은 브레이크 드럼 pick-and-place 테스트베드(Franka FR3, NVIDIA Jetson Thor, ROS2, K3s)에서")
 
 실증은 경우정밀의 실제 프레스 공정에서 원통형 부품을 집어 정렬하고 양손 버튼으로 프레스를 기동하는 작업부터 시작해, 검수, 적재, 이동 플랫폼으로 넓혀 갈 예정입니다.
 

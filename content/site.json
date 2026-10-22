@@ -32,9 +32,10 @@
     "ko": "센터의 연구 영역: 데이터 축(데이터 품질, 멀티모달 데이터, 콘텐츠, 엣지 컴퓨팅)과 보안 축(영상보안, 물리보안, AI 투명성, 신뢰 실행 환경)이 만나는 지점의 「신뢰할 수 있는 AI」",
     "en": "The center's research areas — a data axis (data quality, multimodal data, contents, edge computing) and a security axis (video security, physical security, AI transparency, trusted execution environment) overlapping at reliable AI"
   },
+  "_about": "⛔ 숫자를 문장에 적지 않는다 — 빌드가 {researchers} 를 연구진 수(정규직, data/members.json 의 research:true)로 바꾼다. 적어 두면 인원이 바뀔 때 조용히 틀린다(실제로 「12명」이 13명이 된 뒤에도 남았다).",
   "about": {
-    "ko": "임베디드 시스템부터 데이터 분석, 인공지능 모델까지 폭넓은 경험을 갖춘 연구진 12명이 국내외 파트너와 함께 연구하고 있습니다.",
-    "en": "Twelve researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
+    "ko": "임베디드 시스템부터 데이터 분석, 인공지능 모델까지 폭넓은 경험을 갖춘 연구진 {researchers}명이 국내외 파트너와 함께 연구하고 있습니다.",
+    "en": "{researchers} researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
   },
   "research_title": {
     "ko": "정부 R&D와 민간 수탁 과제",
@@ -91,8 +92,8 @@
           "en": "Contract research"
         },
         "body": {
-          "ko": "기업에 필요한 기술을 과제로 정의하여 수행합니다. 2026년 현재 민간 수탁 과제 1건을 수행하고 있습니다.",
-          "en": "We scope the work as a project and run it. One private-sector contract is under way in 2026."
+          "ko": "기업에 필요한 기술을 과제로 정의하여 수행합니다.",
+          "en": "We scope the work as a project and run it."
         }
       },
       {
