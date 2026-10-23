@@ -1326,7 +1326,12 @@ GRADES = {"수석연구원", "책임연구원", "선임연구원", "연구원", 
 
 
 PER_PERSON = 5
-"""구성원 쪽에서 한 사람에게 싣는 과제 수의 상한 — 참여율 연 합산이 큰 순으로 이만큼만."""
+CARD_STATUSES = ("active", "closing")
+"""⭐ **구성원 카드에 싣는 과제의 규칙(센터장 결정).** 한 곳에만 적고 빌드가 산출물로 다시 검사한다.
+- 수행 중인 과제만 싣는다: 시작했고 끝나지 않은 과제(`CARD_STATUSES` — 종료 예정 포함). 종료, 착수 예정은 싣지 않는다
+- 순서는 참여율 **연 합산**이 큰 순이다(`members.json` 의 순서, `pull_from_sot.py` 가 적는다. 수치는 비공개라 없다)
+- 앞 `PER_PERSON` 개만 싣고 나머지는 접어 두지도 않는다
+- 카드 위 숫자는 수행 중인 **책임 과제 수**만이다(참여 과제 수는 싣지 않는다 — 목록과 어긋나 보인다)"""
 
 
 def page_people(lg, site, members, projects, detailed):
@@ -1345,7 +1350,7 @@ def page_people(lg, site, members, projects, detailed):
         return [(by_slug[s], r) for s, r in d.items() if s in by_slug]
 
     def count_label(items) -> str:
-        live = [x for x in items if x[0]["status"] != "closed"]
+        live = [x for x in items if x[0]["status"] in CARD_STATUSES]
         if not live:
             return ""
         own = sum(1 for x in live if x[1] == "lead")
@@ -1365,8 +1370,11 @@ def page_people(lg, site, members, projects, detailed):
         #    반영되지 않은 사람에게 거짓 문장이 된다(정본에는 과제가 있는데 data 가 늦은 경우).
         if not items:
             return ""
-        # ⭐ 참여율 순 앞 PER_PERSON 개만 싣는다. 나머지는 접어 두지도 않는다(센터장 결정).
-        return f'<div class="plist">{"".join(prow(p, r) for p, r in items[:PER_PERSON])}</div>'
+        # ⭐ 규칙은 CARD_STATUSES 의 독스트링: 수행 중만, 참여율 순 앞 PER_PERSON 개, 나머지는 싣지 않는다.
+        live = [(p, r) for p, r in items if p["status"] in CARD_STATUSES][:PER_PERSON]
+        if not live:
+            return ""
+        return f'<div class="plist">{"".join(prow(p, r) for p, r in live)}</div>'
 
     for m in members:
         if m["grade"]["ko"] not in GRADES:
@@ -2207,6 +2215,19 @@ def main() -> int:
                 block(f"인사이트 글에 고지문이 없다: {lg}/news/{n['slug']}/")
             if not is_insight(n) and has:
                 block(f"소식 글에 인사이트 고지문이 실렸다: {lg}/news/{n['slug']}/")
+
+    # ⛔ 구성원 카드 규칙(CARD_STATUSES 독스트링)을 산출물로 다시 본다 — 코드를 고치다 규칙이 풀려도 에러가
+    #    안 나는 종류의 일이다(접어 둔 목록, 종료 과제, 참여 과제 수가 되살아나는 것).
+    for lg in LANGS:
+        html = pages.get(f"{lg}/people/index.html", "")
+        closed_tag = f'<span class="mtag">{e(T[lg]["st_closed"])}</span>'
+        for card in re.split(r'<article class="(?:pcard|dir)"', html)[1:]:
+            card = card.split("</article>", 1)[0]
+            n = card.count('<div class="pl">')
+            if n > PER_PERSON:
+                block(f"구성원 카드에 과제가 {n}개다({lg}) — 규칙은 {PER_PERSON}개까지")
+            if closed_tag in card or "pmore" in card:
+                block(f"구성원 카드에 종료 과제나 접힌 목록이 있다({lg}) — 규칙은 수행 중만, 앞 {PER_PERSON}개만")
 
     n_pages = len(pages)
     print(f"✅ {n_pages}쪽 · 과제 {len(projects)} · 구성원 {len(members)} · "
