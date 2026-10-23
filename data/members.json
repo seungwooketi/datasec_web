@@ -36,6 +36,10 @@
    {
     "slug": "cross-device-sensory-sharing",
     "role": "member"
+   },
+   {
+    "slug": "ai-bom-powertrain-reliability",
+    "role": "lead"
    }
   ],
   "research": true
@@ -64,6 +68,18 @@
    },
    {
     "slug": "low-visibility-3d",
+    "role": "member"
+   },
+   {
+    "slug": "on-device-ai-chip-software",
+    "role": "member"
+   },
+   {
+    "slug": "aegis-rm",
+    "role": "member"
+   },
+   {
+    "slug": "mission-data-fusion",
     "role": "member"
    }
   ],
@@ -147,6 +163,10 @@
    {
     "slug": "on-device-video-security-platform",
     "role": "member"
+   },
+   {
+    "slug": "mission-data-fusion",
+    "role": "member"
    }
   ],
   "research": true
@@ -186,6 +206,14 @@
    {
     "slug": "data-drift-management",
     "role": "member"
+   },
+   {
+    "slug": "on-device-ai-chip-software",
+    "role": "member"
+   },
+   {
+    "slug": "aegis-rm",
+    "role": "lead"
    }
   ],
   "research": true
@@ -276,6 +304,14 @@
    {
     "slug": "marine-battery-data-hub",
     "role": "member"
+   },
+   {
+    "slug": "on-device-ai-chip-software",
+    "role": "lead"
+   },
+   {
+    "slug": "aegis-rm",
+    "role": "member"
    }
   ],
   "research": true
@@ -304,6 +340,10 @@
    },
    {
     "slug": "human-foundation-model",
+    "role": "member"
+   },
+   {
+    "slug": "aegis-rm",
     "role": "member"
    }
   ],
@@ -354,6 +394,10 @@
    {
     "slug": "manned-unmanned-ai-collaboration",
     "role": "member"
+   },
+   {
+    "slug": "edge-video-surveillance",
+    "role": "member"
    }
   ],
   "research": true
@@ -394,6 +438,10 @@
    },
    {
     "slug": "hybrid-sound-masking",
+    "role": "member"
+   },
+   {
+    "slug": "ai-bom-powertrain-reliability",
     "role": "member"
    }
   ],
@@ -469,6 +517,10 @@
    {
     "slug": "low-visibility-3d",
     "role": "member"
+   },
+   {
+    "slug": "ai-bom-powertrain-reliability",
+    "role": "member"
    }
   ],
   "research": true
@@ -490,7 +542,16 @@
   },
   "links": {},
   "external_count": 0,
-  "projects": [],
+  "projects": [
+   {
+    "slug": "data-drift-management",
+    "role": "member"
+   },
+   {
+    "slug": "battlefield-decision-support",
+    "role": "member"
+   }
+  ],
   "research": true
  },
  {
