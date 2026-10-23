@@ -8,7 +8,7 @@ summary: 서울대학교, 엔키화이트햇, 로보웍스, 경우정밀과 공�
 
 한국전자기술연구원 인공지능데이터·보안연구센터가 서울대학교, (주)엔키화이트햇, 로보웍스(주), (주)경우정밀과 함께 제안한 정부 R&D 과제가 최종 선정되어, 최근 협약을 마치고 본격적인 연구에 들어갔습니다.
 
-과제는 산업통상부와 한국산업기술기획평가원(KEIT)이 지원하는 2026년도 로봇산업기술개발사업의 「제조 핵심기술 보호를 위한 AI 로봇/휴머노이드의 지능보호 및 보안 실행 기술 개발」입니다. 과제명은 AEGIS-RM(Action-aware Edge-Guarded Intelligence and Secure-execution for Robots and Manufacturing)으로 줄여 부르며, 2026년 8월부터 2029년 12월까지 4년간 한국전자기술연구원이 주관합니다.
+과제는 산업통상부와 한국산업기술기획평가원(KEIT)이 지원하는 2026년도 로봇산업기술개발사업의 "제조 핵심기술 보호를 위한 AI 로봇/휴머노이드의 지능보호 및 보안 실행 기술 개발"입니다. 과제명은 AEGIS-RM(Action-aware Edge-Guarded Intelligence and Secure-execution for Robots and Manufacturing)으로 줄여 부르며, 2026년 8월부터 2029년 12월까지 4년간 한국전자기술연구원이 주관합니다.
 
 # 과제 목표
 

@@ -2,6 +2,50 @@
   "_": "핵심 연구 주제. ⭐ 정본에 없는 **편집 분류**다 — 사람이 정하고 PR 리뷰가 공개 결정이다. 배열 순서가 홈의 연구 지도와 주제 카드 순서다. id 허용 목록은 이 파일 하나다(build.py 에 다시 적지 않는다). line, desc 가 두 언어 모두 비면 그 칸을 렌더하지 않고, 한쪽만 비면 빌드가 막는다. featured 는 그 주제의 projects 안에 있어야 한다. 모든 주제에 과제가 붙기 전에는 과제 목록의 주제 필터를 렌더하지 않는다.",
   "topics": [
     {
+      "id": "ai-safety",
+      "axis": "security",
+      "name": {
+        "ko": "인공지능 안전",
+        "en": "AI Safety"
+      },
+      "line": {
+        "ko": "하드웨어로 격리된 공간에서 AI를 실행해 모델과 데이터를 지키는 기술",
+        "en": "Running AI in a hardware-isolated space to protect models and data"
+      },
+      "desc": {
+        "ko": "엣지에서 동작하는 로봇 AI의 추론을 외부에 드러내지 않고 수행하며 실행이 변조되지 않도록 지킵니다. 모델에 담긴 제조 노하우는 비가역 학습과 워터마킹으로 보호하고, 지능과 제어를 분리해 이상 동작을 탐지합니다.",
+        "en": "We run robot AI inference at the edge without exposing it and keep its execution from being tampered with. We protect the manufacturing know-how inside models with irreversible learning and watermarking, and separate intelligence from control to detect abnormal behavior."
+      },
+      "featured": "aegis-rm",
+      "projects": [
+        "aegis-rm"
+      ]
+    },
+    {
+      "id": "physical",
+      "axis": "security",
+      "name": {
+        "ko": "물리보안",
+        "en": "Physical Security"
+      },
+      "line": {
+        "ko": "영상과 센서로 현장의 보안 위험을 알아채고 대응하는 기술",
+        "en": "Sensing and responding to on-site risks with video and sensors"
+      },
+      "desc": {
+        "ko": "영상, 소리, 센서 데이터를 함께 분석해 건물과 산업 현장의 보안과 위험 상황을 알아채고 대응합니다. 서버와 경량 엣지 단말에서 동작하는 보안 AI, 카메라 단말이 스스로를 보호하는 개방형 영상보안 플랫폼을 연구합니다.",
+        "en": "We analyze video, sound and sensor data together to detect and respond to security and safety risks in buildings and industrial sites. We build security AI that runs on servers and lightweight edge devices, and an open video-security platform whose cameras protect themselves."
+      },
+      "featured": "multimodal-security-response",
+      "projects": [
+        "multimodal-security-response",
+        "edge-video-surveillance",
+        "on-device-video-security-platform",
+        "ai-crowd-dynamics",
+        "physical-security-interworking"
+      ]
+    },
+    {
       "id": "multimodal",
       "axis": "data",
       "name": {
@@ -46,50 +90,6 @@
         "virtual-space-audio",
         "low-visibility-3d",
         "cross-device-sensory-sharing"
-      ]
-    },
-    {
-      "id": "tee",
-      "axis": "security",
-      "name": {
-        "ko": "신뢰 실행 환경",
-        "en": "Trusted Execution Environment"
-      },
-      "line": {
-        "ko": "하드웨어로 격리된 공간에서 AI를 실행해 모델과 데이터를 지키는 기술",
-        "en": "Running AI in a hardware-isolated space to protect models and data"
-      },
-      "desc": {
-        "ko": "엣지에서 동작하는 로봇 AI의 추론을 외부에 드러내지 않고 수행하며 실행이 변조되지 않도록 지킵니다. 모델에 담긴 제조 노하우는 비가역 학습과 워터마킹으로 보호하고, 지능과 제어를 분리해 이상 동작을 탐지합니다.",
-        "en": "We run robot AI inference at the edge without exposing it and keep its execution from being tampered with. We protect the manufacturing know-how inside models with irreversible learning and watermarking, and separate intelligence from control to detect abnormal behavior."
-      },
-      "featured": "aegis-rm",
-      "projects": [
-        "aegis-rm"
-      ]
-    },
-    {
-      "id": "physical",
-      "axis": "security",
-      "name": {
-        "ko": "물리보안",
-        "en": "Physical Security"
-      },
-      "line": {
-        "ko": "영상과 센서로 현장의 보안 위험을 알아채고 대응하는 기술",
-        "en": "Sensing and responding to on-site risks with video and sensors"
-      },
-      "desc": {
-        "ko": "영상, 소리, 센서 데이터를 함께 분석해 건물과 산업 현장의 보안과 위험 상황을 알아채고 대응합니다. 서버와 경량 엣지 단말에서 동작하는 보안 AI, 카메라 단말이 스스로를 보호하는 개방형 영상보안 플랫폼을 연구합니다.",
-        "en": "We analyze video, sound and sensor data together to detect and respond to security and safety risks in buildings and industrial sites. We build security AI that runs on servers and lightweight edge devices, and an open video-security platform whose cameras protect themselves."
-      },
-      "featured": "multimodal-security-response",
-      "projects": [
-        "multimodal-security-response",
-        "edge-video-surveillance",
-        "on-device-video-security-platform",
-        "ai-crowd-dynamics",
-        "physical-security-interworking"
       ]
     }
   ]

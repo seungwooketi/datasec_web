@@ -30,7 +30,7 @@ sit on deep steel #1D2D3D.
 
 ## Lockups on the web
 
-The wordmark is live type, not artwork — set it in Barlow Condensed 600 beside
+The wordmark is live type, not artwork - set it in Barlow Condensed 600 beside
 the inline symbol. This keeps it crisp at any density, searchable, and
 translatable. Do not export the lockup as a PNG for the site header.
 
@@ -77,7 +77,7 @@ from `ADSRC Assets.dc.html` in the design handoff, not from the site.
 
 ## Rendered artwork
 
-`og-image.png` (1200 × 630, deep steel) is the social/preview card — point
+`og-image.png` (1200 × 630, deep steel) is the social/preview card - point
 `og:image` at it. `adsrc-lockup-horizontal.png` (3600 × 900) is the primary
 lockup at 3× for slides, Word documents and print proofs. Use it where live
 type is not available; never in the site header.
@@ -90,7 +90,7 @@ type is not available; never in the site header.
 | Graphite | #1D1F20 | Wordmark, body copy, rules |
 | Deep steel | #1D2D3D | Reverse ground: covers, OG cards, banners |
 
-Steel measures ~3.6:1 against the light ground — fine for the symbol, large
+Steel measures ~3.6:1 against the light ground - fine for the symbol, large
 type and chrome, not for body copy. Use #416180 where running text must be blue.
 
 ## Print masters
