@@ -163,6 +163,9 @@ def main() -> int:
     title_of_code = {c: norm(sp.name) for sp in running for c in (sp.account_no, sp.project_no) if c}
     listed = {p.name for p in read["people"].people}
     want: dict[str, dict[str, str]] = {n: {} for n in listed}
+    load: dict[str, dict[str, float]] = {n: {} for n in listed}
+    """사람 → 과제 → 참여율 연 합산. ⛔ **M/M 과 같은 비공개 값이다** — 순서를 정하는 데만 쓰고
+    `data/`, 화면, 보고서 어디에도 수치로 옮기지 않는다(사이트는 순서만 받는다, 센터장 결정)."""
     unmatched: list[str] = []
     for row in read["people"].participation:
         if row.external:
@@ -174,6 +177,8 @@ def main() -> int:
             continue
         got = want.setdefault(row.person, {})
         got[slug] = "lead" if row.role == "책임자" or got.get(slug) == "lead" else "member"
+        w = load.setdefault(row.person, {})
+        w[slug] = w.get(slug, 0.0) + sum(getattr(row, "months", ()) or ())
     if unmatched:
         errors.append(f"사이트 과제에 못 붙인 참여 {len(unmatched)}건 — 아래 '미매칭' 을 보라")
     p_changed: list[str] = []
@@ -187,14 +192,21 @@ def main() -> int:
         for s, r in old.items():                # 기업수탁 연결은 참여율이 모르므로 그대로 둔다
             if role_of.get(s) == "contract" and s not in new:
                 new[s] = r
-        if new != old:
+        # ⭐ 순서 = 참여율 **연 합산**이 큰 순(센터장 결정). 같으면 책임 과제가 먼저, 그다음 지금 순서.
+        #    구성원 쪽은 이 순서의 앞 5개만 보인다(build.py). 참여율에 없는 연결(기업수탁)은 뒤로.
+        w = load.get(m["name"]["ko"], {})
+        before = [x["slug"] for x in m["projects"]]
+        seq = sorted(new, key=lambda s: (-w.get(s, -1.0), new[s] != "lead",
+                                         before.index(s) if s in before else len(before)))
+        if new != old or seq != before:
             add = sorted(set(new) - set(old))
             rm = sorted(set(old) - set(new))
             rc = sorted(s for s in set(new) & set(old) if new[s] != old[s])
+            moved = new == old and seq != before
             p_changed.append(f"{m['slug']}: " + " ".join(
-                [f"+{s}" for s in add] + [f"-{s}" for s in rm] + [f"~{s}({old[s]}→{new[s]})" for s in rc]))
-            order = [x["slug"] for x in m["projects"] if x["slug"] in new] + [s for s in new if s not in old]
-            m["projects"] = [{"slug": s, "role": new[s]} for s in order]
+                [f"+{s}" for s in add] + [f"-{s}" for s in rm] + [f"~{s}({old[s]}→{new[s]})" for s in rc]
+                + (["순서(참여율 순)"] if moved else [])))
+            m["projects"] = [{"slug": s, "role": new[s]} for s in seq]
 
     print(f"정본: 수행 과제 {len(running)} · 직원명부 {len(staff)} · 참여율 명단 {len(listed)} · "
           f"참여관계 {len(read['people'].participation)}")

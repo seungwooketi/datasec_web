@@ -18,11 +18,11 @@
   "external_count": 1,
   "projects": [
    {
-    "slug": "low-visibility-3d",
-    "role": "lead"
+    "slug": "ai-crowd-dynamics",
+    "role": "member"
    },
    {
-    "slug": "hybrid-sound-masking",
+    "slug": "low-visibility-3d",
     "role": "lead"
    },
    {
@@ -30,8 +30,8 @@
     "role": "member"
    },
    {
-    "slug": "ai-crowd-dynamics",
-    "role": "member"
+    "slug": "hybrid-sound-masking",
+    "role": "lead"
    },
    {
     "slug": "cross-device-sensory-sharing",
@@ -63,11 +63,11 @@
   "external_count": 2,
   "projects": [
    {
-    "slug": "human-foundation-model",
+    "slug": "low-visibility-3d",
     "role": "member"
    },
    {
-    "slug": "low-visibility-3d",
+    "slug": "mission-data-fusion",
     "role": "member"
    },
    {
@@ -79,7 +79,7 @@
     "role": "member"
    },
    {
-    "slug": "mission-data-fusion",
+    "slug": "human-foundation-model",
     "role": "member"
    }
   ],
@@ -104,7 +104,11 @@
   "external_count": 1,
   "projects": [
    {
-    "slug": "mission-data-fusion",
+    "slug": "data-drift-management",
+    "role": "member"
+   },
+   {
+    "slug": "marine-battery-data-hub",
     "role": "member"
    },
    {
@@ -112,23 +116,19 @@
     "role": "member"
    },
    {
-    "slug": "multimodal-rag",
-    "role": "member"
-   },
-   {
-    "slug": "data-drift-management",
-    "role": "member"
-   },
-   {
-    "slug": "dil-data-sharing",
-    "role": "member"
-   },
-   {
     "slug": "manned-unmanned-ai-collaboration",
     "role": "member"
    },
    {
-    "slug": "marine-battery-data-hub",
+    "slug": "multimodal-rag",
+    "role": "member"
+   },
+   {
+    "slug": "mission-data-fusion",
+    "role": "member"
+   },
+   {
+    "slug": "dil-data-sharing",
     "role": "member"
    }
   ],
@@ -153,12 +153,12 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "edge-video-surveillance",
-    "role": "lead"
-   },
-   {
     "slug": "multimodal-security-response",
     "role": "member"
+   },
+   {
+    "slug": "edge-video-surveillance",
+    "role": "lead"
    },
    {
     "slug": "on-device-video-security-platform",
@@ -196,16 +196,12 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "human-foundation-model",
-    "role": "lead"
-   },
-   {
     "slug": "mission-data-fusion",
     "role": "member"
    },
    {
-    "slug": "data-drift-management",
-    "role": "member"
+    "slug": "human-foundation-model",
+    "role": "lead"
    },
    {
     "slug": "on-device-ai-chip-software",
@@ -214,6 +210,10 @@
    {
     "slug": "aegis-rm",
     "role": "lead"
+   },
+   {
+    "slug": "data-drift-management",
+    "role": "member"
    }
   ],
   "research": true
@@ -237,8 +237,8 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "multimodal-rag",
-    "role": "lead"
+    "slug": "marine-battery-data-hub",
+    "role": "member"
    },
    {
     "slug": "dil-data-sharing",
@@ -249,24 +249,24 @@
     "role": "lead"
    },
    {
-    "slug": "maritime-aton-info-cooperation",
-    "role": "lead"
+    "slug": "data-drift-management",
+    "role": "member"
    },
    {
-    "slug": "mission-data-fusion",
-    "role": "member"
+    "slug": "multimodal-rag",
+    "role": "lead"
    },
    {
     "slug": "battlefield-decision-support",
     "role": "member"
    },
    {
-    "slug": "data-drift-management",
+    "slug": "mission-data-fusion",
     "role": "member"
    },
    {
-    "slug": "marine-battery-data-hub",
-    "role": "member"
+    "slug": "maritime-aton-info-cooperation",
+    "role": "lead"
    }
   ],
   "research": true
@@ -290,7 +290,11 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "battlefield-decision-support",
+    "slug": "on-device-ai-chip-software",
+    "role": "lead"
+   },
+   {
+    "slug": "marine-battery-data-hub",
     "role": "member"
    },
    {
@@ -298,19 +302,15 @@
     "role": "member"
    },
    {
-    "slug": "human-foundation-model",
+    "slug": "battlefield-decision-support",
     "role": "member"
-   },
-   {
-    "slug": "marine-battery-data-hub",
-    "role": "member"
-   },
-   {
-    "slug": "on-device-ai-chip-software",
-    "role": "lead"
    },
    {
     "slug": "aegis-rm",
+    "role": "member"
+   },
+   {
+    "slug": "human-foundation-model",
     "role": "member"
    }
   ],
@@ -339,11 +339,11 @@
     "role": "member"
    },
    {
-    "slug": "human-foundation-model",
+    "slug": "aegis-rm",
     "role": "member"
    },
    {
-    "slug": "aegis-rm",
+    "slug": "human-foundation-model",
     "role": "member"
    }
   ],
@@ -368,6 +368,10 @@
   "external_count": 1,
   "projects": [
    {
+    "slug": "data-drift-management",
+    "role": "lead"
+   },
+   {
     "slug": "mission-data-fusion",
     "role": "lead"
    },
@@ -376,27 +380,23 @@
     "role": "lead"
    },
    {
-    "slug": "data-drift-management",
-    "role": "lead"
-   },
-   {
     "slug": "marine-battery-data-hub",
     "role": "lead"
-   },
-   {
-    "slug": "multimodal-rag",
-    "role": "member"
-   },
-   {
-    "slug": "dil-data-sharing",
-    "role": "member"
    },
    {
     "slug": "manned-unmanned-ai-collaboration",
     "role": "member"
    },
    {
+    "slug": "multimodal-rag",
+    "role": "member"
+   },
+   {
     "slug": "edge-video-surveillance",
+    "role": "member"
+   },
+   {
+    "slug": "dil-data-sharing",
     "role": "member"
    }
   ],
@@ -421,7 +421,7 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "virtual-space-audio",
+    "slug": "cross-device-sensory-sharing",
     "role": "lead"
    },
    {
@@ -429,7 +429,7 @@
     "role": "lead"
    },
    {
-    "slug": "cross-device-sensory-sharing",
+    "slug": "virtual-space-audio",
     "role": "lead"
    },
    {
@@ -470,16 +470,16 @@
     "role": "lead"
    },
    {
+    "slug": "edge-video-surveillance",
+    "role": "member"
+   },
+   {
     "slug": "on-device-video-security-platform",
     "role": "lead"
    },
    {
     "slug": "physical-security-interworking",
     "role": "lead"
-   },
-   {
-    "slug": "edge-video-surveillance",
-    "role": "member"
    }
   ],
   "research": true
@@ -503,7 +503,7 @@
   "external_count": 0,
   "projects": [
    {
-    "slug": "virtual-space-audio",
+    "slug": "cross-device-sensory-sharing",
     "role": "member"
    },
    {
@@ -511,7 +511,7 @@
     "role": "member"
    },
    {
-    "slug": "cross-device-sensory-sharing",
+    "slug": "virtual-space-audio",
     "role": "member"
    },
    {

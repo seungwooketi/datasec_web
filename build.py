@@ -104,7 +104,6 @@ T = {
         "researchers_h": "연구진", "staff_h": "연구원, 행정", "grade_filter": "직급",
         "grade_chief": "수석연구원", "grade_principal": "책임연구원", "grade_senior": "선임연구원",
         "own": "책임", "join": "참여", "count_pn": "과제 {n}", "count_own": ", 책임 {m}",
-        "more_n": "외 {n}건 더 보기",
         # ── 협력
         "ways_h": "협력 방안", "contact_h": "문의하기", "visit_h": "찾아오시는 길",
         "copy_mail": "주소 복사", "copied": "주소를 복사했습니다", "copy_failed": "복사하지 못했습니다. 위 주소를 옮겨 적어 주십시오.",
@@ -165,7 +164,6 @@ T = {
         "researchers_h": "Faculty", "staff_h": "Research associates and administration", "grade_filter": "Grade",
         "grade_chief": "Chief", "grade_principal": "Principal", "grade_senior": "Senior",
         "own": "PI", "join": "Member", "count_pn": "{n} projects", "count_pn_one": "{n} project", "count_own": ", PI on {m}",
-        "more_n": "{n} more",
         "ways_h": "Ways to collaborate", "contact_h": "Contact", "visit_h": "Visit",
         "copy_mail": "Copy address", "copied": "Address copied", "copy_failed": "Could not copy. Please copy the address above.",
         "hire_label": "Hiring", "hire_aria": "Hiring notice", "hire_see": "See the posting",
@@ -1327,20 +1325,24 @@ GRADE_KEY = {"수석연구원": "chief", "책임연구원": "principal", "선임
 GRADES = {"수석연구원", "책임연구원", "선임연구원", "연구원", "행정원"}
 
 
+PER_PERSON = 5
+"""구성원 쪽에서 한 사람에게 싣는 과제 수의 상한 — 참여율 연 합산이 큰 순으로 이만큼만."""
+
+
 def page_people(lg, site, members, projects, detailed):
     t = T[lg]
     o = other(lg)
     by_slug = {p["slug"]: p for p in projects}
 
     def plist(m: dict) -> list[tuple[dict, str]]:
-        """참여율에서 온 연결 ∪ 담당자로 걸린 과제(정본 「책임자 이름」)."""
+        """참여율에서 온 연결 ∪ 담당자로 걸린 과제(정본 「책임자 이름」).
+        ⭐ 순서는 `members.json` 의 순서다 — `pull_from_sot.py` 가 참여율 **연 합산**이 큰 순으로 적는다
+           (수치는 비공개라 data 에 없다). 참여율에 없고 담당자로만 걸린 과제는 뒤에 붙는다."""
         d = {x["slug"]: x["role"] for x in m["projects"]}
         for p in projects:
             if p["pi"]["ko"] == m["name"]["ko"]:
                 d[p["slug"]] = "lead"
-        items = [(by_slug[s], r) for s, r in d.items() if s in by_slug]
-        items.sort(key=lambda x: (x[1] != "lead", x[0]["status"] == "closed", x[0]["title"][lg]))
-        return items
+        return [(by_slug[s], r) for s, r in d.items() if s in by_slug]
 
     def count_label(items) -> str:
         live = [x for x in items if x[0]["status"] != "closed"]
@@ -1361,11 +1363,8 @@ def page_people(lg, site, members, projects, detailed):
         #    반영되지 않은 사람에게 거짓 문장이 된다(정본에는 과제가 있는데 data 가 늦은 경우).
         if not items:
             return ""
-        rows = "".join(prow(p, r) for p, r in items[:3])
-        if len(items) > 3:
-            rows += (f'<details class="pmore"><summary>{e(t["more_n"].format(n=len(items) - 3))}</summary>'
-                     + "".join(prow(p, r) for p, r in items[3:]) + '</details>')
-        return f'<div class="plist">{rows}</div>'
+        # ⭐ 참여율 순 앞 PER_PERSON 개만 싣는다. 나머지는 접어 두지도 않는다(센터장 결정).
+        return f'<div class="plist">{"".join(prow(p, r) for p, r in items[:PER_PERSON])}</div>'
 
     for m in members:
         if m["grade"]["ko"] not in GRADES:
