@@ -22,6 +22,23 @@ python3 -m http.server 8770 --directory docs
 런타임에 질의가 없다. 그래서 **DB 가 죽어도 사이트는 살아 있고**, 반대로 **KB 가 실수해도
 그 실수는 PR 을 통과해야 공개된다.** 자동 게시로 만들면 사람이 고친 값을 다음 회차가 되돌린다.
 
+### 매달 자동 갱신
+
+매달 1일 10:00 에 이 Mac 의 LaunchAgent(`ops/com.datasec.sot-pr.plist`)가 `tools/sot_pr.py` 를 돌린다.
+정본으로 `data/` 를 갱신하고 다시 구워, 바뀐 것이 있으면 가지 `sot/YYYY-MM-DD` 로 **PR 을 연다**(병합은 사람이).
+결과는 두레이 @swkum 업무로 온다 - PR 을 열었을 때, 사람이 정할 것(정본에만 있는 새 과제, 새 사람)이 있을 때,
+실패했을 때. 바뀐 것이 없으면 아무것도 만들지 않는다. 데이터가 같아도 그날 다시 구운 `docs/` 가 다르면
+(과제 상태 전환) PR 이 열린다.
+
+```bash
+python3 tools/sot_pr.py --dry-run          # 무엇을 할지만 (keti-kb venv 파이썬으로)
+cp ops/com.datasec.sot-pr.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.datasec.sot-pr.plist
+launchctl kickstart gui/$(id -u)/com.datasec.sot-pr   # 지금 한 번
+```
+
+로그는 `~/Library/Logs/datasec-sot-pr.log`. ⚠️ Mac 이 꺼져 있던 날은 돌지 않는다(잠들어 있었으면 깨어날 때 돈다).
+
 ## 2. ⛔ 배포 전에 반드시
 
 ```bash
@@ -191,7 +208,6 @@ Enterprise Cloud 가 필요하다.
       책임자 확인이 필요하거나(온디바이스 AI 칩 SW), 계획서를 찾지 못했다(사운드마스킹, 해양 항로표지)
 - [ ] 구성원 사진 - 지금은 센터장 한 장뿐이다
 - [ ] 찾아오시는 길의 지도 - 네이버 지도는 NCP Client ID 가 있어야 한다
-- [ ] 갱신 자동화: `pull_from_sot.py` 를 월 1회 돌려 PR 을 여는 사내 스케줄
 
 ## 8. ⛔ 정본을 읽을 때 밟는 지뢰
 

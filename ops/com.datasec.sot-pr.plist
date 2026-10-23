@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  datasec.work 정본 갱신 자동화. 매달 1일 10:00 에 tools/sot_pr.py 를 돌린다.
+  정본 엑셀로 data 를 갱신해 바뀐 것이 있으면 PR 을 열고, 두레이 @swkum 업무로 알린다. 병합은 사람이 한다.
+
+  ⛔ 이 주석에는 하이픈 두 개를 잇대어 쓰지 않는다. XML 주석 안에서는 문법 오류다.
+
+  ⭐ 왜 cron 이 아닌가: 두레이 토큰(키체인 kb-dooray)과 git push 의 GitHub 인증(osxkeychain)이 키체인에 있고, cron 의
+     보안 세션에서는 키체인을 못 읽는다(keti-kb 의 ops/com.keti.kb-doctor-alert.plist 주석, 실측).
+  ⭐ 왜 keti-kb 의 venv 파이썬을 바로 띄우나: 정본 엑셀이 구글드라이브에 있다. launchd 작업은 처음 띄운 실행
+     파일이 폴더 접근 권한(TCC)의 주체다. 이미 그 폴더를 읽는 kb-web 과 같은 실행 파일을 띄운다(sh 로 감싸지 않는다).
+  ⚠️ RunAtLoad, KeepAlive 를 두지 않는다. 등록이 곧 회차가 되면 안 된다.
+  ⚠️ 잠들어 있어 놓친 회차는 깨어날 때 한 번 돈다(launchd.plist(5)). 꺼져 있던 시각은 돌리지 않는다.
+
+  설치:  cp ops/com.datasec.sot-pr.plist ~/Library/LaunchAgents/
+         launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.datasec.sot-pr.plist
+  확인:  launchctl print gui/$(id -u)/com.datasec.sot-pr | grep -E 'state|last exit'
+  지금 한 번:  launchctl kickstart gui/$(id -u)/com.datasec.sot-pr
+  해제:  launchctl bootout gui/$(id -u)/com.datasec.sot-pr
+  ⚠️ 고친 뒤에는 다시 복사하고 bootout 뒤 bootstrap 한다. launchd 는 등록할 때 읽은 내용으로 돈다.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.datasec.sot-pr</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/swkeum/work/keti-kb/.venv/bin/python</string>
+    <string>/Users/swkeum/work/datasec_web/tools/sot_pr.py</string>
+  </array>
+  <key>WorkingDirectory</key><string>/Users/swkeum/work/datasec_web</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>LANG</key><string>ko_KR.UTF-8</string>
+    <key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>KETI_KB</key><string>/Users/swkeum/work/keti-kb</string>
+  </dict>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Day</key><integer>1</integer>
+    <key>Hour</key><integer>10</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+
+  <key>StandardOutPath</key><string>/Users/swkeum/Library/Logs/datasec-sot-pr.log</string>
+  <key>StandardErrorPath</key><string>/Users/swkeum/Library/Logs/datasec-sot-pr.log</string>
+</dict>
+</plist>

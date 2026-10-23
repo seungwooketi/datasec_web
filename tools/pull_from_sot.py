@@ -78,6 +78,8 @@ def load_adapter():
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true", help="실제로 data/*.json 을 고친다")
+    ap.add_argument("--report", metavar="PATH",
+                    help="결과를 JSON 으로 적는다(tools/sot_pr.py 가 읽는다). ⚠️ 이름이 들어간다 — 공개 위치에 두지 않는다")
     args = ap.parse_args()
 
     xlsx = load_adapter()
@@ -209,6 +211,14 @@ def main() -> int:
             print(f"\n── {label} ({len(items)})")
             for x in items:
                 print(f"   {x}")
+    if args.report:
+        pathlib.Path(args.report).write_text(json.dumps({
+            "ok": not errors, "errors": errors, "warnings": warnings,
+            "counts": {"running": len(running), "staff": len(staff), "listed": len(listed)},
+            "changed": {"projects": changed, "members": m_changed, "participation": p_changed},
+            "pending": {"new_projects": unseen, "gone": gone, "new_people": roster_only,
+                        "site_only": site_only, "unmatched": unmatched},
+        }, ensure_ascii=False, indent=1), encoding="utf-8")
     if errors:
         print("", file=sys.stderr)
         for e in errors:
