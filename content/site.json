@@ -30,7 +30,7 @@
   "_about": "⛔ 숫자를 문장에 적지 않는다 — 빌드가 {researchers} 를 연구진 수(정규직, data/members.json 의 research:true)로 바꾼다. 적어 두면 인원이 바뀔 때 조용히 틀린다(실제로 「12명」이 13명이 된 뒤에도 남았다).",
   "about": {
     "ko": "임베디드 시스템부터 데이터 분석, 인공지능 모델까지 폭넓은 경험을 갖춘 연구진 {researchers}명이 국내외 파트너와 함께 연구하고 있습니다.",
-    "en": "{researchers} researchers whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
+    "en": "{researchers} faculty members whose experience runs from embedded systems through data analysis to AI models, working with partners in Korea and abroad."
   },
   "research_title": {
     "ko": "정부 R&D와 민간 수탁 과제",

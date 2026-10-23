@@ -9,16 +9,18 @@
         "en": "AI Safety"
       },
       "line": {
-        "ko": "하드웨어로 격리된 공간에서 AI를 실행해 모델과 데이터를 지키는 기술",
-        "en": "Running AI in a hardware-isolated space to protect models and data"
+        "ko": "AI 모델과 데이터를 지키고, 납품되는 AI를 믿을 수 있게 검증하는 기술",
+        "en": "Protecting AI models and data, and verifying the AI we deploy"
       },
       "desc": {
-        "ko": "엣지에서 동작하는 로봇 AI의 추론을 외부에 드러내지 않고 수행하며 실행이 변조되지 않도록 지킵니다. 모델에 담긴 제조 노하우는 비가역 학습과 워터마킹으로 보호하고, 지능과 제어를 분리해 이상 동작을 탐지합니다.",
-        "en": "We run robot AI inference at the edge without exposing it and keep its execution from being tampered with. We protect the manufacturing know-how inside models with irreversible learning and watermarking, and separate intelligence from control to detect abnormal behavior."
+        "ko": "엣지 로봇 AI의 추론을 하드웨어로 격리된 공간에서 기밀로 수행하고, 모델에 담긴 제조 노하우를 비가역 학습과 워터마킹으로 보호합니다. AI의 구성을 기록한 AI-BOM으로 납품되는 AI의 취약점과 정합성을 검증하는 기술도 개발합니다.",
+        "en": "We run edge robot AI inference confidentially in hardware-isolated space and protect the know-how inside models with irreversible learning and watermarking. We also verify supplied AI against its AI-BOM, a record of what it is built from, checking for vulnerabilities and mismatches."
       },
       "featured": "aegis-rm",
       "projects": [
-        "aegis-rm"
+        "aegis-rm",
+        "ai-bom-powertrain-reliability",
+        "on-device-ai-chip-software"
       ]
     },
     {
