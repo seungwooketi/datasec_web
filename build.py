@@ -69,7 +69,7 @@ T = {
         "all_projects": "전체 과제 보기",
         "insights_h": "인사이트", "all_insights": "전체 인사이트 →",
         "news_h": "소식", "all_news": "전체 소식 →",
-        "collab_h": "함께할 방법", "way_more": "자세히 →",
+        "collab_h": "협력", "way_more": "자세히 →",
         "news_empty": "등록된 소식이 없습니다.",
         # ── 통계
         "researchers": "연구인력", "active_projects": "수행 중 과제", "lead_projects": "수행 중 주관 과제",
