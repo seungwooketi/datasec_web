@@ -80,8 +80,8 @@ figure { margin: 0; }
 .blueprint > .corner.tr { top: -6px; right: -6px; }
 .blueprint > .corner.bl { bottom: -6px; left: -6px; }
 .blueprint > .corner.br { bottom: -6px; right: -6px; }
-/* 핸드오프 styles.css:78-82, 97-99 를 그대로 옮긴다(값을 새로 정하지 않았다). 빠져 있어서
-   구성원 사진이 강철색으로 물들지 않고 원색으로 나갔다. */
+/* 핸드오프 styles.css:78-82, 97-99 를 그대로 옮긴다(값을 새로 정하지 않았다).
+   ⛔ 구성원 사진에는 쓰지 않는다 — 얼굴이 강철색 단색이 된다. 사진은 원색(site.css .portrait). */
 .blueprint.halftone, .blueprint.plate, .blueprint.duotone { overflow: visible; }
 .duotone{position:relative;overflow:hidden}
 .duotone::after{content:"";position:absolute;inset:0;pointer-events:none;

@@ -1400,7 +1400,7 @@ def page_people(lg, site, members, projects, detailed):
         if m.get("photo"):
             pw, ph = img_size(f"assets/people/{m['photo']}")
             photo = blueprint(f'<img src="{stamp("/assets/people/" + m["photo"])}" alt="" '
-                              f'width="{pw}" height="{ph}">', cls="duotone portrait")
+                              f'width="{pw}" height="{ph}">', cls="portrait")   # 원색 — 단색 덧칠 금지(아래 게이트)
         sub = t["slash"].join(x for x in (m["grade"][lg], count_label(items)) if x)
         hx = "h3" if dir_in else "h2"
         grade = f' data-grade="{GRADE_KEY.get(m["grade"]["ko"], "other")}"' if dir_in else ""
@@ -2087,6 +2087,9 @@ def main() -> int:
             for tok in re.split(r"[\s_-]+", attr.lower()):
                 if tok in BANNED or tok.startswith(BANNED_PREFIX):
                     block(f"광고 차단에 걸리는 이름: {rel} 「{attr}」 — 토큰 「{tok}」")
+            # ⛔ 사진을 강철색 한 가지로 덮지 않는다(.duotone) — 얼굴이 창백한 파랑이 된다.
+            if "duotone" in attr.split():
+                block(f"사진에 단색 덧칠(.duotone)이 걸렸다: {rel} 「{attr}」 — 사진은 원색으로 싣는다")
 
     # ⛔ **미공개 과제가 새어 나갔는지 산출물에서 직접 확인한다.** 걸러 냈다고 믿지 않는다 —
     #    뉴스 글이나 과제 소개문이 제목·slug 를 그대로 적어 두면 거르기를 통과한다.
