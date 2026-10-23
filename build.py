@@ -1650,6 +1650,24 @@ def page_collaborate(lg, site):
     v = site["visit"]
     maplink = (f'<a class="maplink" href="{e(v["map_url"])}" rel="noopener" target="_blank">'
                f'{e(v["map_label"][lg])} ↗</a>')
+    km = v.get("kakao_map") or {}
+    kmap = ""
+    if km:
+        # ⛔ 퍼가기 코드의 값만 받는다 — 모양이 아니면 막는다(이 값이 스크립트 안에 그대로 들어간다).
+        if not (re.fullmatch(r"\d{10,16}", km.get("timestamp", "")) and re.fullmatch(r"[a-z0-9]{6,20}", km.get("key", ""))):
+            block("content/site.json visit.kakao_map: timestamp 는 숫자, key 는 영소문자와 숫자여야 한다")
+        else:
+            maplink += (f' <a class="maplink" href="{e(km["place_url"])}" rel="noopener" target="_blank">'
+                        f'{e(km["label"][lg])} ↗</a>')
+            # ⭐ 카카오맵 약도(키 없는 공식 퍼가기). ⚠️ 설치 스크립트가 document.write 를 쓰므로 defer 없이
+            #    그 자리에서 돌아야 한다. 폭은 100% — 고정 640 이면 휴대폰에서 쪽이 옆으로 밀린다.
+            #    스크립트가 막히면 지도만 빠지고 위의 주소, 지도 링크는 그대로다.
+            kmap = (f'<div class="kmap"><div id="daumRoughmapContainer{km["timestamp"]}" '
+                    f'class="root_daum_roughmap root_daum_roughmap_landing"></div>'
+                    f'<script charset="UTF-8" class="daum_roughmap_loader_script" '
+                    f'src="https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js"></script>'
+                    f'<script charset="UTF-8">new daum.roughmap.Lander({{"timestamp": "{km["timestamp"]}", '
+                    f'"key": "{km["key"]}", "mapWidth": "100%", "mapHeight": "360"}}).render();</script></div>')
     rows = [(t["addr"], f'{e(v["org_line"][lg])}<br>{e(v["address"][lg])}<br>{maplink}')]
     if v.get("phone"):
         tel = "+82" + re.sub(r"\D", "", v["phone"].split(")", 1)[-1])
@@ -1676,6 +1694,7 @@ def page_collaborate(lg, site):
 <section id="visit" class="csec">{klabel(t['k_visit'])}
 <h2 class="ht h-2">{e(t['visit_h'])}</h2>
 <div class="visitbox">{blueprint(f'<div class="reg-inner">{dl}</div>', style="padding:18px")}</div>
+{kmap}
 {f'<div class="ways">{notes}</div>' if notes else ''}
 </section>
 </div>

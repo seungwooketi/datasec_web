@@ -64,6 +64,7 @@ python3 -m http.server 8770 --directory docs
 | 무엇을 | 어디를 |
 |---|---|
 | 소개문, 협력 안내, 연락처, 주소, 표제 | `content/site.json` |
+| 찾아오시는 길 지도(카카오맵 약도) | `content/site.json` 의 `visit.kakao_map`(퍼가기 코드의 `timestamp`, `key`). 빌드가 모양을 검사한다 - 이 값은 스크립트 안에 그대로 들어간다 |
 | 소식 한 편, 인사이트 글 | `content/news/<slug>.ko.md` **+ `.en.md`** (`source` 가 센터장 블로그면 인사이트 쪽으로 간다) |
 | 과제 소개, 약칭, 추진 체계 | `content/projects/<slug>.ko.md` **+ `.en.md`** - 약칭 `short:`, 기관은 머리말 `consortium_lead`, `consortium_joint`, `consortium_demand`(쉼표로, 괄호 안 쉼표는 안 끊는다), `consortium_note`. 이 넷 밖의 `consortium_` 키는 빌드가 막는다 |
 | 홈의 연구 주제 4개 (이름, 한 줄, 과제 배정, 대표 과제) | `content/topics.json` - ⭐ 편집 판단이다. 정본에 없는 값이라 사람이 정한다 |

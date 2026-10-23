@@ -673,6 +673,8 @@ a.tag:hover { border-color: var(--color-accent-700); }
 .cbtns .btn { min-height: 44px; }
 .copy-msg { font-size: 13px; color: var(--color-neutral-700); }
 .visitbox { margin-top: 20px; }
+.kmap { margin-top: 20px; width: 100%; overflow: hidden; }
+.kmap .root_daum_roughmap { width: 100% !important; }
 
 /* ── 영문 안내 줄(국문 홈, 브라우저 언어에 한국어가 없을 때) — 메뉴 아래 오른쪽 */
 .en-note { position: absolute; z-index: 4; top: calc(var(--nav-h, 72px) + 16px);
