@@ -103,7 +103,7 @@ T = {
         "fig_all": "전체 구성원", "fig_research": "연구진", "fig_staff": "연구원", "fig_admin": "행정",
         "researchers_h": "연구진", "staff_h": "연구원, 행정", "grade_filter": "직급",
         "grade_chief": "수석연구원", "grade_principal": "책임연구원", "grade_senior": "선임연구원",
-        "own": "책임", "join": "참여", "count_pn": "과제 {n}", "count_own": ", 책임 {m}",
+        "own": "책임", "join": "참여", "lead_n": "책임 과제 {n}",
         # ── 협력
         "ways_h": "협력 방안", "contact_h": "문의하기", "visit_h": "찾아오시는 길",
         "copy_mail": "주소 복사", "copied": "주소를 복사했습니다", "copy_failed": "복사하지 못했습니다. 위 주소를 옮겨 적어 주십시오.",
@@ -163,7 +163,7 @@ T = {
         "fig_all": "All members", "fig_research": "Faculty", "fig_staff": "Research associates", "fig_admin": "Administration",
         "researchers_h": "Faculty", "staff_h": "Research associates and administration", "grade_filter": "Grade",
         "grade_chief": "Chief", "grade_principal": "Principal", "grade_senior": "Senior",
-        "own": "PI", "join": "Member", "count_pn": "{n} projects", "count_pn_one": "{n} project", "count_own": ", PI on {m}",
+        "own": "PI", "join": "Member", "lead_n": "PI on {n} projects", "lead_n_one": "PI on {n} project",
         "ways_h": "Ways to collaborate", "contact_h": "Contact", "visit_h": "Visit",
         "copy_mail": "Copy address", "copied": "Address copied", "copy_failed": "Could not copy. Please copy the address above.",
         "hire_label": "Hiring", "hire_aria": "Hiring notice", "hire_see": "See the posting",
@@ -1349,7 +1349,9 @@ def page_people(lg, site, members, projects, detailed):
         if not live:
             return ""
         own = sum(1 for x in live if x[1] == "lead")
-        return nfmt(t, "count_pn", len(live)) + (t["count_own"].format(m=own) if own else "")
+        # ⭐ 책임 과제 수만 싣는다. 참여 과제 수는 싣지 않는다 — 목록이 5개까지라(PER_PERSON) 숫자와
+        #    목록이 어긋나 보인다(센터장 결정).
+        return nfmt(t, "lead_n", own) if own else ""
 
     def prow(p: dict, r: str) -> str:
         closed = (f'<span class="mtag">{e(t["st_closed"])}</span>' if p["status"] == "closed" else "")
