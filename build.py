@@ -605,6 +605,7 @@ def crumbs_html(lg: str, items: list) -> str:
 # 도메인 표기 - "datasec work" 같은 도메인 검색어가 이 사이트와 맞물리게 한다.
 # 화면(바닥글)에 보이게 두고, JSON-LD alternateName 도 같은 값을 쓴다(§9).
 DOMAIN_LABEL = "datasec.work"
+HOME_TITLE_SUFFIX = {"ko": "KETI 한국전자기술연구원", "en": "KETI"}
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -654,7 +655,9 @@ def shell(lg: str, nav_key: str, path: str, title: str | None, desc: str, body: 
     base = site["site_url"].rstrip("/")
     canonical = f"{base}/{lg}/{path}"
     og_title = f"{title} — {center}" if title else center
-    doc_title = og_title + (f" | {DOMAIN_LABEL}" if path == "" else "")
+    # ⭐ 홈 제목에 기관명(국문, KETI)을 함께 둔다. 「KETI ○○센터」, 「한국전자기술연구원 ○○센터」로
+    #    찾는 사람이 많은데, 색인된 쪽이 홈뿐이던 때 KETI 라는 글자가 홈 어디에도 없어 잡히지 않았다.
+    doc_title = og_title + (f" | {HOME_TITLE_SUFFIX[lg]}" if path == "" else "")
     if crumbs is None and path:
         label = next((t[k] for p, k in NAVS if p == nav_key), title or "")
         crumbs = [(t["crumb_home"], f"/{lg}/")]
@@ -775,7 +778,7 @@ def mail(email: str, cls: str = "") -> str:
             f'<span class="rev">{e(shown)}</span></a>')
 
 
-def org_jsonld(lg: str, site: dict, stats: dict) -> str:
+def org_jsonld(lg: str, site: dict, stats: dict, director: dict | None = None) -> str:
     """조직 구조화 데이터 — **홈 한 쪽에만** 넣는다.
 
     ⚠️ 기대를 낮춰 둔다. 구글의 Organization 지원 속성에 `parentOrganization` 은 **없고**
@@ -793,7 +796,8 @@ def org_jsonld(lg: str, site: dict, stats: dict) -> str:
         "@id": f"{base}/#center",
         "name": site["center_full"][lg],
         "alternateName": [site["center"]["ko"], site["center"]["en"],
-                          site["center_full"]["ko"], site["center_full"]["en"], "ADSRC",
+                          site["center_full"]["ko"], site["center_full"]["en"],
+                          f'KETI {site["center"]["ko"]}', f'KETI {site["center"]["en"]}', "ADSRC",
                           DOMAIN_LABEL],
         "url": f"{base}/{lg}/",
         "logo": f"{base}/assets/brand/symbol-1024.png",
@@ -806,6 +810,11 @@ def org_jsonld(lg: str, site: dict, stats: dict) -> str:
             "@type": "Organization", "name": site["org_name"][lg], "url": site["org_url"],
             "sameAs": ["https://ror.org/039k6f508", "https://www.wikidata.org/wiki/Q30281929"]},
     }
+    if director:
+        # 홈 머리에 「센터장 ○○○」으로 보이는 사람만 싣는다(화면에 없는 사실은 넣지 않는다).
+        d["employee"] = {"@type": "Person", "name": director["name"][lg],
+                         "jobTitle": director["org_role"][lg],
+                         "url": f"{base}/{lg}/people/#{director['slug']}"}
     body = json.dumps(d, ensure_ascii=False, separators=(",", ":"))
     return f'\n<script type="application/ld+json">{body}</script>'
 
@@ -1025,12 +1034,16 @@ def page_home(lg, site, projects, members, news, stats, detailed, topics):
     note = f'<span class="hsec-note">{e(t["topics_note"])}</span>' if any_feat else ""
     insights = [n for n in news[lg] if is_insight(n)][:3]
     plain = [n for n in news[lg] if not is_insight(n)][:3]
+    director = next((m for m in members if m.get("org_role", {}).get("ko") == "센터장"), None)
+    dir_line = (f'<span class="mdir">{e(director["org_role"][lg])} '
+                f'<a href="/{lg}/people/#{e(director["slug"])}">{e(director["name"][lg])}</a></span>'
+                if director else "")
     ways = "".join(
         f'<div class="hway"><b class="ht">{e(w["title"][lg])}</b><p>{e(w["body"][lg])}</p>'
         f'<a href="/{lg}/collaborate/#way-{e(w["id"])}">{e(t["way_more"])}</a></div>'
         for w in site["collaborate"]["ways"])
     body = f"""
-<div class="masthead"><h1>{e(site['center_full'][lg])}</h1><span>{e(site['org_division'][lg])}</span></div>
+<div class="masthead"><h1>{e(site['center_full'][lg])}</h1><span>{e(site['org_division'][lg])}</span>{dir_line}</div>
 <div class="herorow">
 <div class="herotext">
 <p class="ht hero">{e(site['hero'][lg])}</p>
@@ -1069,7 +1082,7 @@ def page_home(lg, site, projects, members, news, stats, detailed, topics):
 </section>
 """
     return shell(lg, "", "", None, site["lede"][lg], body, site,
-                 jsonld=org_jsonld(lg, site, stats))
+                 jsonld=org_jsonld(lg, site, stats, director))
 
 
 def load_summaries() -> dict[str, dict[str, dict]]:
