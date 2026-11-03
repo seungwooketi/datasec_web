@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
 Sitemap: https://www.datasec.work/sitemap.xml
+
+#DaumWebMasterTool:ddfbcaf3d26dc359dd23d3f48fab4cc11fd40f58aac5c44cff5775ab50d07c05:e72ZaETHYmtl8bFrs60rSQ==

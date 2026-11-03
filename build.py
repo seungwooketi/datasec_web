@@ -2062,7 +2062,9 @@ def main() -> int:
     host = base.split("://", 1)[-1].strip("/")
     write("CNAME", host + "\n")
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
-    write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n")
+    # 다음 웹마스터도구 소유확인 PIN. 다음은 robots.txt 의 이 주석 줄로 확인한다 - 지우면 확인이 끊긴다
+    DAUM_PIN = "#DaumWebMasterTool:ddfbcaf3d26dc359dd23d3f48fab4cc11fd40f58aac5c44cff5775ab50d07c05:e72ZaETHYmtl8bFrs60rSQ=="
+    write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {base}/sitemap.xml\n\n{DAUM_PIN}\n")
 
     # ⭐ `lastmod` 는 **그 쪽 내용이 마지막으로 바뀐 날**이다. 쪽마다 지문(page_sig)을 직전
     #    산출물과 비교해, 같으면 직전 docs/sitemap.xml 의 날짜를 잇고 바뀐 쪽만 빌드한 날로 둔다.
