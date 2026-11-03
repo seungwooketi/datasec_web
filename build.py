@@ -605,7 +605,7 @@ def crumbs_html(lg: str, items: list) -> str:
 # 도메인 표기 - "datasec work" 같은 도메인 검색어가 이 사이트와 맞물리게 한다.
 # 화면(바닥글)에 보이게 두고, JSON-LD alternateName 도 같은 값을 쓴다(§9).
 DOMAIN_LABEL = "datasec.work"
-HOME_TITLE_SUFFIX = {"ko": "KETI 한국전자기술연구원", "en": "KETI"}
+HOME_TITLE_SUFFIX = {"ko": "KETI 한국전자기술연구원", "en": "KETI, Korea Electronics Technology Institute"}
 
 
 # ════════════════════════════════════════════════════════════════════
