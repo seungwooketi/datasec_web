@@ -56,6 +56,9 @@ T = {
         "contact": "문의하기", "skip": "본문으로 건너뛰기", "lang_switch": "언어",
         "range": " ~ ", "sep": ", ", "slash": " / ",
         "addr": "주소", "phone": "대표전화", "visit": "찾아오시는 길",
+        "brochure": "센터 소개 자료(PDF)", "k_brochure": "센터 소개 자료",
+        "brochure_h": "브로셔 내려받기",
+        "brochure_lede": "센터의 연구 분야와 주요 과제, 협력 방법을 한 권에 정리했습니다. 국문과 영문 두 가지가 있습니다.",
         # ── 절 라벨. 번호는 메뉴 위치(NAVS)에서 온다 — 홈에 없는 메뉴(구성원 05)는 건너뛴다.
         "k_research": "01 / Research", "k_projects": "02 / Projects", "k_insights": "03 / Insights",
         "k_news": "04 / News", "k_people": "05 / People", "k_collab": "06 / Collaborate",
@@ -123,6 +126,9 @@ T = {
         "contact": "Contact", "skip": "Skip to content", "lang_switch": "Language",
         "range": " – ", "sep": ", ", "slash": " / ",
         "addr": "Address", "phone": "Phone", "visit": "Visit",
+        "brochure": "Brochure (PDF)", "k_brochure": "About the center",
+        "brochure_h": "Download our brochure",
+        "brochure_lede": "Our research areas, key projects and ways to work with us in one document, in English and Korean.",
         "k_research": "01 / Research", "k_projects": "02 / Projects", "k_insights": "03 / Insights",
         "k_news": "04 / News", "k_people": "05 / People", "k_collab": "06 / Collaborate",
         "k_ways": "01 / Ways to collaborate", "k_contact": "02 / Contact", "k_visit": "03 / Visit",
@@ -601,6 +607,22 @@ def crumbs_html(lg: str, items: list) -> str:
 DOMAIN_LABEL = "datasec.work"
 
 
+# ════════════════════════════════════════════════════════════════════
+# 센터 브로셔(PDF)
+# ════════════════════════════════════════════════════════════════════
+# ⭐ 파일 이름은 **판이 바뀌어도 그대로** 둔다(밖에 걸린 링크가 살아 있게). 새 판은 같은 이름으로 덮는다.
+#    자산 주소에는 stamp() 가 내용 해시를 붙이므로 덮어써도 옛 판이 캐시에 남지 않는다.
+BROCHURE = {"ko": "/assets/brochure/adsrc-brochure-ko.pdf", "en": "/assets/brochure/adsrc-brochure-en.pdf"}
+
+
+def brochure_href(lg: str) -> str:
+    rel = BROCHURE[lg]
+    if not (ROOT / rel.lstrip("/")).exists():
+        block(f"브로셔 파일이 없다: {rel}")
+        return rel
+    return stamp(rel)
+
+
 def shell(lg: str, nav_key: str, path: str, title: str | None, desc: str, body: str, site: dict,
           og_type: str = "website", jsonld: str = "", head_extra: str = "",
           og_image: str = "", og_alt: str = "", crumbs: list | None = None) -> str:
@@ -689,7 +711,7 @@ def shell(lg: str, nav_key: str, path: str, title: str | None, desc: str, body: 
 <footer>
 <span>{e(site['center_full'][lg])}</span>
 <span>{foot_mid}</span>
-<span class="foot-domain"><a href="/{lg}/collaborate/#visit">{e(t['visit'])}</a><a href="/{lg}/">{DOMAIN_LABEL}</a></span>
+<span class="foot-domain"><a href="{brochure_href(lg)}" target="_blank" rel="noopener">{e(t['brochure'])}</a><a href="/{lg}/collaborate/#visit">{e(t['visit'])}</a><a href="/{lg}/">{DOMAIN_LABEL}</a></span>
 </footer>
 <script src="{stamp('/assets/mail.js')}" defer></script>
 <script src="{stamp('/assets/site.js')}" defer></script>
@@ -1695,6 +1717,11 @@ def page_collaborate(lg, site):
 <section id="ways" class="csec">{klabel(t['k_ways'])}
 <h2 class="ht h-2">{e(t['ways_h'])}</h2>
 <div class="ways4">{"".join(ways)}</div>
+</section>
+<section id="brochure" class="csec">{klabel(t['k_brochure'])}
+<h2 class="ht h-2">{e(t['brochure_h'])}</h2>
+<p class="lede-m">{e(t['brochure_lede'])}</p>
+<div class="cbtns"><a class="btn btn-primary" href="{brochure_href(lg)}" target="_blank" rel="noopener">{e(T[lg]['brochure'])}</a><a class="btn btn-secondary" href="{brochure_href('en' if lg == 'ko' else 'ko')}" target="_blank" rel="noopener" hreflang="{'en' if lg == 'ko' else 'ko'}">{e(T['en' if lg == 'ko' else 'ko']['brochure'])}</a></div>
 </section>
 <section id="contact" class="csec">{klabel(t['k_contact'])}
 <h2 class="ht h-2">{e(t['contact_h'])}</h2>
