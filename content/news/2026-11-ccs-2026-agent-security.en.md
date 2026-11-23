@@ -1,5 +1,5 @@
 ---
-title: CCS 2026 in numbers - AI agent security research is growing fast
+title: ACM CCS 2026 - growing interest in AI and agentic AI security
 date: 2026-11-23
 category: center
 summary: At ACM CCS 2026 in The Hague, main-conference papers on the security of AI agents went from one last year to thirteen. A side-by-side count of the 2025 and 2026 papers.
