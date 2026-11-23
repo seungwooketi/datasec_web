@@ -22,7 +22,7 @@ Here is how this year's main-conference papers compare with last year's.
 
 I could not sit in on every session, and there were far too many papers to read every abstract. So I collected the titles and abstracts of the main-conference papers from OpenAlex and applied the same keyword rules to both years, then checked the agent candidates by hand. Posters, demos and workshops are left out. These are my own counts; a different rule would move the numbers a little.
 
-Papers on the security of agents themselves went from one to thirteen, and papers that use agents to attack or analyse systems went from none to three. Growth is expected for a concept this new. Still, agent security incidents have been in the news for less than a year, and the 16 agent papers already make up 3.3% of the main program, up from 0.3% last year. Research is widening fast from the security of the models, such as LLMs, to the security of the agents built on them.
+By abstract keywords, agent-related papers went from two in 2025 to about twenty this year. The 16 in the table are the ones I checked by hand: papers on the security of agents themselves went from one to thirteen, and papers that use agents to attack or analyse systems went from none to three. Growth is expected for a concept this new. Still, agent security incidents have been in the news for less than a year, and the 16 checked papers alone already make up 3.3% of the main program, up from 0.3% last year. Research is widening fast from the security of LLMs and other ML models to the security of the agents built on them.
 
 Two papers deal with the Model Context Protocol (MCP), which is fast becoming the standard interface between agents and external tools:
 
