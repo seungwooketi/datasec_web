@@ -245,8 +245,30 @@ def figure(alt: str, src: str, caption: str, width: str = "") -> str:
         + cap + "</figure>")
 
 
+# 표 한 벌: `| 머리 | 머리 |` 다음 줄에 `|---|---:|`, 그 뒤에 행. `---:` 는 오른쪽 맞춤(수치 칸).
+# ⛔ 칸 수가 머리와 다르거나 구분 줄이 없으면 막는다 — 칸이 밀린 표는 에러 없이 틀린 수치를 보여 준다.
+TABLE_SEP = re.compile(r"^:?-{3,}:?$")
+
+
+def md_table(rows: list[str]) -> str:
+    cells = [[c.strip() for c in r.strip().strip("|").split("|")] for r in rows]
+    if len(cells) < 3 or not all(TABLE_SEP.match(c) for c in cells[1]):
+        block(f"본문 표는 머리 줄, 구분 줄(|---|), 행 하나 이상이어야 한다: {rows[0][:60]}")
+        return ""
+    head, sep, body = cells[0], cells[1], cells[2:]
+    if len(sep) != len(head) or any(len(r) != len(head) for r in body):
+        block(f"본문 표의 칸 수가 머리({len(head)}칸)와 다른 줄이 있다: {rows[0][:60]}")
+        return ""
+    cls = [' class="ralign"' if s.endswith(":") and not s.startswith(":") else "" for s in sep]
+    th = "".join(f'<th scope="col"{c}>{_inline(h)}</th>' for h, c in zip(head, cls))
+    tr = "".join("<tr>" + "".join(f"<td{c}>{_inline(x)}</td>" for x, c in zip(r, cls)) + "</tr>"
+                 for r in body)
+    return (f'<div class="tablewrap"><table class="table mdtable"><thead><tr>{th}</tr></thead>'
+            f"<tbody>{tr}</tbody></table></div>")
+
+
 def markdown(text: str) -> str:
-    """문단 · 제목 · 목록 · 인용 · 구분선 · 그림만. 그 이상은 이 사이트에 필요 없다."""
+    """문단 · 제목 · 목록 · 인용 · 구분선 · 그림 · 표만. 그 이상은 이 사이트에 필요 없다."""
     out: list[str] = []
     buf: list[str] = []
     mode: str | None = None
@@ -263,6 +285,8 @@ def markdown(text: str) -> str:
             out.append(f"<{mode}>{items}</{mode}>")
         elif mode == "quote":
             out.append("<blockquote>" + " ".join(_inline(x) for x in buf) + "</blockquote>")
+        elif mode == "table":
+            out.append(md_table(buf))
         buf.clear()
         mode = None
 
@@ -280,6 +304,11 @@ def markdown(text: str) -> str:
             flush()
             n = len(line) - len(line.lstrip("#"))
             out.append(f"<h{min(n + 1, 6)}>{_inline(line.lstrip('#').strip())}</h{min(n + 1, 6)}>")
+        elif line.lstrip().startswith("|"):
+            if mode != "table":
+                flush()
+                mode = "table"
+            buf.append(line)
         elif re.match(r"^(-{3,}|\*{3,})$", line.strip()):
             flush()
             out.append('<hr class="cr">')

@@ -246,6 +246,12 @@ body[data-lang="ko"] .tb { text-transform: none; letter-spacing: 0; }
 .prose h2 { font-size: 23px; line-height: 25px; margin: 30px 0 10px; text-transform: uppercase; }
 body[data-lang="ko"] .prose h2 { text-transform: none; }
 .prose li { margin-bottom: 4px; }
+/* 본문 표(마크다운 `|` 표, build.py md_table). 디자인 시스템 .table 을 쓰고 본문과의 여백만 준다 */
+.prose .tablewrap { margin: 20px 0; }
+.mdtable td { vertical-align: top; }
+/* ⚠️ 오른쪽 맞춤 칸의 class 는 `ralign` 이다. `num` 은 위의 큰 숫자 양식이라 색과 굵기가 따라온다 */
+.mdtable .ralign { text-align: right; white-space: nowrap; font-feature-settings: "tnum" 1; }
+body[data-lang="ko"] .mdtable th { text-transform: none; letter-spacing: 0; font-size: 12px; }
 /* 원문 링크 버튼 — 소식 상세의 위와 아래. 색은 .btn-primary 를 그대로 쓴다 */
 .srcbox { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 22px 0 0; font-size: 13px;
   color: color-mix(in srgb, var(--color-text) 62%, transparent); }
